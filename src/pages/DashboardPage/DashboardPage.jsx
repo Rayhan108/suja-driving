@@ -8,6 +8,7 @@ import { Input } from "antd";
 import Overview from "../../component/Overview/Overview";
 import ClientGrowth from "../../component/ClientGrowth/ClientGrowth";
 import TotalEarning from "../../component/TotalEarning/TotalEarning";
+import { SlArrowLeft } from "react-icons/sl";
 
 function DashboardPage() {
   const currentYear = dayjs().year();
@@ -28,9 +29,10 @@ function DashboardPage() {
   return (
     <div className="flex flex-col">
       <div className="flex justify-between items-center pt-0 mt-0 mb-1">
-        <div>
-          <p className="text-[#35BEBD] font-title text-3xl font-bold">
-            Dashboard
+        <div className="flex justify-center items-center gap-5">
+          <SlArrowLeft className="w-5 h-5 text-right  text-[#3564d3]" />
+          <p className="text-[#3564d3] font-title text-3xl font-bold">
+            Dashboard Overview
           </p>
         </div>
         <div>

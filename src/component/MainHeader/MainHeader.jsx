@@ -2,6 +2,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import anita from "../../assets/Anita.png"
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { Badge } from "antd";
 const MainHeader = ({ toggleSidebar }) => {
   const navigate = useNavigate();
 
@@ -15,7 +16,11 @@ const MainHeader = ({ toggleSidebar }) => {
           </div> */}
           <div className="flex gap-5 items-center">
             <div>
-        <Link to={"/notification"}>    <IoIosNotificationsOutline className="text-[#35BEBD] text-3xl "/></Link>
+        <Link to={"/notification"}> 
+           <Badge count={5}>
+     <IoIosNotificationsOutline className="text-[#35BEBD] bg-white rounded-full w-8 p-1 text-3xl"/>
+    </Badge>
+        </Link>
             </div>
             <div
               onClick={() => navigate("/profile")}

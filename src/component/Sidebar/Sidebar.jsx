@@ -50,14 +50,14 @@ const user = false;
   </div>
       {/* Sidebar Menu */}
         <div className="flex justify-center items-center mt-0">
-        <img src={logo} className="w-16 mb-7 mt-5 "/>
+        <img src={logo} className="w-16 mb-3 mt-3 "/>
         </div>
       <ul className="-mt-2 pl-5 text-[10px]">
         {/* Dashboard Page */}
         <Link to="/">
           <li
             className={`flex items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/") ? "bg-[#F3F3F3] text-[#3F5EAB] px-3 py-3 rounded-xl" : ""
+              isActive("/") ? "bg-[#F3F3F3] text-[#3564d3]  px-3 py-3 rounded-xl" : ""
             }`}
           >
             <FaHome className="w-5 h-5" />
@@ -69,7 +69,7 @@ const user = false;
         <Link to="/userManagement">
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/userManagement") ? "bg-[#F3F3F3] text-[#3F5EAB] px-3 py-3 rounded-2xl" : ""
+              isActive("/userManagement") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <FaRegUser className="w-5 h-5" />
@@ -81,7 +81,7 @@ const user = false;
         <Link to="/vendor">
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/vendor") ? "bg-[#F3F3F3] text-[#3F5EAB]  px-3 py-3 rounded-2xl" : ""
+              isActive("/vendor") ? "bg-[#F3F3F3] text-[#3564d3]  px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <FaRegUser className="w-5 h-5" />
@@ -93,7 +93,7 @@ const user = false;
         <Link to="/order">
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/services") ? "bg-[#F3F3F3] text-[#3F5EAB] px-3 py-3 rounded-2xl" : ""
+              isActive("/services") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -104,7 +104,7 @@ const user = false;
         <Link to="/order">
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/services") ? "bg-[#F3F3F3] text-[#3F5EAB] px-3 py-3 rounded-2xl" : ""
+              isActive("/services") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -115,10 +115,10 @@ const user = false;
         <Link to="/order">
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/services") ? "bg-[#F3F3F3] text-[#3F5EAB] px-3 py-3 rounded-2xl" : ""
+              isActive("/services") ? "bg-[#F3F3F3] text-[#3564d3]  px-3 py-3 rounded-2xl" : ""
             }`}
           >
-            <LuSquareMenu className="w-5 h-5" />
+            <LuSquareMenu className="w-5 h-5" /> 
             <p className="text-lg font-semibold">Highway Code</p>
           </li>
         </Link>
@@ -126,7 +126,7 @@ const user = false;
         <Link to="/order">
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/services") ? "bg-[#F3F3F3] text-[#3F5EAB] px-3 py-3 rounded-2xl" : ""
+              isActive("/services") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -137,7 +137,7 @@ const user = false;
         <Link to="/order">
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/services") ? "bg-[#F3F3F3] text-[#3F5EAB] px-3 py-3 rounded-2xl" : ""
+              isActive("/services") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -148,7 +148,7 @@ const user = false;
         <Link to="/order">
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/services") ? "bg-[#F3F3F3] text-[#3F5EAB] px-3 py-3 rounded-2xl" : ""
+              isActive("/services") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -159,7 +159,7 @@ const user = false;
         <Link to="/order">
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/services") ? "bg-[#F3F3F3] text-[#3F5EAB] px-3 py-3 rounded-2xl" : ""
+              isActive("/services") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -169,18 +169,18 @@ const user = false;
 
 
         {/* Settings */}
-        <bu tton
+        <button
           onClick={toggleSettingsDropdown} // Toggle the dropdown
           className={`flex justify-between items-center gap-2 mt-5 cursor-pointer py-2 whitespace-nowrap transition-all duration-300 ease-in-out ${
-            isSettingsActive ? "bg-[#F3F3F3] text-[#3F5EAB] pl-3 pr-5 py-3 rounded-2xl" : ""
+            isSettingsActive ? "bg-[#F3F3F3] text-[#3564d3] pl-3 pr-5 py-3 rounded-2xl" : ""
           }`}
         >
           <div className="flex flex-row justify-between items-center gap-2">
             <IoMdSettings className="w-5 h-5 text-white" />
             <p className="text-lg font-semibold text-white">Settings</p>
           </div>
-          <SlArrowDown className="w-5 h-5 text-right ml-5" />
-        </bu>
+          <SlArrowDown className="w-5 h-5 text-right ml-5 text-white" />
+        </button>
 
         {/* Settings Submenu */}
         {isSettingsOpen && (
@@ -188,7 +188,7 @@ const user = false;
             <Link to="/setting/aboutUs">
               <li
                 className={`py-[5px] flex items-center gap-2 transition-all duration-300 ease-in-out text-white ${
-                  isActive("/setting/aboutUs") ? "text-[#3F5EAB]" : ""
+                  isActive("/setting/aboutUs") ? "text-[#3564d3]" : ""
                 }`}
               >
                 <IoMdInformationCircleOutline className="w-5 h-5 text-lg font-semibold" />
@@ -198,7 +198,7 @@ const user = false;
             <Link to="/setting/policy">
               <li
                 className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out text-white ${
-                  isActive("/setting/policy") ? "text-[#3F5EAB]" : ""
+                  isActive("/setting/policy") ? "text-[#3564d3]" : ""
                 }`}
               >
                 <FaRegBookmark className="w-5 h-5 text-lg font-semibold" />
@@ -208,7 +208,7 @@ const user = false;
             <Link to="/setting/privacy">
               <li
                 className={`py-2 flex items-center gap-2 transition-all duration-300 ease-in-out text-white ${
-                  isActive("/setting/privacy") ? "text-[#3F5EAB]" : ""
+                  isActive("/setting/privacy") ? "text-[#3564d3]" : ""
                 }`}
               >
                 <MdOutlinePrivacyTip className="w-5 h-5 text-lg font-semibold" />
@@ -224,8 +224,8 @@ const user = false;
                   isActive("/setting/faq") ? "text-[#00c0b5]" : ""
                 }`}
               >
-                <GoQuestion className="w-5 h-5 text-lg font-semibold" />
-                <p className="text-lg font-semibold">FAQ</p>
+                <GoQuestion className="w-5 h-5 text-lg font-semibold text-white" />
+                <p className="text-lg font-semibold text-white">FAQ</p>
               </li>
             </Link>
             <Link to="/setting/support">
@@ -234,8 +234,8 @@ const user = false;
                   isActive("/setting/support") ? "text-[#00c0b5]" : ""
                 }`}
               >
-                <GoQuestion className="w-5 h-5 text-lg font-semibold" />
-                <p className="text-lg font-semibold">Support</p>
+                <GoQuestion className="w-5 h-5 text-lg font-semibold text-white" />
+                <p className="text-lg font-semibold text-white">Support</p>
               </li>
             </Link>
           </ul>

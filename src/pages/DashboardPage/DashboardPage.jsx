@@ -6,7 +6,7 @@ import { IoSearch } from "react-icons/io5";
 
 import { Input } from "antd";
 import Overview from "../../component/Overview/Overview";
-import ClientGrowth from "../../component/ClientGrowth/ClientGrowth";
+import ClientGrowth from "../../component/practiceSession/practiceSession";
 import TotalEarning from "../../component/TotalEarning/TotalEarning";
 import { SlArrowLeft } from "react-icons/sl";
 

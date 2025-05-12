@@ -57,7 +57,7 @@ const user = false;
         <Link to="/">
           <li
             className={`flex items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out text-white ${
-              isActive("/") ? "bg-[#F3F3F3] text-[#3564d3]  px-3 py-3 rounded-xl" : ""
+              isActive("/") ? "bg-[#F3F3F3] text-[#21418d]  px-3 py-3 rounded-xl" : ""
             }`}
           >
             <FaHome className="w-5 h-5" />

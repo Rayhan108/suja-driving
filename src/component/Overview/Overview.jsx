@@ -10,22 +10,22 @@ const Overview = () => {
                <div >
                <img src={client} alt="" />
                </div>
-                <p className="font-title  text-xl pb-2 text-[#07163D]">Total User</p>
-                <p className="font-title  text-xl text-[#07163D] pt-2">852,650</p>
+                <p className="font-title  text-xl pb-2 ">Total User</p>
+                <p className="font-title  text-xl  pt-2">852,650</p>
             </div>
             <div className=" text-white bg-[#3F5EAB] px-16 rounded-xl flex flex-col justify-center items-center py-5">
                <div >
                <img src={vendor} alt="" />
                </div>
-                <p className="font-title  text-xl pb-2 text-[#07163D]">Total Completed</p>
-                <p className="font-title  text-xl text-[#07163D] pt-2">2,500</p>
+                <p className="font-title  text-xl pb-2 ">Total Completed</p>
+                <p className="font-title  text-xl  pt-2">2,500</p>
             </div>
             <div className=" text-white bg-[#3F5EAB] px-16 rounded-xl flex flex-col justify-center items-center py-5">
                <div >
                <img src={order} alt="" />
                </div>
-                <p className="font-title  text-xl pb-2 text-[#07163D]">Total Revenue</p>
-                <p className="font-title  text-xl text-[#07163D] pt-2">2,500</p>
+                <p className="font-title  text-xl pb-2 ">Total Revenue</p>
+                <p className="font-title  text-xl  pt-2">2,500</p>
             </div>
     
         </div>

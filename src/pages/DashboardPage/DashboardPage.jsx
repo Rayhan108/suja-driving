@@ -1,14 +1,15 @@
 /* eslint-disable no-unused-vars */
-import { FaChevronDown, FaUsers, FaVideo } from "react-icons/fa";
+
 import { useState } from "react";
 import dayjs from "dayjs";
 import { IoSearch } from "react-icons/io5";
 
 import { Input } from "antd";
 import Overview from "../../component/Overview/Overview";
-import ClientGrowth from "../../component/practiceSession/practiceSession";
-import TotalEarning from "../../component/TotalEarning/TotalEarning";
 import { SlArrowLeft } from "react-icons/sl";
+import RecentActivity from "../../component/RecentActivity/RecentActivity";
+import PracticeSession from "../../component/practiceSession/practiceSession";
+import Question from "../../component/RecentActivity/Question";
 
 function DashboardPage() {
   const currentYear = dayjs().year();
@@ -27,9 +28,9 @@ function DashboardPage() {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-between items-center pt-0 mt-0 mb-1">
-        <div className="flex justify-center items-center gap-5">
+    <div className=" container mx-auto">
+        <div className="flex justify-between my-2"> 
+      <div className="flex  justify-center items-center gap-5">
           <SlArrowLeft className="w-5 h-5 text-right  text-[#3564d3]" />
           <p className="text-[#3564d3] font-title text-3xl font-bold">
             Dashboard Overview
@@ -47,11 +48,20 @@ function DashboardPage() {
             </span>
           </div>
         </div>
+        </div>
+      <div className="flex flex-col justify-between items-center pt-0 mt-0 mb-1">
+
       </div>
       {/* main content */}
       <Overview />
-      <ClientGrowth />
-      <TotalEarning />
+      <PracticeSession />
+      <div className="flex gap-10 w-[100%]">
+     
+          <RecentActivity />
+  
+          <Question />
+    
+      </div>
     </div>
   );
 }

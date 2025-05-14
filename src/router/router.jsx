@@ -14,6 +14,7 @@ import Verify from "../pages/Verify/Verify";
 import ForgotPass from "../pages/ForgotPass/ForgotPass";
 import SetPass from "../pages/SetPass/SetPass";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
+import UserManagement from "../pages/UserManagement/UserManagement";
 
   
   const router = createBrowserRouter([
@@ -41,6 +42,10 @@ import DashboardPage from "../pages/DashboardPage/DashboardPage";
           {
             path: "/",
             element: <DashboardPage/>,
+          },
+          {
+            path: "/userManagement",
+            element: <UserManagement/>,
           },
          
         ]

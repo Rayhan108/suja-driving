@@ -71,12 +71,12 @@ const user = false;
 
         {/* User Page */}
         <Link to="/userManagement" className="flex justify-between ">
-              {isActive("/g") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+              {isActive("/userManagement") && (
+            <div className="bg-[#F3F3F3] w-[3%] h-14  -left-8 mt-5 relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/userManagement") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
+              isActive("/userManagement") ? "bg-[#F3F3F3] text-[#2f5fcf] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <FaRegUser className="w-5 h-5" />

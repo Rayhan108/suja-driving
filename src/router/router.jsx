@@ -15,6 +15,8 @@ import ForgotPass from "../pages/ForgotPass/ForgotPass";
 import SetPass from "../pages/SetPass/SetPass";
 import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import UserManagement from "../pages/UserManagement/UserManagement";
+import TheoryManagement from "../pages/TheoryManagement/TheoryManagement";
+import TheoryManagementTopic from "../pages/TheoryManagement/TheoryManagementTopic";
 
   
   const router = createBrowserRouter([
@@ -46,6 +48,14 @@ import UserManagement from "../pages/UserManagement/UserManagement";
           {
             path: "/userManagement",
             element: <UserManagement/>,
+          },
+          {
+            path: "/theoryManagement/category",
+            element: <TheoryManagement/>,
+          },
+          {
+            path: "/theoryManagement/topic",
+            element: <TheoryManagementTopic/>,
           },
          
         ]

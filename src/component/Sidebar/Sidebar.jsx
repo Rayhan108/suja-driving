@@ -85,13 +85,13 @@ const user = false;
         </Link>
         
         {/* Vendor */}
-        <Link to="/vendor" className="flex justify-between ">
-              {isActive("/vendor") && (
+        <Link to="/theoryManagement/category" className="flex justify-between ">
+              {isActive("/theoryManagement/category") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/vendor") ? "bg-[#F3F3F3] text-[#3564d3]  px-3 py-3 rounded-2xl" : ""
+              isActive("/theoryManagement/category") ? "bg-[#F3F3F3] text-[#3564d3]  px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <FaRegUser className="w-5 h-5" />

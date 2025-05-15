@@ -1,7 +1,8 @@
 import { Table, Modal, ConfigProvider } from "antd";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { useState } from "react";
-import EditQuesForm from "./EditQuestionForm";
+import EditAdiQuesForm from "./EditAdiQuesForm";
+
 
 const AdiQuestionTable = ({ question }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -188,7 +189,7 @@ const AdiQuestionTable = ({ question }) => {
         >
           <div >
             <h1 className="text-3xl text-center text-[#333333]">Edit Question</h1>
- <EditQuesForm/>
+ <EditAdiQuesForm/>
           </div>
         </Modal>
 

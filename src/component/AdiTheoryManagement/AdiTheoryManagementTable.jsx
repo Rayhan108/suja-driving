@@ -3,7 +3,8 @@ import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import EditCategoryForm from "./EditCategoryForm";
+
+import EditAdiCategoryForm from "./EditAdiCategoryForm";
 
 const AdiTheoryManagementTable = ({ category }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -87,51 +88,31 @@ const AdiTheoryManagementTable = ({ category }) => {
           pagination={{ pageSize: 10 }}
           scroll={{ x: "max-content" }}
         />
-        <Modal
-          open={isModalOpen}
-          centered
-          onCancel={handleCancel}
-          footer={null}
-        >
-          <div className="flex flex-col p-5 w-full">
-            <h1 className="text-3xl text-center text-[#333333]">Message</h1>
-            <div className="">
-              <p className="text-xl text-start mt-5 mb-3">Send To</p>
-              <Input type="text" placeholder="Only to user" />
-            </div>
-            <div className="">
-              <p className="text-xl text-start mt-5 mb-3">Message</p>
-              <TextArea type="text" placeholder="Message here..." />
-            </div>
-            <div className="flex gap-14 mt-3">
-              <div>
-                <h1>Send:</h1>
-              </div>
-              <div className="flex gap-5">
-                <Checkbox />
-                <p>Email</p>
-              </div>
-            </div>
-            <div className="text-center py-5 w-full flex ">
-              <div className="w-[100%]">
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className=" text-[#3F5EAB] border-2 border-[#FFE2D4] font-semibold py-3 rounded-lg px-16"
-                >
-                  Cancel
-                </button>
-              </div>
-              <div className="w-[100%]">
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="bg-[#00c0b5] text-white font-semibold py-3 rounded-lg px-16"
-                >
-                  CONFIRM
-                </button>
-              </div>
-            </div>
+         <Modal
+        open={isModalOpen}
+        centered
+        onCancel={handleCancel}
+        footer={null}
+        destroyOnClose
+      >
+        <div className="flex flex-col justify-center items-center py-10">
+          <h1 className="text-3xl text-center text-red-500">Are you sure!</h1>
+          <p className="text-xl text-center mt-5">
+            Do you really want to delete? Please confirm.
+          </p>
+          <div className="text-center py-5 w-full">
+            <button
+              onClick={() => {
+                // handle delete logic here
+                setIsModalOpen(false);
+              }}
+              className="bg-red-500 text-white font-semibold w-1/3 py-3 px-5 rounded-lg"
+            >
+              CONFIRM
+            </button>
           </div>
-        </Modal>
+        </div>
+      </Modal>
 
         {/* edit modal */}
           <Modal
@@ -142,7 +123,7 @@ const AdiTheoryManagementTable = ({ category }) => {
         >
           <div >
             <h1 className="text-3xl text-center text-[#333333]">Edit Category</h1>
- <EditCategoryForm/>
+ <EditAdiCategoryForm/>
           </div>
         </Modal>
       </ConfigProvider>

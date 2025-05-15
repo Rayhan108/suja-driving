@@ -21,6 +21,7 @@ import QuestionManagement from "../pages/TheoryManagement/QuestionManagement";
 import AdiTheoryManagement from "../pages/AdiTheoryManagement/AdiTheoryManagement";
 import AdiTheoryManagementTopic from "../pages/AdiTheoryManagement/AdiTheoryMangementTopic";
 import AdiQuestionManagement from "../pages/AdiTheoryManagement/AdiQuestionManagement";
+import HazardPage from "../pages/Hazard/HazardPage";
 
   
   const router = createBrowserRouter([
@@ -84,6 +85,10 @@ import AdiQuestionManagement from "../pages/AdiTheoryManagement/AdiQuestionManag
           {
             path: "/adiTheoryManagement/question",
             element: <AdiQuestionManagement/>,
+          },
+          {
+            path: "/hazard",
+            element: <HazardPage/>,
           },
          
         ]

@@ -111,7 +111,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Tabs for Category, Topic, Question */}
-      <div className="flex gap-9">
+      <div className="flex gap-9"> 
         <div>
           <Link to="/theoryManagement/category">
             <button

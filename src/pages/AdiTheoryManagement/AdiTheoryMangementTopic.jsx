@@ -5,6 +5,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import TheoryManagementTopicTable from "../../component/TheoryManagement/TheoryManagementTopicTable";
 import AddTopicForm from "../../component/TheoryManagement/AddTopicForm";
+import AddAdiTopicForm from "../../component/AdiTheoryManagement/AddAdiTopicForm";
+import AdiTheoryManagementTopicTable from "../../component/AdiTheoryManagement/AdiTheoryManagementTopicTable";
 
 const AdiTheoryManagementTopic = () => {
 const topic = [
@@ -150,7 +152,7 @@ console.log("activeTabFromURL",activeTabFromURL);
           </Link>
         </div>
         <div>
-          <Link to="/theoryManagement/topic">
+          <Link to="/adiTheoryManagement/topic">
             <button
               className={`${
                 activeTab === "topic"
@@ -163,7 +165,7 @@ console.log("activeTabFromURL",activeTabFromURL);
           </Link>
         </div>
         <div>
-          <Link to="/theoryManagement/question">
+          <Link to="/adiTheoryManagement/question">
             <button
               className={`${
                 activeTab === "question"
@@ -178,7 +180,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTopicTable topic={topic} />
+      <AdiTheoryManagementTopicTable topic={topic} />
 
 
 
@@ -191,7 +193,7 @@ console.log("activeTabFromURL",activeTabFromURL);
  
       >
   <div>
-    <AddTopicForm/>
+    <AddAdiTopicForm/>
   </div>
       </Modal>
     </div>

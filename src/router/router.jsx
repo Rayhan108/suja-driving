@@ -18,6 +18,9 @@ import UserManagement from "../pages/UserManagement/UserManagement";
 import TheoryManagement from "../pages/TheoryManagement/TheoryManagement";
 import TheoryManagementTopic from "../pages/TheoryManagement/TheoryManagementTopic";
 import QuestionManagement from "../pages/TheoryManagement/QuestionManagement";
+import AdiTheoryManagement from "../pages/AdiTheoryManagement/AdiTheoryManagement";
+import AdiTheoryManagementTopic from "../pages/AdiTheoryManagement/AdiTheoryMangementTopic";
+import AdiQuestionManagement from "../pages/AdiTheoryManagement/AdiQuestionManagement";
 
   
   const router = createBrowserRouter([
@@ -51,6 +54,10 @@ import QuestionManagement from "../pages/TheoryManagement/QuestionManagement";
             element: <UserManagement/>,
           },
           {
+            path: "/theoryManagement",
+            element: <TheoryManagement/>,
+          },
+          {
             path: "/theoryManagement/category",
             element: <TheoryManagement/>,
           },
@@ -61,6 +68,22 @@ import QuestionManagement from "../pages/TheoryManagement/QuestionManagement";
           {
             path: "/theoryManagement/question",
             element: <QuestionManagement/>,
+          },
+          {
+            path: "/adiTheoryManagement",
+            element: <AdiTheoryManagement/>,
+          },
+          {
+            path: "/adiTheoryManagement/category",
+            element: <AdiTheoryManagement/>,
+          },
+          {
+            path: "/adiTheoryManagement/topic",
+            element: <AdiTheoryManagementTopic/>,
+          },
+          {
+            path: "/adiTheoryManagement/question",
+            element: <AdiQuestionManagement/>,
           },
          
         ]

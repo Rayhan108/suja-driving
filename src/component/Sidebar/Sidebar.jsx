@@ -34,9 +34,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   // Checks if the current URL path starts with the given path
   const isTheory = (path) => location.pathname.startsWith(path);
+  const isAdiTheory = (path) => location.pathname.startsWith(path);
   return (
     <div
-      className={`fixed lg:static px-3 bg-[#3F5EAB] text-[#0D0D0D] w-[70%] sm:w-[70%] md:w-[15%] lg:w-[15%]  overflow-y-auto py-5 md:py-0 z-50 transition-transform ${
+      className={`fixed lg:static px-3 bg-[#3F5EAB]  w-[70%] sm:w-[70%] md:w-[15%] lg:w-[20%]  overflow-y-auto py-5 md:py-0 z-50 transition-transform font-title ${
         isOpen ? "translate-x-0 top-0 left-0 " : "-translate-x-full"
       } lg:translate-x-0`}
     >
@@ -61,7 +62,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           )}
           <li
             // text-[#193985]
-            className={`flex items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%]  ${
+            className={`flex items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out  w-[98%]  ${
               isActive("/")
                 ? "bg-[#F3F3F3] text-[#193985]  px-3 py-3 rounded-xl"
                 : ""
@@ -78,7 +79,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className="bg-[#F3F3F3] w-[3%] h-14  -left-8 mt-5 relative"></div>
           )}
           <li
-            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
+            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
               isActive("/userManagement")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
@@ -90,12 +91,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </Link>
 
         {/* theory*/}
-        <Link to="/theoryManagement/category" className="flex justify-between ">
+        <Link to="/theoryManagement" className="flex justify-between ">
           {isTheory("/theoryManagement") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
-            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
+            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
               isTheory("/theoryManagement")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
@@ -107,13 +108,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </Link>
 
         {/* Order */}
-        <Link to="/adiTheory" className="flex justify-between ">
-          {isActive("/adiTheory") && (
+        <Link to="/adiTheoryManagement/category" className="flex justify-between ">
+          {isAdiTheory("/adiTheoryManagement") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
-            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/adiTheory")
+            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
+              isAdiTheory("/adiTheoryManagement")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
             }`}
@@ -128,14 +129,14 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
-            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
+            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
               isActive("/hazard")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
-            <p className="text-lg font-semibold">ADI Theory Management</p>
+            <p className="text-lg font-semibold">Hazard Perception</p>
           </li>
         </Link>
         {/* Highway */}
@@ -144,7 +145,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
-            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
+            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
               isActive("/highway")
                 ? "bg-[#F3F3F3] text-[#193985]  px-3 py-3 rounded-2xl"
                 : ""
@@ -160,7 +161,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
-            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
+            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
               isActive("/test")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
@@ -176,7 +177,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
-            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
+            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
               isActive("/services")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
@@ -192,7 +193,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
-            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
+            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
               isActive("/feedback")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
@@ -208,7 +209,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
-            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
+            className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
               isActive("/analysis")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""

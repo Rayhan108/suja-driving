@@ -3,11 +3,20 @@ import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import EditCategoryForm from "./EditCategoryForm";
 
 const TheoryManagementTable = ({ category }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
+  };
+  const showEditModal = (id) => {
+    console.log("id",id);
+    setEditModalOpen(true);
+  };
+  const handleEditCancel = () => {
+    setEditModalOpen(false);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -40,11 +49,11 @@ const TheoryManagementTable = ({ category }) => {
       align: "center", // Center-aligned Action column
       render: (_, record) => (
         <div className="flex items-center justify-center gap-5">
-          <Link to={`/order/${record.orderId}`}>
-      <button>
+       
+      <button onClick={()=>showEditModal(record)}>
               <RiEdit2Line className="text-black  w-5 h-5" />
             </button>
-          </Link>
+      
           <button onClick={showModal}>
             <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
           </button>
@@ -121,6 +130,19 @@ const TheoryManagementTable = ({ category }) => {
                 </button>
               </div>
             </div>
+          </div>
+        </Modal>
+
+        {/* edit modal */}
+          <Modal
+          open={isEditModalOpen}
+          centered
+          onCancel={handleEditCancel}
+          footer={null}
+        >
+          <div >
+            <h1 className="text-3xl text-center text-[#333333]">Edit Category</h1>
+ <EditCategoryForm/>
           </div>
         </Modal>
       </ConfigProvider>

@@ -1,9 +1,10 @@
-import { Input } from "antd";
+import { Input, Modal } from "antd";
 import { IoSearch } from "react-icons/io5";
 import { SlArrowLeft } from "react-icons/sl";
 import TheoryManagementTable from "../../component/TheoryManagement/TheoryManagementTable";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import AddCategoryForm from "../../component/TheoryManagement/AddCategoryForm";
 
 const TheoryManagement = () => {
   const category = [
@@ -71,6 +72,17 @@ console.log("activeTabFromURL",activeTabFromURL);
   useEffect(() => {
     setActiveTab(activeTabFromURL || 'category');
   }, [location]);
+  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    // setDeleteId(id);
+    setIsModalOpen(true);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setDeleteId(null);
+  };
+
 
   return (
     <div>
@@ -93,7 +105,7 @@ console.log("activeTabFromURL",activeTabFromURL);
             </span>
           </div>
           <div>
-            <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">+Add Category</button>
+            <button className="bg-[#3F5EAB] text-white p-3 rounded-xl" onClick={() => showModal()}>+Add Category</button>
           </div>
         </div>
       </div>
@@ -140,13 +152,24 @@ console.log("activeTabFromURL",activeTabFromURL);
           </Link>
         </div>
       </div>
-{/* <div className="flex gap-9 mb-12">
-    <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Category</button></div>
-    <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Topic</button></div>
-    <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Question</button></div>
-</div> */}
+
       {/* Pass category data to the TheoryManagementTable component */}
       <TheoryManagementTable category={category} />
+
+
+
+
+               <Modal
+        open={isModalOpen}
+        centered
+        onCancel={handleCancel}
+        footer={null}
+ 
+      >
+  <div>
+    <AddCategoryForm/>
+  </div>
+      </Modal>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { Table, Modal, ConfigProvider } from "antd";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { useState } from "react";
+import EditQuesForm from "./EditQuestionForm";
 
 const QuestionTable = ({ question }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,6 +14,16 @@ const QuestionTable = ({ question }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
     setDeleteId(null);
+  };
+
+    const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+  const showEditModal = (id) => {
+    console.log("id",id);
+    setEditModalOpen(true);
+  };
+  const handleEditCancel = () => {
+    setEditModalOpen(false);
   };
 
   const columns = [
@@ -104,7 +115,7 @@ const QuestionTable = ({ question }) => {
       width: 80,
       render: (_, record) => (
         <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
-          <button
+          <button onClick={()=>showEditModal(record)}
             style={{ border: "none", background: "none", cursor: "pointer" }}
           >
             <RiEdit2Line size={20} color="#000" />
@@ -167,6 +178,20 @@ const QuestionTable = ({ question }) => {
           </div>
         </div>
       </Modal>
+
+                {/* edit modal */}
+          <Modal
+          open={isEditModalOpen}
+          centered
+          onCancel={handleEditCancel}
+          footer={null}
+        >
+          <div >
+            <h1 className="text-3xl text-center text-[#333333]">Edit Question</h1>
+ <EditQuesForm/>
+          </div>
+        </Modal>
+
     </ConfigProvider>
   );
 };

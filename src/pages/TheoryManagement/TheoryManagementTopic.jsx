@@ -1,9 +1,10 @@
-import { Input } from "antd";
+import { Input, Modal } from "antd";
 import { IoSearch } from "react-icons/io5";
 import { SlArrowLeft } from "react-icons/sl";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import TheoryManagementTopicTable from "../../component/TheoryManagement/TheoryManagementTopicTable";
+import AddTopicForm from "../../component/TheoryManagement/AddTopicForm";
 
 const TheoryManagementTopic = () => {
 const topic = [
@@ -84,7 +85,17 @@ const topic = [
   }
 ];
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+
+  const showModal = () => {
+    // setDeleteId(id);
+    setIsModalOpen(true);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setDeleteId(null);
+  };
   const location = useLocation(); // Get the current location (URL)
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
@@ -118,7 +129,7 @@ console.log("activeTabFromURL",activeTabFromURL);
             </span>
           </div>
           <div>
-            <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">+Add Topic</button>
+            <button className="bg-[#3F5EAB] text-white p-3 rounded-xl" onClick={() => showModal()}>+Add Topic</button>
           </div>
         </div>
       </div>
@@ -165,13 +176,24 @@ console.log("activeTabFromURL",activeTabFromURL);
           </Link>
         </div>
       </div>
-{/* <div className="flex gap-9 mb-12">
-    <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Category</button></div>
-    <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Topic</button></div>
-    <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Question</button></div>
-</div> */}
+
       {/* Pass category data to the TheoryManagementTable component */}
       <TheoryManagementTopicTable topic={topic} />
+
+
+
+
+            <Modal
+        open={isModalOpen}
+        centered
+        onCancel={handleCancel}
+        footer={null}
+ 
+      >
+  <div>
+    <AddTopicForm/>
+  </div>
+      </Modal>
     </div>
     );
 };

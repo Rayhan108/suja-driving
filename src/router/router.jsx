@@ -24,6 +24,7 @@ import AdiQuestionManagement from "../pages/AdiTheoryManagement/AdiQuestionManag
 import HazardPage from "../pages/Hazard/HazardPage";
 import HighwayPage from "../pages/Highway/HighwayPage";
 import TestScore from "../pages/TestScore/TestScore";
+import Subscription from "../pages/Subscription/Subscription";
 
   
   const router = createBrowserRouter([
@@ -99,6 +100,10 @@ import TestScore from "../pages/TestScore/TestScore";
           {
             path: "/testScore",
             element: <TestScore/>,
+          },
+          {
+            path: "/subscription",
+            element: <Subscription/>,
           },
          
         ]

@@ -4,9 +4,10 @@ import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 
 import { FiEye } from "react-icons/fi";
-import UpdateTestScore from "./UpdateTestScore";
+import EditSubscription from "./EditSubscription";
 
-const TestScoreTable = ({ testData }) => {
+
+const SubscriptionTable = ({ subscriptionData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDescriptionModalOpen, setDescriptionModalOpen] = useState(false);
@@ -42,36 +43,36 @@ const TestScoreTable = ({ testData }) => {
       render: (text, record, index) => index + 1, // Use the index + 1 as serial number
     },
     {
-      title: "Test Type",
-      dataIndex: "testType",
-      key: "testType",
+      title: "Plane Name",
+      dataIndex: "name",
+      key: "name",
       align: "center", // Center-aligned Category Name column
     },
     {
-      title: "Settings Name",
-      dataIndex: "setting",
-      key: "setting",
+      title: "User",
+      dataIndex: "user",
+      key: "user",
       align: "center", // Center-aligned Category Name column
     },
     {
-      title: "Current Value",
-      dataIndex: "currentValue",
-      key: "currentValue",
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
       align: "center",
     },
     {
-      title: "View",
-      dataIndex: "description",
-      key: "description",
-      align: "center", // Center-aligned Category Icon column
-      render: (_, record) => (
-        <FiEye
-          size={24}
-          className=" mx-auto"
-          onClick={() => showDescriptionModal(record)}
-        />
-      ),
+      title: "Payment Method",
+      dataIndex: "method",
+      key: "method",
+      align: "center",
     },
+     {
+      title: " Expire Date",
+      dataIndex: "expDate",
+      key: "expDate",
+      align: "center",
+    },
+ 
     {
       title: "Action",
       key: "action",
@@ -82,8 +83,12 @@ const TestScoreTable = ({ testData }) => {
             <RiEdit2Line className="text-black  w-5 h-5" />
           </button>
 
-          <button onClick={showModal}>
-            <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
+          <button >
+            <FiEye
+          size={24}
+          className=" mx-auto"
+          onClick={() => showDescriptionModal(record)}
+        />
           </button>
         </div>
       ),
@@ -110,7 +115,7 @@ const TestScoreTable = ({ testData }) => {
         }}
       >
         <Table
-          dataSource={testData}
+          dataSource={subscriptionData}
           columns={columns}
           pagination={{ pageSize: 10 }}
           scroll={{ x: "max-content" }}
@@ -148,18 +153,18 @@ const TestScoreTable = ({ testData }) => {
           onCancel={handleDescriptionCancel}
           footer={null}
         >
-          <div>
-            <div class=" mx-auto text-center p-6   rounded">
-              <div class="text-3xl font-bold text-blue-600 mb-2">44 of 50</div>
-              <button class="bg-green-500 text-white px-6 py-2 rounded mb-3">
-                Passed
-              </button>
-              <div class=" pt-2 text-gray-800 font-semibold">
-                ADI Theory Test
-              </div>
-              <div class="text-gray-600 mt-1">April 21, 2025</div>
-            </div>
-          </div>
+        <div class="max-w-md mx-auto mt-8 p-6 bg-white rounded-md ">
+  <p class="mb-4 text-gray-800 font-semibold">
+    Everything in the Listener package, plus:
+  </p>
+  <ul class="list-disc list-inside space-y-2 text-gray-700">
+    <li>More Matches: Meet three matches instead of two.</li>
+    <li>Extended Chat: Access chat with your match for up to one week.</li>
+    <li>Second Chance: Users can be matched again if their first match doesn't work out, providing another chance at connection.</li>
+    <li>Exclusive Content: Access to curated dating tips, insights, and advice not available to free-tier users.</li>
+  </ul>
+</div>
+
         </Modal>
 
         {/* edit modal */}
@@ -171,7 +176,7 @@ const TestScoreTable = ({ testData }) => {
         >
           <div>
             <h1 className="text-3xl text-center text-[#333333]">Edit</h1>
-            <UpdateTestScore />
+            <EditSubscription/>
           </div>
         </Modal>
       </ConfigProvider>
@@ -179,4 +184,4 @@ const TestScoreTable = ({ testData }) => {
   );
 };
 
-export default TestScoreTable;
+export default SubscriptionTable;

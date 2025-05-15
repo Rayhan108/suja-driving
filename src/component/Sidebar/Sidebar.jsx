@@ -156,13 +156,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           </li>
         </Link>
         {/* Test */}
-        <Link to="/test" className="flex justify-between ">
-          {isActive("/test") && (
+        <Link to="/testScore" className="flex justify-between ">
+          {isActive("/testScore") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
-              isActive("/test")
+              isActive("/testScore")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
             }`}

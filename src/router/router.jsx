@@ -23,6 +23,7 @@ import AdiTheoryManagementTopic from "../pages/AdiTheoryManagement/AdiTheoryMang
 import AdiQuestionManagement from "../pages/AdiTheoryManagement/AdiQuestionManagement";
 import HazardPage from "../pages/Hazard/HazardPage";
 import HighwayPage from "../pages/Highway/HighwayPage";
+import TestScore from "../pages/TestScore/TestScore";
 
   
   const router = createBrowserRouter([
@@ -94,6 +95,10 @@ import HighwayPage from "../pages/Highway/HighwayPage";
           {
             path: "/highway",
             element: <HighwayPage/>,
+          },
+          {
+            path: "/testScore",
+            element: <TestScore/>,
           },
          
         ]

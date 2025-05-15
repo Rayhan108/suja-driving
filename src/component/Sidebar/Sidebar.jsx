@@ -45,9 +45,7 @@ const user = false;
       >
         <IoCloseSharp />
       </button>
-  <div>
-    
-  </div>
+
       {/* Sidebar Menu */}
         <div className="flex justify-center items-center mt-0">
         <img src={logo} className="w-16 mb-3 mt-3 "/>
@@ -60,8 +58,9 @@ const user = false;
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
           ) }
           <li
+          // text-[#193985]
             className={`flex items-center gap-2 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%]  ${
-              isActive("/") ? "bg-[#F3F3F3] text-[#2f5fcf]  px-3 py-3 rounded-xl" : ""
+              isActive("/") ? "bg-[#F3F3F3] text-[#193985]  px-3 py-3 rounded-xl" : ""
             }`}
           >
             <FaHome className="w-5 h-5" />
@@ -76,7 +75,7 @@ const user = false;
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/userManagement") ? "bg-[#F3F3F3] text-[#2f5fcf] px-3 py-3 rounded-2xl" : ""
+              isActive("/userManagement") ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <FaRegUser className="w-5 h-5" />
@@ -87,11 +86,11 @@ const user = false;
         {/* Vendor */}
         <Link to="/theoryManagement/category" className="flex justify-between ">
               {isActive("/theoryManagement/category") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/theoryManagement/category") ? "bg-[#F3F3F3] text-[#3564d3]  px-3 py-3 rounded-2xl" : ""
+              isActive("/theoryManagement/category") ? "bg-[#F3F3F3] text-[#193985]  px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <FaRegUser className="w-5 h-5" />
@@ -102,11 +101,11 @@ const user = false;
         {/* Order */}
         <Link to="/order" className="flex justify-between ">
              {isActive("/order") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/order") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
+              isActive("/order") ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -116,11 +115,11 @@ const user = false;
         {/* Hazard */}
         <Link to="/hazard" className="flex justify-between ">
                 {isActive("/hazard") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/hazard") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
+              isActive("/hazard") ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -130,11 +129,11 @@ const user = false;
         {/* Highway */}
         <Link to="/highway" className="flex justify-between ">
             {isActive("/highway") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/highway") ? "bg-[#F3F3F3] text-[#3564d3]  px-3 py-3 rounded-2xl" : ""
+              isActive("/highway") ? "bg-[#F3F3F3] text-[#193985]  px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" /> 
@@ -144,11 +143,11 @@ const user = false;
         {/* Test */}
         <Link to="/test" className="flex justify-between ">
               {isActive("/test") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/test") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
+              isActive("/test") ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -158,11 +157,11 @@ const user = false;
         {/* Subscription */}
         <Link to="/subscription" className="flex justify-between ">
            {isActive("/subscription") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/services") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
+              isActive("/services") ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -172,11 +171,11 @@ const user = false;
         {/* feedback */}
         <Link to="/feedback" className="flex justify-between ">
                {isActive("/feedback") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/feedback") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
+              isActive("/feedback") ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -186,11 +185,11 @@ const user = false;
         {/* Analysis */}
         <Link to="/analysis" className="flex justify-between ">
                {isActive("/analysis") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           ) }
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out text-white w-[98%] ${
-              isActive("/analysis") ? "bg-[#F3F3F3] text-[#3564d3] px-3 py-3 rounded-2xl" : ""
+              isActive("/analysis") ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl" : ""
             }`}
           >
             <LuSquareMenu className="w-5 h-5" />
@@ -203,11 +202,11 @@ const user = false;
         <button
           onClick={toggleSettingsDropdown} // Toggle the dropdown
           className={`flex justify-between items-center gap-2 mt-3 cursor-pointer py-2 whitespace-nowrap transition-all duration-300 ease-in-out ${
-            isSettingsActive ? "bg-[#F3F3F3] text-[#3564d3] pl-3 pr-5 py-3 rounded-2xl" : ""
+            isSettingsActive ? "bg-[#F3F3F3] text-[#193985] pl-3 pr-5 py-3 rounded-2xl" : ""
           }`}
         >
                 {isActive("/setting") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt- relative"></div>
+            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           ) }
           <div className="flex flex-row justify-between items-center gap-2">
             <IoMdSettings className="w-5 h-5 text-white" />
@@ -222,7 +221,7 @@ const user = false;
             <Link to="/setting/aboutUs">
               <li
                 className={`py-[3px] flex items-center gap-2 transition-all duration-300 ease-in-out text-white ${
-                  isActive("/setting/aboutUs") ? "text-[#3564d3]" : ""
+                  isActive("/setting/aboutUs") ? "text-[#193985]" : ""
                 }`}
               >
                 <IoMdInformationCircleOutline className="w-5 h-5 text-lg font-semibold" />
@@ -232,7 +231,7 @@ const user = false;
             <Link to="/setting/policy">
               <li
                 className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out text-white ${
-                  isActive("/setting/policy") ? "text-[#3564d3]" : ""
+                  isActive("/setting/policy") ? "text-[#193985]" : ""
                 }`}
               >
                 <FaRegBookmark className="w-5 h-5 text-lg font-semibold" />
@@ -242,7 +241,7 @@ const user = false;
             <Link to="/setting/privacy">
               <li
                 className={`py-2 flex items-center gap-2 transition-all duration-300 ease-in-out text-white ${
-                  isActive("/setting/privacy") ? "text-[#3564d3]" : ""
+                  isActive("/setting/privacy") ? "text-[#193985]" : ""
                 }`}
               >
                 <MdOutlinePrivacyTip className="w-5 h-5 text-lg font-semibold" />
@@ -255,7 +254,7 @@ const user = false;
             <Link to="/setting/faq">
               <li
                 className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out ${
-                  isActive("/setting/faq") ? "text-[#00c0b5]" : ""
+                  isActive("/setting/faq") ? "text-[#193985]" : ""
                 }`}
               >
                 <GoQuestion className="w-5 h-5 text-lg font-semibold text-white" />
@@ -265,7 +264,7 @@ const user = false;
             <Link to="/setting/support">
               <li
                 className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out ${
-                  isActive("/setting/support") ? "text-[#00c0b5]" : ""
+                  isActive("/setting/support") ? "text-[#193985]" : ""
                 }`}
               >
                 <GoQuestion className="w-5 h-5 text-lg font-semibold text-white" />

@@ -1,69 +1,95 @@
 import { Input } from "antd";
 import { IoSearch } from "react-icons/io5";
 import { SlArrowLeft } from "react-icons/sl";
-import TheoryManagementTable from "../../component/TheoryManagement/TheoryManagementTable";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import TheoryManagementTopicTable from "../../component/TheoryManagement/TheoryManagementTopicTable";
 
 const TheoryManagementTopic = () => {
-      const category = [
-    {
-      "sl": "01",
-      "categoryName": "Bus",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "02",
-      "categoryName": "Car",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "03",
-      "categoryName": "Bike",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "04",
-      "categoryName": "Train",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "05",
-      "categoryName": "Plane",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "06",
-      "categoryName": "Boat",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "07",
-      "categoryName": "Truck",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "08",
-      "categoryName": "Ship",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "09",
-      "categoryName": "Scooter",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "10",
-      "categoryName": "Helicopter",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    }
-  ];
+const topic = [
+  {
+    "id": "01",
+    "topicName": "Alertness",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "02",
+    "topicName": "Awareness",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "03",
+    "topicName": "Concentration",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "04",
+    "topicName": "Focus",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "05",
+    "topicName": "Memory",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "06",
+    "topicName": "Motivation",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "07",
+    "topicName": "Problem Solving",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "08",
+    "topicName": "Creativity",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "09",
+    "topicName": "Decision Making",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "10",
+    "topicName": "Time Management",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "11",
+    "topicName": "Communication",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "12",
+    "topicName": "Leadership",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "13",
+    "topicName": "Teamwork",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "14",
+    "topicName": "Stress Management",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  },
+  {
+    "id": "15",
+    "topicName": "Adaptability",
+    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+  }
+];
+
 
   const location = useLocation(); // Get the current location (URL)
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
   const activeTabFromURL = location.pathname.split('/')[2]; // Assuming your routes look like "/category", "/topic", "/question"
-
+console.log("activeTabFromURL",activeTabFromURL);
   // Set the initial active tab based on the URL
   const [activeTab, setActiveTab] = useState(activeTabFromURL || 'category');
 
@@ -104,7 +130,7 @@ const TheoryManagementTopic = () => {
             <button
               className={`${
                 activeTab === "category"
-                  ? "bg-[#2C4581] text-[#3F5EAB]"
+                  ? "bg-[#2C4581] text-[#ffffff]"
                   : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
               } p-3 rounded-xl`}
             >
@@ -117,7 +143,7 @@ const TheoryManagementTopic = () => {
             <button
               className={`${
                 activeTab === "topic"
-                  ? "bg-[#2C4581] text-[#3F5EAB]"
+                  ? "bg-[#2C4581] text-[#ffffff]"
                   : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
               } p-3 rounded-xl`}
             >
@@ -130,7 +156,7 @@ const TheoryManagementTopic = () => {
             <button
               className={`${
                 activeTab === "question"
-                  ? "bg-[#2C4581] text-[#3F5EAB]"
+                  ? "bg-[#2C4581] text-[#ffffff]"
                   : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
               } p-3 rounded-xl`}
             >
@@ -145,7 +171,7 @@ const TheoryManagementTopic = () => {
     <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Question</button></div>
 </div> */}
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTable category={category} />
+      <TheoryManagementTopicTable topic={topic} />
     </div>
     );
 };

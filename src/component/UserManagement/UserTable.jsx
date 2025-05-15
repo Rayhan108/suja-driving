@@ -10,7 +10,7 @@ const UserTable = ({ user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = (userdata) => {
 
-    console.log("userid",userdata);
+    console.log("userData",userdata);
     setIsModalOpen(true);
   };
   const handleCancel = () => {
@@ -18,11 +18,11 @@ const UserTable = ({ user }) => {
   };
 
   const columns = [
-    {
-      title: "User ID",
-      dataIndex: "userId",
-      key: "userId",
-    },
+    // {
+    //   title: "User ID",
+    //   dataIndex: "userId",
+    //   key: "userId",
+    // },
     {
       title: "Name",
       dataIndex: "name",

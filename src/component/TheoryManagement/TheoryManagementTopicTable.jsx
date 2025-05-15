@@ -1,11 +1,12 @@
+
 import { Checkbox, ConfigProvider, Input, Modal, Table } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
-
-const TheoryManagementTable = ({ category }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const TheoryManagementTopicTable = ({topic}) => {
+    // console.log(topic);
+      const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -22,16 +23,16 @@ const TheoryManagementTable = ({ category }) => {
     render: (text, record, index) => index + 1,  // Use the index + 1 as serial number
   },
     {
-      title: "Category Name",
-      dataIndex: "categoryName",
-      key: "categoryName",
-      align: "center", // Center-aligned Category Name column
+      title: "Topic Name",
+      dataIndex: "topicName",
+      key: "topicName",
+      align: "center", 
     },
     {
-      title: "Category Icon",
-      dataIndex: "categoryIcon",
+      title: "Topic  Icon",
+      dataIndex: "topicIcon",
       key: "categoryIcon",
-      align: "center", // Center-aligned Category Icon column
+      align: "center", 
       render: (text) => <img src={text} alt="Category Icon" style={{ width: 70, height: 40 }} />,
     },
     {
@@ -40,8 +41,11 @@ const TheoryManagementTable = ({ category }) => {
       align: "center", // Center-aligned Action column
       render: (_, record) => (
         <div className="flex items-center justify-center gap-5">
-          <Link to={`/order/${record.orderId}`}>
-      <button>
+          <Link 
+        //   to={`/order/${record.orderId}`}
+          
+          >
+            <button>
               <RiEdit2Line className="text-black  w-5 h-5" />
             </button>
           </Link>
@@ -53,8 +57,8 @@ const TheoryManagementTable = ({ category }) => {
     },
   ];
 
-  return (
-    <div>
+    return (
+         <div>
       <ConfigProvider
         theme={{
           components: {
@@ -73,7 +77,7 @@ const TheoryManagementTable = ({ category }) => {
         }}
       >
         <Table
-          dataSource={category}
+          dataSource={topic}
           columns={columns}
           pagination={{ pageSize: 10 }}
           scroll={{ x: "max-content" }}
@@ -125,7 +129,7 @@ const TheoryManagementTable = ({ category }) => {
         </Modal>
       </ConfigProvider>
     </div>
-  );
+    );
 };
 
-export default TheoryManagementTable;
+export default TheoryManagementTopicTable;

@@ -1,63 +1,86 @@
 import { Input } from "antd";
 import { IoSearch } from "react-icons/io5";
 import { SlArrowLeft } from "react-icons/sl";
-import TheoryManagementTable from "../../component/TheoryManagement/TheoryManagementTable";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import QuestionTable from "../../component/TheoryManagement/QuestionTable";
 
-const TheoryManagement = () => {
-  const category = [
-    {
-      "sl": "01",
-      "categoryName": "Bus",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "02",
-      "categoryName": "Car",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "03",
-      "categoryName": "Bike",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "04",
-      "categoryName": "Train",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "05",
-      "categoryName": "Plane",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "06",
-      "categoryName": "Boat",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "07",
-      "categoryName": "Truck",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "08",
-      "categoryName": "Ship",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "09",
-      "categoryName": "Scooter",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "10",
-      "categoryName": "Helicopter",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
+
+
+const QuestionManagement = () => {
+const question = [
+  {
+    id: "01",
+    question: "What should you do when driving in foggy conditions?",
+    answere: {
+      options: [
+        { label: "A", text: "Use fog lights if visibility is seriously reduced" },
+        { label: "B", text: "Keep close to the car in front at all times" },
+        { label: "C", text: "Flash your headlights to warn other drivers" },
+        { label: "D", text: "Do not use your demister and windscreen wipers" }
+      ],
+      correctOptions: ["A"],  
+      explanation: "If visibility is seriously reduced due to fog, you must use dipped headlights."
     }
-  ];
+  },
+  {
+    id: "02",
+    question: "What is the safe following distance under normal conditions?",
+    answere: {
+      options: [
+        { label: "A", text: "1 second" },
+        { label: "B", text: "2 seconds" },
+        { label: "C", text: "3 seconds" },
+        { label: "D", text: "4 seconds" }
+      ],
+      correctOptions: ["C"],  
+      explanation: "A 3-second gap is recommended to maintain a safe following distance."
+    }
+  },
+  {
+    id: "03",
+    question: "When are you allowed to use a mobile phone while driving?",
+    answere: {
+      options: [
+        { label: "A", text: "Only with a hands-free device" },
+        { label: "B", text: "When stopped at a red light" },
+        { label: "C", text: "While driving on a quiet road" },
+        { label: "D", text: "Never" }
+      ],
+      correctOptions: ["A"],  
+      explanation: "Using a hands-free device is allowed, but holding a phone while driving is prohibited."
+    }
+  },
+  {
+    id: "04",
+    question: "What should you do at a pedestrian crossing with no traffic lights?",
+    answere: {
+      options: [
+        { label: "A", text: "Stop if pedestrians are waiting to cross" },
+        { label: "B", text: "Slow down and sound your horn" },
+        { label: "C", text: "Speed up to clear the crossing quickly" },
+        { label: "D", text: "Ignore if no pedestrians are on the road" }
+      ],
+      correctOptions: ["A"],  
+      explanation: "You must stop if pedestrians are waiting to cross to allow them to do so safely."
+    }
+  },
+  {
+    id: "05",
+    question: "How should you react to an emergency vehicle approaching with flashing lights?",
+    answere: {
+      options: [
+        { label: "A", text: "Speed up to get out of the way" },
+        { label: "B", text: "Move to the side of the road and stop" },
+        { label: "C", text: "Continue driving normally" },
+        { label: "D", text: "Ignore and keep going" }
+      ],
+      correctOptions: ["B"],  
+      explanation: "You should move to the side and stop to give way to emergency vehicles."
+    }
+  }
+];
+
 
   const location = useLocation(); // Get the current location (URL)
 
@@ -71,9 +94,8 @@ console.log("activeTabFromURL",activeTabFromURL);
   useEffect(() => {
     setActiveTab(activeTabFromURL || 'category');
   }, [location]);
-
-  return (
-    <div>
+    return (
+       <div>
       <div className="flex justify-between my-2">
         <div className="flex justify-center items-center gap-5">
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
@@ -93,13 +115,13 @@ console.log("activeTabFromURL",activeTabFromURL);
             </span>
           </div>
           <div>
-            <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">+Add Category</button>
+            <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">+Add Question</button>
           </div>
         </div>
       </div>
 
       {/* Tabs for Category, Topic, Question */}
-      <div className="flex gap-9">
+      <div className="flex gap-9 mb-5">
         <div>
           <Link to="/theoryManagement/category">
             <button
@@ -140,15 +162,11 @@ console.log("activeTabFromURL",activeTabFromURL);
           </Link>
         </div>
       </div>
-{/* <div className="flex gap-9 mb-12">
-    <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Category</button></div>
-    <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Topic</button></div>
-    <div>       <button className="bg-[#3F5EAB] text-white p-3 rounded-xl">Question</button></div>
-</div> */}
+
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTable category={category} />
+      <QuestionTable question={question} />
     </div>
-  );
+    );
 };
 
-export default TheoryManagement;
+export default QuestionManagement;

@@ -17,6 +17,7 @@ import DashboardPage from "../pages/DashboardPage/DashboardPage";
 import UserManagement from "../pages/UserManagement/UserManagement";
 import TheoryManagement from "../pages/TheoryManagement/TheoryManagement";
 import TheoryManagementTopic from "../pages/TheoryManagement/TheoryManagementTopic";
+import QuestionManagement from "../pages/TheoryManagement/QuestionManagement";
 
   
   const router = createBrowserRouter([
@@ -56,6 +57,10 @@ import TheoryManagementTopic from "../pages/TheoryManagement/TheoryManagementTop
           {
             path: "/theoryManagement/topic",
             element: <TheoryManagementTopic/>,
+          },
+          {
+            path: "/theoryManagement/question",
+            element: <QuestionManagement/>,
           },
          
         ]

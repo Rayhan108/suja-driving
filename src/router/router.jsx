@@ -28,6 +28,8 @@ import Subscription from "../pages/Subscription/Subscription";
 import Feedback from "../pages/Feedback/Feedback";
 import Analytics from "../pages/Analytics/Analytics";
 import UpdateProfile from "../pages/Profile/UpdateProfile";
+import Terms from "../pages/Terms/Terms";
+import Privacy from "../pages/Privacy/Privacy";
 
   
   const router = createBrowserRouter([
@@ -119,6 +121,14 @@ import UpdateProfile from "../pages/Profile/UpdateProfile";
           {
             path: "/setting/updateProfile",
             element: <UpdateProfile/>
+          },
+          {
+            path: "/setting/terms",
+            element: <Terms/>
+          },
+          {
+            path: "/setting/privacy",
+            element: <Privacy/>
           },
         
          

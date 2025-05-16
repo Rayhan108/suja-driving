@@ -50,10 +50,10 @@ console.log("setting active",isSettingsActive);
       </button>
 
       {/* Sidebar Menu */}
-      <div className="flex justify-center items-center mt-0">
+      <div className="flex justify-center items-center mb-7">
         <img src={logo} className="w-16 mb-3 mt-3 " />
       </div>
-      <ul className="-mt-2 pl-5 text-[10px]">
+      <ul className="-mt-2 pl-5 text-[10px] ">
         {/* Dashboard Page */}
 
         <Link to="/" className="flex justify-between ">
@@ -247,7 +247,7 @@ console.log("setting active",isSettingsActive);
         <IoMdSettings className="w-5 h-5 " />
         <p className="text-lg font-semibold">Settings</p>
 
-        <SlArrowDown className="w-5 h-5 text-right ml-5 text-[#193985]" />
+        <SlArrowDown className="w-5 h-5 text-right ml-5 text-[#193985] hover:-rotate-90" />
       </li>
     </button>
   </Link>
@@ -267,10 +267,10 @@ console.log("setting active",isSettingsActive);
                 <p className="text-lg font-semibold">Profile</p>
               </li>
             </Link>
-            <Link to="/setting/policy">
+            <Link to="/setting/terms">
               <li
                 className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out mb-5 ${
-                  isActive("/setting/policy") ? "text-[#193985]" : ""
+                  isActive("/setting/terms") ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]" : ""
                 }`}
               >
                 <FaRegBookmark className="w-5 h-5 text-lg font-semibold" />
@@ -280,7 +280,7 @@ console.log("setting active",isSettingsActive);
             <Link to="/setting/privacy" className="">
               <li
                 className={`py-2 flex items-center gap-2 transition-all duration-300 ease-in-out  ${
-                  isActive("/setting/privacy") ? "text-[#193985]" : ""
+                  isActive("/setting/privacy") ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]" : ""
                 }`}
               >
                 <MdOutlinePrivacyTip className="w-5 h-5 text-lg font-semibold" />

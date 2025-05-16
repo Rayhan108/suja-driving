@@ -30,6 +30,7 @@ import Analytics from "../pages/Analytics/Analytics";
 import UpdateProfile from "../pages/Profile/UpdateProfile";
 import Terms from "../pages/Terms/Terms";
 import Privacy from "../pages/Privacy/Privacy";
+import PassReset from "../pages/PassReset/PassReset";
 
   
   const router = createBrowserRouter([
@@ -38,8 +39,12 @@ import Privacy from "../pages/Privacy/Privacy";
       element: <Signin />,
     },
     {
-      path: "/validation",
+      path: "/verify",
       element: <Verify />,
+    },
+    {
+      path: "/passReset",
+      element: <PassReset />,
     },
     {
       path: "/forget-password",

@@ -1,142 +1,61 @@
-import { useState } from "react";
-import { Form, Input, Checkbox, Divider, Typography } from "antd";
-import { FaRegEyeSlash } from "react-icons/fa";
-import { IoEyeOutline } from "react-icons/io5";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-import logo from "../../assets/Logo.png";
-import login from "../../assets/login.png";
-import { Link, useNavigate } from "react-router-dom";
-import { MdKeyboardArrowLeft } from "react-icons/md";
+export default function Verify() {
+  const navigate = useNavigate()
+  const { register, handleSubmit, watch } = useForm({
+    mode: 'onChange',
+  });
 
-const { Title, Text } = Typography;
-
-const Verify = () => {
-  const navigate = useNavigate();
-  const [showCode, setShowCode] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const onFinish = (values) => {
-    console.log("Form submitted:", values); // Display form values in the console
-    setLoading(true);
-    // Add your form submission logic here
-    navigate("/");
+  const onSubmit = (data) => {
+    console.log(data);
+    // handle code verification here
+    navigate("/passReset")
   };
+
+  // Get the entered code values for visual feedback if needed
+  const code = watch(['digit1', 'digit2', 'digit3', 'digit4', 'digit5']);
+
   return (
-    <div className="max-w-7xl mx-auto w-full flex md:flex-row flex-col justify-center items-center gap-8 md:ml-16 lg:ml-96">
-      <div className="flex w-1/2 bg-white rounded-lg overflow-hidden font-title">
-        {/* Left Section - Form */}
-        <div className="flex-1 p-10 flex flex-col">
-          {/* Logo */}
-          <div className="mb-10">
-            <img
-              src={logo}
-              alt="U TEE HUB Logo"
-              width={142}
-              height={50}
-              className="logo"
-            />
-          </div>
+    <div className="flex flex-col justify-center p-6 max-w-md mx-auto font-title min-h-screen items-center">
+      <h2 className="text-lg font-semibold mb-2">Check Your Email</h2>
+      <p className="text-center text-lg text-gray-600 mb-6">
+        We sent a reset link to  contact@dscode..com
+        enter 5 digit code that mentioned in the email
+      </p>
 
-          {/* Form Container */}
-          <div className="max-w-md">
-            <Link to="/sign-in"  className=" mb-2 flex items-center text-black">
-            <MdKeyboardArrowLeft className="" size={24}/> Back to login
-            </Link>
-            <Title level={2} className="text-gray-800 mb-2">
-              Verify Code
-            </Title>
-            <Text className="text-gray-600 mb-8">
-            An authentication code has been sent to your email.
-            </Text>
+      <form className="flex justify-between w-full mb-6" onSubmit={handleSubmit(onSubmit)}>
+        {[...Array(5)].map((_, i) => (
+          <input
+            key={i}
+            type="text"
+            maxLength={1}
+            {...register(`digit${i + 1}`, { required: true, pattern: /^[0-9]$/ })}
+            className="w-10 h-10 border border-gray-300 rounded-md text-center text-lg focus:outline-none focus:border-blue-600"
+            inputMode="numeric"
+          />
+        ))}
+      </form>
 
-            <Form
-              name="verify"
-              onFinish={onFinish}
-              className="space-y-6"
-              initialValues={{ remember: true }}
-            >
-  
+      <button
+        type="submit"
+        onClick={handleSubmit(onSubmit)}
+        className="bg-blue-600 text-white text-sm rounded-md px-5 py-2 w-full mb-4"
+      >
+        Verify Code
+      </button>
 
-              {/* Password Field */}
-              <div className="relative pt-2">
-                <Form.Item
-                  name="code" // This binds the input to form state
-                  rules={[
-                    { required: true, message: "Please input your code!" },
-                  ]}
-                >
-                  <div className="">
-                    <label className="absolute z-30 -top-3 left-3 px-1 text-lg bg-white">
-                      Enter Code
-                    </label>
-                    <Input
-                      type={showCode ? "text" : "password"}
-                      placeholder="••••••••••••••••••"
-                      className="w-full px-3 py-5 border border-[#35BEBD] rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowCode(!showCode)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                    >
-                      {showCode ? (
-                        <FaRegEyeSlash className="h-5 w-5 text-gray-400" />
-                      ) : (
-                        <IoEyeOutline className="h-5 w-5 text-gray-400" />
-                      )}
-                    </button>
-                  </div>
-                </Form.Item>
-              </div>
-
-              {/* Remember Me and Forgot Password */}
-              <div className="flex justify-between">
-         <p className="text-sm text-black">Didn’t receive a code? <span className="text-[#FF8682]">Resend</span></p>
-                
-              </div>
-
-              {/* Verify Button */}
-              <Form.Item>
-                <button
-                  type="submit"
-                  className="w-full flex text-xl items-center justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#35BEBD] hover:bg-[#25a0a0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors"
-                >
-                  {loading ? (
-                    <svg
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                  ) : null}
-             Verify
-                </button>
-              </Form.Item>
-            </Form>
-
-          </div>
-        </div>
-      </div>
-
-      <div className="w-1/2">
-        <img src={login} alt="Login Image" className="w-[70%] mt-20" />
-      </div>
+      <p className="text-xs text-gray-500">
+        You have not received the email?{' '}
+        <button
+          type="button"
+          className="text-blue-600 underline"
+          onClick={() => alert('Resend email clicked')}
+        >
+          Resend
+        </button>
+      </p>
     </div>
   );
-};
-
-export default Verify;
+}

@@ -5,81 +5,97 @@ import { FcGoogle } from "react-icons/fc";
 import { IoEyeOutline } from "react-icons/io5";
 
 import logo from "../../assets/Logo.png";
-import confirmPass from "../../assets/forgotPass.png";
+import login from "../../assets/login.png";
 import { Link, useNavigate } from "react-router-dom";
-import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const { Title, Text } = Typography;
 
-const SetPass = () => {
+const Signin = () => {
   const navigate = useNavigate();
-  const [showPass, setShowPass] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const onFinish = (values) => {
     console.log("Form submitted:", values); // Display form values in the console
     setLoading(true);
     // Add your form submission logic here
-    navigate("/validation");
+    navigate("/");
   };
   return (
-    <div className="max-w-7xl mx-auto w-full flex md:flex-row flex-col justify-center items-center gap-8 md:ml-16 lg:ml-96">
-      <div className="flex w-1/2 bg-white rounded-lg overflow-hidden font-title">
+    <div className="max-w-7xl mx-auto w-full flex md:flex-row flex-col justify-center items-center gap-8 md:ml-16 lg:ml-96 min-h-screen">
+      <div className="flex w-1/2 bg-white] rounded-lg overflow-hidden font-title shadow-2xl ">
         {/* Left Section - Form */}
         <div className="flex-1 p-10 flex flex-col">
-          {/* Logo */}
-          <div className="mb-10">
-            <img
-              src={logo}
-              alt="U TEE HUB Logo"
-              width={142}
-              height={50}
-              className="logo"
-            />
-          </div>
-
           {/* Form Container */}
-          <div className="max-w-md">
-            <Link to="/sign-in" className=" mb-2 flex items-center text-black">
-              <MdKeyboardArrowLeft className="" size={24} /> Back to login
-            </Link>
-            <Title level={2} className="text-gray-800 mb-2">
-              Set a password
-            </Title>
-            <Text className="text-gray-600 mb-8">
-              Your previous password has been reseted. Please set a new password
-              for your account.
-            </Text>
+          <div className="max-w-md mx-auto">
+            <h1 className="text-gray-800 text-2xl mb-2 text-center">
+              Set a New Password
+            </h1>
+            <p className="text-gray-600 mb-8 text-center">
+              Create a new password. Ensure it differs from previous ones for
+              security
+            </p>
 
             <Form
-              name="verify"
+              name="setPass"
               onFinish={onFinish}
               className="space-y-6"
               initialValues={{ remember: true }}
             >
-              {/*Create Password Field */}
-              <div className="relative pt-2">
+              {/* Password Field */}
+              <div className=" pt-2">
                 <Form.Item
-                  name="createPass" // This binds the input to form state
+                  name="newPassword" // This binds the input to form state
                   rules={[
-                    { required: true, message: "Please input your code!" },
+                    { required: true, message: "Please input your password!" },
                   ]}
                 >
-                  <div className="">
-                    <label className="absolute z-30 -top-3 left-3 px-1 text-lg bg-white">
-                      Create Password
+                  <div className="relative">
+                    <label className=" px-1 text-lg bg-white">
+                      New Password
                     </label>
                     <Input
-                      type={showPass ? "text" : "password"}
+                      type={showPassword ? "text" : "password"}
                       placeholder="••••••••••••••••••"
-                      className="w-full px-3 py-5 border border-[#35BEBD] rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-3 py-5 border border-[#3F5EAB] rounded-md focus:outline-none focus:ring-2 "
                     />
                     <button
                       type="button"
-                      onClick={() => setShowPass(!showPass)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute top-16 right-0 pr-3 flex items-center -translate-y-1/2"
                     >
-                      {showPass ? (
+                      {showPassword ? (
+                        <FaRegEyeSlash className="h-5 w-5 text-gray-400" />
+                      ) : (
+                        <IoEyeOutline className="h-5 w-5 text-gray-400" />
+                      )}
+                    </button>
+                  </div>
+                </Form.Item>
+              </div>
+              {/*confirm Password Field */}
+              <div className=" pt-2">
+                <Form.Item
+                  name="confirmNewPassword" // This binds the input to form state
+                  rules={[
+                    { required: true, message: "Please input your password!" },
+                  ]}
+                >
+                  <div className="relative">
+                    <label className=" px-1 text-lg bg-white">
+                      Confirm Password
+                    </label>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="••••••••••••••••••"
+                      className="w-full px-3 py-5 border border-[#3F5EAB] rounded-md focus:outline-none focus:ring-2 "
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute top-16 right-0 pr-3 flex items-center -translate-y-1/2"
+                    >
+                      {showPassword ? (
                         <FaRegEyeSlash className="h-5 w-5 text-gray-400" />
                       ) : (
                         <IoEyeOutline className="h-5 w-5 text-gray-400" />
@@ -89,43 +105,11 @@ const SetPass = () => {
                 </Form.Item>
               </div>
 
-              {/*re enter Password Field */}
-              <div className="relative pt-2">
-                <Form.Item
-                  name="confirmPass" // This binds the input to form state
-                  rules={[
-                    { required: true, message: "Please input your code!" },
-                  ]}
-                >
-                  <div className="">
-                    <label className="absolute z-30 -top-3 left-3 px-1 text-lg bg-white">
-                      Create Password
-                    </label>
-                    <Input
-                      type={showPass ? "text" : "password"}
-                      placeholder="••••••••••••••••••"
-                      className="w-full px-3 py-5 border border-[#35BEBD] rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPass(!showPass)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                    >
-                      {showPass ? (
-                        <FaRegEyeSlash className="h-5 w-5 text-gray-400" />
-                      ) : (
-                        <IoEyeOutline className="h-5 w-5 text-gray-400" />
-                      )}
-                    </button>
-                  </div>
-                </Form.Item>
-              </div>
-
-              {/* Verify Button */}
+              {/* Login Button */}
               <Form.Item>
                 <button
                   type="submit"
-                  className="w-full flex text-xl items-center justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#35BEBD] hover:bg-[#25a0a0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors"
+                  className="w-full flex text-xl items-center justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#3F5EAB] hover:bg-[#4a62a0] focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors"
                 >
                   {loading ? (
                     <svg
@@ -149,19 +133,15 @@ const SetPass = () => {
                       ></path>
                     </svg>
                   ) : null}
-                  Set Password
+                  Update PassWord
                 </button>
               </Form.Item>
             </Form>
           </div>
         </div>
       </div>
-
-      <div className="w-1/2">
-        <img src={confirmPass} alt="Login Image" className="w-[70%] mt-20" />
-      </div>
     </div>
   );
 };
 
-export default SetPass;
+export default Signin;

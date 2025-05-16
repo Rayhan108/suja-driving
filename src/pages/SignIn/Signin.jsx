@@ -19,10 +19,10 @@ const Signin = () => {
     console.log("Form submitted:", values); // Display form values in the console
     setLoading(true);
     // Add your form submission logic here
-    navigate("/validation");
+
   };
   return (
-    <div className="max-w-7xl mx-auto w-full flex md:flex-row flex-col justify-center items-center gap-8 md:ml-16 lg:ml-96">
+    <div className="max-w-7xl mx-auto w-full flex md:flex-row flex-col justify-center items-center gap-8 md:ml-16 lg:ml-96 min-h-screen">
       <div className="flex w-1/2 bg-white] rounded-lg overflow-hidden font-title shadow-2xl ">
         {/* Left Section - Form */}
         <div className="flex-1 p-10 flex flex-col">
@@ -155,26 +155,7 @@ const Signin = () => {
               </Form.Item>
             </Form>
 
-            {/* Divider */}
-            <div className="relative flex justify-center text-sm mt-5">
-              <Divider>Or login with</Divider>
-            </div>
-
-            {/* Social Login */}
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                className="w-full inline-flex justify-center py-3 px-4 border border-[#3F5EAB] rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <FcGoogle className="h-7 w-7" />
-              </button>
-              <button
-                type="button"
-                className="w-full inline-flex justify-center py-3 px-4 border border-[#3F5EAB] rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <FaApple className="h-7 w-7 text-black" />
-              </button>
-            </div>
+  
           </div>
         </div>
       </div>

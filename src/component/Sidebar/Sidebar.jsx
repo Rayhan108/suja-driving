@@ -26,7 +26,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   // Check if any settings submenu is active
   const isSettingsActive = currentPath.startsWith("/setting");
-
+console.log("setting active",isSettingsActive);
   // Handle toggling of the settings dropdown
   const toggleSettingsDropdown = () => {
     setIsSettingsOpen(!isSettingsOpen);
@@ -221,31 +221,46 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </Link>
 
         {/* Settings */}
-        <button
-          onClick={toggleSettingsDropdown} // Toggle the dropdown
-          className={`flex justify-between items-center gap-2 mt-3 cursor-pointer py-2 whitespace-nowrap transition-all duration-300 ease-in-out ${
-            isSettingsActive
-              ? "bg-[#F3F3F3] text-[#193985] pl-3 pr-5 py-3 rounded-2xl"
-              : ""
-          }`}
-        >
-          {isActive("/setting") && (
-            <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
-          )}
-          <div className="flex flex-row justify-between items-center gap-2">
-            <IoMdSettings className="w-5 h-5 text-white" />
-            <p className="text-lg font-semibold text-white">Settings</p>
-          </div>
-          <SlArrowDown className="w-5 h-5 text-right ml-5 text-white" />
-        </button>
+<div className="relative mt-3"> {/* relative container for absolute child */}
+  <Link to={"/setting/updateProfile"}>
+    <button
+      onClick={toggleSettingsDropdown}
+      className={`flex w-full justify-between items-center gap-2 mt-1 cursor-pointer whitespace-nowrap transition-all duration-300 ease-in-out ${
+        isSettingsActive
+          ? "bg-[#F3F3F3] text-[#193985] px-3 pb-2 rounded-2xl"
+          : ""
+      } relative`} // position relative here too for any absolute children
+    >
+      {/* Absolutely positioned colored bar */}
+      {isSettingsActive && (
+        <div
+          className="bg-[#F3F3F3] w-[3%] -left-6 top-0 absolute h-14"
+          style={{ transform: "translateX(-100%)" }} 
+        ></div>
+      )}
+
+      <li
+        className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out w-[98%] ${
+          isActive("/") ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl" : ""
+        }`}
+      >
+        <IoMdSettings className="w-5 h-5 " />
+        <p className="text-lg font-semibold">Settings</p>
+
+        <SlArrowDown className="w-5 h-5 text-right ml-5 text-[#193985]" />
+      </li>
+    </button>
+  </Link>
+</div>
+
 
         {/* Settings Submenu */}
         {isSettingsOpen && (
-          <ul className="text-right py-3 ">
+          <ul className="text-right ">
             <Link to="/setting/updateProfile">
               <li
-                className={`py-[3px] flex items-center gap-2 transition-all duration-300 ease-in-out  ${
-                  isActive("/setting/updateProfile") ? "text-[#193985]" : ""
+                className={`py-[3px] flex items-center gap-2 transition-all duration-300 ease-in-out mb-5 mt-5  ${
+                  isActive("/setting/updateProfile") ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]" : ""
                 }`}
               >
                 <IoMdInformationCircleOutline className="w-5 h-5 text-lg font-semibold" />
@@ -254,7 +269,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </Link>
             <Link to="/setting/policy">
               <li
-                className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out${
+                className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out mb-5 ${
                   isActive("/setting/policy") ? "text-[#193985]" : ""
                 }`}
               >
@@ -262,7 +277,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 <p className="text-lg font-semibold">Terms and Condition</p>
               </li>
             </Link>
-            <Link to="/setting/privacy">
+            <Link to="/setting/privacy" className="">
               <li
                 className={`py-2 flex items-center gap-2 transition-all duration-300 ease-in-out  ${
                   isActive("/setting/privacy") ? "text-[#193985]" : ""
@@ -273,26 +288,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               </li>
             </Link>
 
-            <Link to="/setting/faq">
-              <li
-                className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out ${
-                  isActive("/setting/faq") ? "text-[#193985]" : ""
-                }`}
-              >
-                <GoQuestion className="w-5 h-5 text-lg font-semibold text-white" />
-                <p className="text-lg font-semibold text-white">FAQ</p>
-              </li>
-            </Link>
-            <Link to="/setting/support">
-              <li
-                className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out ${
-                  isActive("/setting/support") ? "text-[#193985]" : ""
-                }`}
-              >
-                <GoQuestion className="w-5 h-5 text-lg font-semibold text-white" />
-                <p className="text-lg font-semibold text-white">Support</p>
-              </li>
-            </Link>
+      
           </ul>
         )}
       </ul>

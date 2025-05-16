@@ -20,13 +20,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const [isSettingsOpen, setIsSettingsOpen] = useState(false); // Track the dropdown state
-  const user = false;
+  const user = true;
   // Check if current path matches a menu item
   const isActive = (path) => currentPath === path;
 
   // Check if any settings submenu is active
   const isSettingsActive = currentPath.startsWith("/setting");
-console.log("setting active",isSettingsActive);
+  console.log("setting active", isSettingsActive);
   // Handle toggling of the settings dropdown
   const toggleSettingsDropdown = () => {
     setIsSettingsOpen(!isSettingsOpen);
@@ -108,7 +108,10 @@ console.log("setting active",isSettingsActive);
         </Link>
 
         {/* Order */}
-        <Link to="/adiTheoryManagement/category" className="flex justify-between ">
+        <Link
+          to="/adiTheoryManagement/category"
+          className="flex justify-between "
+        >
           {isAdiTheory("/adiTheoryManagement") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
@@ -221,38 +224,41 @@ console.log("setting active",isSettingsActive);
         </Link>
 
         {/* Settings */}
-<div className="relative mt-3"> {/* relative container for absolute child */}
-  <Link to={"/setting/updateProfile"}>
-    <button
-      onClick={toggleSettingsDropdown}
-      className={`flex w-full justify-between items-center gap-2 mt-1 cursor-pointer whitespace-nowrap transition-all duration-300 ease-in-out ${
-        isSettingsActive
-          ? "bg-[#F3F3F3] text-[#193985] px-3 pb-2 rounded-2xl"
-          : ""
-      } relative`} // position relative here too for any absolute children
-    >
-      {/* Absolutely positioned colored bar */}
-      {isSettingsActive && (
-        <div
-          className="bg-[#F3F3F3] w-[3%] -left-6 top-0 absolute h-14"
-          style={{ transform: "translateX(-100%)" }} 
-        ></div>
-      )}
+        <div className="relative mt-3">
+          {" "}
+          {/* relative container for absolute child */}
+          <Link to={"/setting/updateProfile"}>
+            <button
+              onClick={toggleSettingsDropdown}
+              className={`flex w-full justify-between items-center gap-2 mt-1 cursor-pointer whitespace-nowrap transition-all duration-300 ease-in-out ${
+                isSettingsActive
+                  ? "bg-[#F3F3F3] text-[#193985] px-3 pb-2 rounded-2xl"
+                  : ""
+              } relative`} // position relative here too for any absolute children
+            >
+              {/* Absolutely positioned colored bar */}
+              {isSettingsActive && (
+                <div
+                  className="bg-[#F3F3F3] w-[3%] -left-6 top-0 absolute h-14"
+                  style={{ transform: "translateX(-100%)" }}
+                ></div>
+              )}
 
-      <li
-        className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out w-[98%] ${
-          isActive("/") ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl" : ""
-        }`}
-      >
-        <IoMdSettings className="w-5 h-5 " />
-        <p className="text-lg font-semibold">Settings</p>
+              <li
+                className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out w-[98%] ${
+                  isActive("/")
+                    ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
+                    : ""
+                }`}
+              >
+                <IoMdSettings className="w-5 h-5 " />
+                <p className="text-lg font-semibold">Settings</p>
 
-        <SlArrowDown className="w-5 h-5 text-right ml-5 text-[#193985] hover:-rotate-90" />
-      </li>
-    </button>
-  </Link>
-</div>
-
+                <SlArrowDown className="w-5 h-5 text-right ml-5 text-[#193985] hover:-rotate-90" />
+              </li>
+            </button>
+          </Link>
+        </div>
 
         {/* Settings Submenu */}
         {isSettingsOpen && (
@@ -260,7 +266,9 @@ console.log("setting active",isSettingsActive);
             <Link to="/setting/updateProfile">
               <li
                 className={`py-[3px] flex items-center gap-2 transition-all duration-300 ease-in-out mb-5 mt-5  ${
-                  isActive("/setting/updateProfile") ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]" : ""
+                  isActive("/setting/updateProfile")
+                    ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]"
+                    : ""
                 }`}
               >
                 <IoMdInformationCircleOutline className="w-5 h-5 text-lg font-semibold" />
@@ -270,7 +278,9 @@ console.log("setting active",isSettingsActive);
             <Link to="/setting/terms">
               <li
                 className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out mb-5 ${
-                  isActive("/setting/terms") ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]" : ""
+                  isActive("/setting/terms")
+                    ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]"
+                    : ""
                 }`}
               >
                 <FaRegBookmark className="w-5 h-5 text-lg font-semibold" />
@@ -280,15 +290,15 @@ console.log("setting active",isSettingsActive);
             <Link to="/setting/privacy" className="">
               <li
                 className={`py-2 flex items-center gap-2 transition-all duration-300 ease-in-out  ${
-                  isActive("/setting/privacy") ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]" : ""
+                  isActive("/setting/privacy")
+                    ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]"
+                    : ""
                 }`}
               >
                 <MdOutlinePrivacyTip className="w-5 h-5 text-lg font-semibold" />
                 <p className="text-lg font-semibold">Privacy Policy</p>
               </li>
             </Link>
-
-      
           </ul>
         )}
       </ul>

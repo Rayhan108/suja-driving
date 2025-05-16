@@ -10,20 +10,17 @@ const MainHeader = ({ toggleSidebar }) => {
     <div className="relative ">
       <header className=" bg-[#3F5EAB] shadow-sm">
         <div className="flex justify-end items-center px-5 md:px-10 h-[80px]">
-          {/* <div onClick={() => navigate("/")}>
-       
-            <h1 className="text-3xl text-white font-bold">DASHBOARD</h1>
-          </div> */}
+   
           <div className="flex gap-5 items-center">
             <div>
-        <Link to={"/notification"}> 
+        {/* <Link to={"/notification"}> 
            <Badge count={5}>
      <IoIosNotificationsOutline className="text-[#35BEBD] bg-white rounded-full w-8 p-1 text-3xl"/>
     </Badge>
-        </Link>
+        </Link> */}
             </div>
             <div
-              onClick={() => navigate("/profile")}
+              // onClick={() => navigate("/profile")}
               className="flex items-center gap-2 cursor-default  px-5 py-2 rounded-2xl"
             >
               <img

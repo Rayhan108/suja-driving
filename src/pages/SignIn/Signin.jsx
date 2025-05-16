@@ -23,11 +23,11 @@ const Signin = () => {
   };
   return (
     <div className="max-w-7xl mx-auto w-full flex md:flex-row flex-col justify-center items-center gap-8 md:ml-16 lg:ml-96">
-      <div className="flex w-1/2 bg-white rounded-lg overflow-hidden font-title">
+      <div className="flex w-1/2 bg-white] rounded-lg overflow-hidden font-title shadow-2xl ">
         {/* Left Section - Form */}
         <div className="flex-1 p-10 flex flex-col">
           {/* Logo */}
-          <div className="mb-10">
+          <div className="mb-10 mx-auto">
             <img
               src={logo}
               alt="U TEE HUB Logo"
@@ -38,13 +38,13 @@ const Signin = () => {
           </div>
 
           {/* Form Container */}
-          <div className="max-w-md">
-            <Title level={2} className="text-gray-800 mb-2">
-              Login
-            </Title>
-            <Text className="text-gray-600 mb-8">
-              Login to access your U Tee Hub account
-            </Text>
+          <div className="max-w-md mx-auto">
+            <h1 className="text-gray-800 text-2xl mb-2 text-center">
+              Login To Your Acount
+            </h1>
+            <p className="text-gray-600 mb-8 text-center">
+              Please enter your email and password to continue
+            </p>
 
             <Form
               name="login"
@@ -53,7 +53,7 @@ const Signin = () => {
               initialValues={{ remember: true }}
             >
               {/* Email Field */}
-              <div className="relative mt-3">
+              <div className="">
                 <Form.Item
                   name="email"
                   rules={[
@@ -62,41 +62,37 @@ const Signin = () => {
                   ]}
                 >
                   <div>
-                    <label
-                      className={`absolute z-30 -top-3 left-3 px-1 text-lg bg-white transition-all`}
-                    >
+                    <label className={` px-1 text-lg bg-white transition-all`}>
                       Email
                     </label>
                     <Input
                       placeholder="john.doe@gmail.com"
                       type="email"
-                      className="w-full px-3 py-5 border border-[#35BEBD] rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-3 py-5 border border-[#3F5EAB] rounded-md focus:outline-none focus:ring-2 "
                     />
                   </div>
                 </Form.Item>
               </div>
 
               {/* Password Field */}
-              <div className="relative pt-2">
+              <div className=" pt-2">
                 <Form.Item
                   name="password" // This binds the input to form state
                   rules={[
                     { required: true, message: "Please input your password!" },
                   ]}
                 >
-                  <div className="">
-                    <label className="absolute z-30 -top-3 left-3 px-1 text-lg bg-white">
-                      Password
-                    </label>
+                  <div className="relative">
+                    <label className=" px-1 text-lg bg-white">Password</label>
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••••••••••••"
-                      className="w-full px-3 py-5 border border-[#35BEBD] rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-3 py-5 border border-[#3F5EAB] rounded-md focus:outline-none focus:ring-2 "
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      className="absolute top-16 right-0 pr-3 flex items-center -translate-y-1/2"
                     >
                       {showPassword ? (
                         <FaRegEyeSlash className="h-5 w-5 text-gray-400" />
@@ -116,7 +112,8 @@ const Signin = () => {
                   </Form.Item>
                 </div>
                 <div>
-                  <Link to="/forget-password"
+                  <Link
+                    to="/forget-password"
                     href="#"
                     className="text-sm text-[#ff6b6b] hover:text-[#ff5252]"
                   >
@@ -129,7 +126,7 @@ const Signin = () => {
               <Form.Item>
                 <button
                   type="submit"
-                  className="w-full flex text-xl items-center justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#30c1c1] hover:bg-[#25a0a0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors"
+                  className="w-full flex text-xl items-center justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-white bg-[#3F5EAB] hover:bg-[#4a62a0] focus:outline-none focus:ring-2 focus:ring-offset-2  transition-colors"
                 >
                   {loading ? (
                     <svg
@@ -167,23 +164,19 @@ const Signin = () => {
             <div className="mt-6 grid grid-cols-2 gap-3">
               <button
                 type="button"
-                className="w-full inline-flex justify-center py-3 px-4 border border-[#35BEBD] rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="w-full inline-flex justify-center py-3 px-4 border border-[#3F5EAB] rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
                 <FcGoogle className="h-7 w-7" />
               </button>
               <button
                 type="button"
-                className="w-full inline-flex justify-center py-3 px-4 border border-[#35BEBD] rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                className="w-full inline-flex justify-center py-3 px-4 border border-[#3F5EAB] rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
               >
                 <FaApple className="h-7 w-7 text-black" />
               </button>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="w-1/2">
-        <img src={login} alt="Login Image" className="w-[70%] mt-20" />
       </div>
     </div>
   );

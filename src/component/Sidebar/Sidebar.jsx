@@ -204,13 +204,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           </li>
         </Link>
         {/* Analysis */}
-        <Link to="/analysis" className="flex justify-between ">
-          {isActive("/analysis") && (
+        <Link to="/analytics" className="flex justify-between ">
+          {isActive("/analytics") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
-              isActive("/analysis")
+              isActive("/analytics")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
             }`}

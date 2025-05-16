@@ -47,12 +47,13 @@ const columns = [
     key: "topicName",
     align: "center",
   },
-  {
-    title: "Videos",
-    dataIndex: "vedio",
-    key: "vedio",
-    align: "center",
-    render: (videoUrl) => (
+{
+  title: "Videos",
+  dataIndex: "vedio",
+  key: "vedio",
+  align: "center",
+  render: (videoUrl) => (
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <video
         src={videoUrl}
         width={100}
@@ -62,23 +63,25 @@ const columns = [
         preload="metadata"
         style={{ objectFit: "cover", borderRadius: 5 }}
       />
-    ),
-  },
-  {
-    title: "Danger Zone",
-    dataIndex: "dangerZone",
-    key: "dangerZone",
-    align: "center",
-    render: (_, record) => (
-      <button
-        className="text-[#3A3A3A] bg-[#CFC9DD] p-2 rounded-xl"
-        style={{ display: "inline-block", textAlign: "center" }}
-        onClick={() => showVedioModal(record)}
-      >
-        View
-      </button>
-    ),
-  },
+    </div>
+  ),
+},
+
+  // {
+  //   title: "Danger Zone",
+  //   dataIndex: "dangerZone",
+  //   key: "dangerZone",
+  //   align: "center",
+  //   render: (_, record) => (
+  //     <button
+  //       className="text-[#3A3A3A] bg-[#CFC9DD] p-2 rounded-xl"
+  //       style={{ display: "inline-block", textAlign: "center" }}
+  //       onClick={() => showVedioModal(record)}
+  //     >
+  //       View
+  //     </button>
+  //   ),
+  // },
   {
     title: "Action",
     key: "action",
@@ -86,7 +89,8 @@ const columns = [
     render: (_, record) => (
       <div className="flex items-center justify-center gap-5">
         <button
-          onClick={() => showEditModal(record)}
+          // onClick={() => showEditModal(record)}
+          onClick={() => showVedioModal(record)}
           style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
         >
           <RiEdit2Line className="text-black w-5 h-5" />

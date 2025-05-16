@@ -1,13 +1,14 @@
 import { Checkbox, ConfigProvider, Input, Modal, Table } from "antd";
 
 import { useState } from "react";
-import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 
 import { FiEye } from "react-icons/fi";
-import EditSubscription from "./EditSubscription";
+
+import EditFeedback from "./EditFeedback";
+import { LuReply } from "react-icons/lu";
 
 
-const SubscriptionTable = ({ subscriptionData }) => {
+const FeedbackTable = ({ feedbackData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDescriptionModalOpen, setDescriptionModalOpen] = useState(false);
@@ -43,53 +44,47 @@ const SubscriptionTable = ({ subscriptionData }) => {
       render: (text, record, index) => index + 1, // Use the index + 1 as serial number
     },
     {
-      title: "Plane Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
       align: "center", // Center-aligned Category Name column
     },
     {
-      title: "User",
-      dataIndex: "user",
-      key: "user",
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
       align: "center", // Center-aligned Category Name column
     },
     {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
+      title: "Last Update",
+      dataIndex: "lastUpdate",
+      key: "lastUpdate",
       align: "center",
     },
-    {
-      title: "Payment Method",
-      dataIndex: "method",
-      key: "method",
-      align: "center",
-    },
-     {
-      title: " Expire Date",
-      dataIndex: "expDate",
-      key: "expDate",
-      align: "center",
-    },
- 
-    {
-      title: "Action",
-      key: "action",
-      align: "center", // Center-aligned Action column
+      {
+      title: "View",
+     key:"view",
+      align: "center", // Center-aligned Category Icon column
       render: (_, record) => (
-        <div className="flex items-center justify-center gap-5">
-          <button onClick={() => showEditModal(record)}>
-            <RiEdit2Line className="text-black  w-5 h-5" />
-          </button>
-
-          <button >
-            <FiEye
+        <FiEye
           size={24}
           className=" mx-auto"
           onClick={() => showDescriptionModal(record)}
         />
+      ),
+    },
+ 
+    {
+      title: "Reply",
+      key: "reply",
+      align: "center", // Center-aligned Action column
+      render: (_, record) => (
+        <div className="flex items-center justify-center gap-5">
+          <button onClick={() => showEditModal(record)}>
+            <LuReply className="text-black  w-5 h-5" />
           </button>
+
+     
         </div>
       ),
     },
@@ -115,7 +110,7 @@ const SubscriptionTable = ({ subscriptionData }) => {
         }}
       >
         <Table
-          dataSource={subscriptionData}
+          dataSource={feedbackData}
           columns={columns}
           pagination={{ pageSize: 10 }}
           scroll={{ x: "max-content" }}
@@ -153,17 +148,30 @@ const SubscriptionTable = ({ subscriptionData }) => {
           onCancel={handleDescriptionCancel}
           footer={null}
         >
-        <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-md ">
-  <p className="mb-4 text-gray-800 font-semibold">
-    Everything in the Listener package, plus:
-  </p>
-  <ul className="list-disc list-inside space-y-2 text-gray-700">
-    <li>More Matches: Meet three matches instead of two.</li>
-    <li>Extended Chat: Access chat with your match for up to one week.</li>
-    <li>Second Chance: Users can be matched again if their first match doesn't work out, providing another chance at connection.</li>
-    <li>Exclusive Content: Access to curated dating tips, insights, and advice not available to free-tier users.</li>
-  </ul>
+            <h1 className="text-center text-2xl mb-3">Details</h1>
+<div class="max-w-md p-4  rounded-md space-y-3 text-sm font-medium text-gray-700">
+  <div class="flex justify-between">
+    <span>ID No:</span>
+    <span class="text-gray-500">#325345636</span>
+  </div>
+  <div class="flex justify-between">
+    <span>Date:</span>
+    <span class="text-gray-500">12/08/24</span>
+  </div>
+  <div class="flex justify-between">
+    <span>User Name:</span>
+    <span class="text-gray-500">Devon Lane</span>
+  </div>
+  <div>
+    <p class="font-semibold">Description of the issue:</p>
+    <p class="text-gray-600">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    </p>
+  </div>
 </div>
+
 
         </Modal>
 
@@ -175,8 +183,8 @@ const SubscriptionTable = ({ subscriptionData }) => {
           footer={null}
         >
           <div>
-            <h1 className="text-3xl text-center text-[#333333]">Edit</h1>
-            <EditSubscription/>
+            <h1 className="text-3xl text-center text-[#333333]">Reply</h1>
+            <EditFeedback/>
           </div>
         </Modal>
       </ConfigProvider>
@@ -184,4 +192,4 @@ const SubscriptionTable = ({ subscriptionData }) => {
   );
 };
 
-export default SubscriptionTable;
+export default FeedbackTable;

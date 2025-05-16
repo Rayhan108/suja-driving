@@ -25,6 +25,7 @@ import HazardPage from "../pages/Hazard/HazardPage";
 import HighwayPage from "../pages/Highway/HighwayPage";
 import TestScore from "../pages/TestScore/TestScore";
 import Subscription from "../pages/Subscription/Subscription";
+import Feedback from "../pages/Feedback/Feedback";
 
   
   const router = createBrowserRouter([
@@ -104,6 +105,10 @@ import Subscription from "../pages/Subscription/Subscription";
           {
             path: "/subscription",
             element: <Subscription/>,
+          },
+          {
+            path: "/feedback",
+            element: <Feedback/>
           },
          
         ]

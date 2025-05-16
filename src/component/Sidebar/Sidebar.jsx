@@ -1,21 +1,24 @@
 import { Link, useLocation } from "react-router-dom";
-import { FaHome, FaRegBookmark, FaRegUser } from "react-icons/fa";
+import { FaCarAlt, FaHome, FaRegBookmark, FaRegUser } from "react-icons/fa";
 import { IoMdInformationCircleOutline, IoMdSettings } from "react-icons/io";
 import {
+  IoArrowRedoCircleSharp,
   IoBagAddOutline,
   IoCloseSharp,
   IoLogInOutline,
   IoVideocamOutline,
 } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
-import { MdOutlinePrivacyTip } from "react-icons/md";
+import { MdOutlineEditRoad, MdOutlinePayment, MdOutlinePrivacyTip } from "react-icons/md";
 import { SlArrowDown } from "react-icons/sl";
-import { GoQuestion } from "react-icons/go";
+import { GoDeviceCameraVideo, GoQuestion } from "react-icons/go";
 
 import { LuSquareMenu } from "react-icons/lu";
 import { useState } from "react"; // Import useState
 import logo from "../../assets/Logo.png";
-import { RiDashboard3Line, RiLogoutCircleLine } from "react-icons/ri";
+import { RiDashboard3Line, RiFeedbackLine, RiLogoutCircleLine } from "react-icons/ri";
+import { SiSimpleanalytics } from "react-icons/si";
+import { CgMail } from "react-icons/cg";
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
@@ -102,7 +105,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 : ""
             }`}
           >
-            <FaRegUser className="w-5 h-5" />
+            <MdOutlineEditRoad  className="w-5 h-5" />
             <p className="text-lg font-semibold">Theory Management</p>
           </li>
         </Link>
@@ -122,7 +125,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 : ""
             }`}
           >
-            <LuSquareMenu className="w-5 h-5" />
+            <FaCarAlt  className="w-5 h-5" />
             <p className="text-lg font-semibold">ADI Theory Management</p>
           </li>
         </Link>
@@ -138,7 +141,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 : ""
             }`}
           >
-            <LuSquareMenu className="w-5 h-5" />
+            <GoDeviceCameraVideo  className="w-5 h-5" />
             <p className="text-lg font-semibold">Hazard Perception</p>
           </li>
         </Link>
@@ -154,7 +157,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 : ""
             }`}
           >
-            <LuSquareMenu className="w-5 h-5" />
+            <IoArrowRedoCircleSharp  className="w-5 h-5" />
             <p className="text-lg font-semibold">Highway Code</p>
           </li>
         </Link>
@@ -170,7 +173,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 : ""
             }`}
           >
-            <LuSquareMenu className="w-5 h-5" />
+            <MdOutlinePayment className="w-5 h-5" />
             <p className="text-lg font-semibold">Test & Scoring Settings</p>
           </li>
         </Link>
@@ -181,12 +184,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           )}
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
-              isActive("/services")
+              isActive("/subscription")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
             }`}
           >
-            <LuSquareMenu className="w-5 h-5" />
+            <CgMail className="w-5 h-5" />
             <p className="text-lg font-semibold">Subscriptions & Payment</p>
           </li>
         </Link>
@@ -202,7 +205,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 : ""
             }`}
           >
-            <LuSquareMenu className="w-5 h-5" />
+            <RiFeedbackLine className="w-5 h-5" />
             <p className="text-lg font-semibold">Feedback & Support</p>
           </li>
         </Link>
@@ -218,7 +221,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 : ""
             }`}
           >
-            <LuSquareMenu className="w-5 h-5" />
+            <SiSimpleanalytics className="w-5 h-5" />
             <p className="text-lg font-semibold">Analytics & Reports</p>
           </li>
         </Link>
@@ -245,16 +248,18 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               )}
 
               <li
-                className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out w-[98%] ${
-                  isActive("/")
-                    ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
-                    : ""
-                }`}
+                className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out w-[98%]`}
               >
                 <IoMdSettings className="w-5 h-5 " />
                 <p className="text-lg font-semibold">Settings</p>
 
-                <SlArrowDown className="w-5 h-5 text-right ml-5 text-[#193985] hover:-rotate-90" />
+          <SlArrowDown
+  className={`w-5 h-5 text-right ml-5 hover:-rotate-90 ${
+    isSettingsActive
+      ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
+      : "text-white"
+  }`}
+/>
               </li>
             </button>
           </Link>
@@ -265,7 +270,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <ul className="text-right ">
             <Link to="/setting/updateProfile">
               <li
-                className={`py-[3px] flex items-center gap-2 transition-all duration-300 ease-in-out mb-5 mt-5  ${
+                className={` flex items-center gap-2 transition-all duration-300 ease-in-out mb-5 mt-5  ${
                   isActive("/setting/updateProfile")
                     ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]"
                     : ""
@@ -277,7 +282,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </Link>
             <Link to="/setting/terms">
               <li
-                className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out mb-5 ${
+                className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out mb-1 ${
                   isActive("/setting/terms")
                     ? "pl-3 pr-5 py-[14px] rounded-2xl bg-[#F3F3F3] text-[#193985]"
                     : ""

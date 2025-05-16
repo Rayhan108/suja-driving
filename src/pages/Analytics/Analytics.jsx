@@ -52,7 +52,7 @@ const Analytics = () => {
         {
             userName:"Israa Khan",
             testName:"ADI theory test",
-            lastUpdate:"12/05/25"
+            lastUpdate:"12/05/25" 
         },
         {
             userName:"Israa Khan",

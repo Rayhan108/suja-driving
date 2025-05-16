@@ -27,6 +27,7 @@ import TestScore from "../pages/TestScore/TestScore";
 import Subscription from "../pages/Subscription/Subscription";
 import Feedback from "../pages/Feedback/Feedback";
 import Analytics from "../pages/Analytics/Analytics";
+import UpdateProfile from "../pages/Profile/UpdateProfile";
 
   
   const router = createBrowserRouter([
@@ -115,6 +116,11 @@ import Analytics from "../pages/Analytics/Analytics";
             path: "/analytics",
             element: <Analytics/>
           },
+          {
+            path: "/setting/updateProfile",
+            element: <UpdateProfile/>
+          },
+        
          
         ]
     },

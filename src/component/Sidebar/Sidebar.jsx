@@ -242,10 +242,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {/* Settings Submenu */}
         {isSettingsOpen && (
           <ul className="text-right py-3 ">
-            <Link to="/setting/aboutUs">
+            <Link to="/setting/updateProfile">
               <li
-                className={`py-[3px] flex items-center gap-2 transition-all duration-300 ease-in-out text-white ${
-                  isActive("/setting/aboutUs") ? "text-[#193985]" : ""
+                className={`py-[3px] flex items-center gap-2 transition-all duration-300 ease-in-out  ${
+                  isActive("/setting/updateProfile") ? "text-[#193985]" : ""
                 }`}
               >
                 <IoMdInformationCircleOutline className="w-5 h-5 text-lg font-semibold" />
@@ -254,7 +254,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </Link>
             <Link to="/setting/policy">
               <li
-                className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out text-white ${
+                className={`pb-2 flex items-center gap-2 transition-all duration-300 ease-in-out${
                   isActive("/setting/policy") ? "text-[#193985]" : ""
                 }`}
               >
@@ -264,7 +264,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </Link>
             <Link to="/setting/privacy">
               <li
-                className={`py-2 flex items-center gap-2 transition-all duration-300 ease-in-out text-white ${
+                className={`py-2 flex items-center gap-2 transition-all duration-300 ease-in-out  ${
                   isActive("/setting/privacy") ? "text-[#193985]" : ""
                 }`}
               >

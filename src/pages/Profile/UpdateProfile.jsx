@@ -62,7 +62,7 @@ const UpdateProfile = () => {
             Israa Khan
           </p>
 
-          <div className="flex gap-12 justify-center">
+          <div className="flex gap-12 justify-center mt-12">
             <button
               onClick={() => setActiveTab("edit")}
               className={`text-center font-title my-3 underline text-lg ${

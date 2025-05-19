@@ -86,7 +86,7 @@ const HazardPage = () => {
 
   return (
     <div>
-      <div className="flex justify-between my-2 mb-5">
+      <div className="flex justify-between my-2 mb-12 font-title">
         <div className="flex justify-center items-center gap-5">
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
           <p className="text-[#3564d3] font-title text-3xl font-bold">

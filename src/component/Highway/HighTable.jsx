@@ -52,7 +52,7 @@ const HighTable = ({ category }) => {
       dataIndex: "images",
       key: "images",
       align: "center", // Center-aligned Category Icon column
-      render: (text) => <img src={text} alt="image" style={{ width: 70, height: 40 }} />,
+      render: (text) => <div style={{ display: "flex", justifyContent: "center" }}> <img src={text} alt="Category Icon" style={{ width: 70, height: 40 }} /></div>,
     },
     {
       title: "Description",
@@ -83,7 +83,7 @@ const HighTable = ({ category }) => {
   return (
     <div>
       <ConfigProvider
-        theme={{
+   theme={{
           components: {
             InputNumber: {
               activeBorderColor: "#00c0b5",
@@ -95,6 +95,13 @@ const HighTable = ({ category }) => {
               colorTextPlaceholder: "#00c0b5",
               itemActiveBgDisabled: "#00c0b5",
               colorPrimary: "#00c0b5",
+            },
+            Table: {
+              headerBg: "#3F5EAB",
+              headerColor: "rgb(255,255,255)",
+              cellFontSize: 16,
+              headerSplitColor: "#ffffff",
+
             },
           },
         }}

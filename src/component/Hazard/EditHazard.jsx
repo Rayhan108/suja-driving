@@ -21,7 +21,7 @@ const EditHazard = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-xs mx-auto p-4 space-y-4 bg-white rounded-md shadow-sm"
+      className="max-w-xs mx-auto p-4 space-y-4 bg-white rounded-md shadow-sm font-title"
       noValidate
     >
       <div className="flex items-center space-x-2">

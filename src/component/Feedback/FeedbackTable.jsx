@@ -93,7 +93,7 @@ const FeedbackTable = ({ feedbackData }) => {
   return (
     <div>
       <ConfigProvider
-        theme={{
+   theme={{
           components: {
             InputNumber: {
               activeBorderColor: "#00c0b5",
@@ -105,6 +105,13 @@ const FeedbackTable = ({ feedbackData }) => {
               colorTextPlaceholder: "#00c0b5",
               itemActiveBgDisabled: "#00c0b5",
               colorPrimary: "#00c0b5",
+            },
+            Table: {
+              headerBg: "#3F5EAB",
+              headerColor: "rgb(255,255,255)",
+              cellFontSize: 16,
+              headerSplitColor: "#ffffff",
+
             },
           },
         }}

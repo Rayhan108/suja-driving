@@ -124,11 +124,11 @@ const HighwayPage = () => {
 
   return (
     <div>
-      <div className="flex justify-between my-2 font-title">
+      <div className="flex justify-between my-2 font-title mb-12">
         <div className="flex justify-center items-center gap-5">
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
           <p className="text-[#3564d3] font-title text-3xl font-bold">
-            Dashboard Overview
+        Highway Code
           </p>
         </div>
         <div className="flex gap-5">

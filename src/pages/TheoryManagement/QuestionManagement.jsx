@@ -108,11 +108,11 @@ console.log("activeTabFromURL",activeTabFromURL);
   }, [location]);
     return (
        <div>
-      <div className="flex justify-between my-2">
+      <div className="flex justify-between mt-2 mb-8">
         <div className="flex justify-center items-center gap-5">
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
           <p className="text-[#3564d3] font-title text-3xl font-bold">
-            Dashboard Overview
+          Theory Management
           </p>
         </div>
         <div className="flex gap-5">
@@ -133,7 +133,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Tabs for Category, Topic, Question */}
-      <div className="flex gap-9 mb-5">
+      <div className="flex gap-9 mb-8">
         <div>
           <Link to="/theoryManagement/category">
             <button
@@ -141,7 +141,7 @@ console.log("activeTabFromURL",activeTabFromURL);
                 activeTab === "category"
                   ? "bg-[#2C4581] text-[#ffffff]"
                   : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
-              } p-3 rounded-xl`}
+              }  px-8 py-2 rounded-xl`}
             >
               Category
             </button>
@@ -154,7 +154,7 @@ console.log("activeTabFromURL",activeTabFromURL);
                 activeTab === "topic"
                   ? "bg-[#2C4581] text-[#ffffff]"
                   : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
-              } p-3 rounded-xl`}
+              }  px-8 py-2 rounded-xl`}
             >
               Topic
             </button>
@@ -167,7 +167,7 @@ console.log("activeTabFromURL",activeTabFromURL);
                 activeTab === "question"
                   ? "bg-[#2C4581] text-[#ffffff]"
                   : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
-              } p-3 rounded-xl`}
+              }  px-8 py-2 rounded-xl`}
             >
               Question
             </button>

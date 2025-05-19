@@ -83,24 +83,28 @@ const UserTable = ({ user }) => {
   return (
     <div>
 <ConfigProvider
-  theme={{
-    components: {
-      InputNumber: {
-        activeBorderColor: "#00c0b5",
-      },
-      Pagination: {
-        colorPrimaryBorder: "#00c0b5",
-        colorBorder: "#00c0b5",
-        colorPrimaryHover: "#00c0b5",
-        colorTextPlaceholder: "#00c0b5",
-        itemActiveBgDisabled: "#00c0b5",
-        colorPrimary: "#00c0b5",
-      },
-      Table: {
-        colorFillAlter: "#3F5EAB", // usually header row background
-      },
-    },
-  }}
+   theme={{
+          components: {
+            InputNumber: {
+              activeBorderColor: "#00c0b5",
+            },
+            Pagination: {
+              colorPrimaryBorder: "#00c0b5",
+              colorBorder: "#00c0b5",
+              colorPrimaryHover: "#00c0b5",
+              colorTextPlaceholder: "#00c0b5",
+              itemActiveBgDisabled: "#00c0b5",
+              colorPrimary: "#00c0b5",
+            },
+            Table: {
+              headerBg: "#3F5EAB",
+              headerColor: "rgb(255,255,255)",
+              cellFontSize: 16,
+              headerSplitColor: "#ffffff",
+
+            },
+          },
+        }}
 >
 
 
@@ -109,6 +113,7 @@ const UserTable = ({ user }) => {
          columns={columns.map((column) => ({
     ...column,
     align: 'center', // Center align content for every column
+
   }))}
           pagination={{ pageSize: 10 }}
           scroll={{ x: "max-content" }}

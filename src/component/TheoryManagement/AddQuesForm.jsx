@@ -75,11 +75,46 @@ const AddQuesForm = () => {
           <p className="text-red-500 text-sm mt-1">Question is required</p>
         )}
       </div>
+      <div>
+        <label className="block mb-1 font-medium text-gray-700">Answere</label>
+        <input
+          {...register("option1", { required: true })}
+          placeholder="option 1"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
+        />
+        {errors.option1 && (
+          <p className="text-red-500 text-sm mt-1">Question is required</p>
+        )}
+        <input
+          {...register("option2", { required: true })}
+          placeholder="option 2"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
+        />
+        {errors.option2 && (
+          <p className="text-red-500 text-sm mt-1">Question is required</p>
+        )}
+        <input
+          {...register("option3", { required: true })}
+          placeholder="option 3"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
+        />
+        {errors.option3 && (
+          <p className="text-red-500 text-sm mt-1">Question is required</p>
+        )}
+        <input
+          {...register("option4", { required: true })}
+          placeholder="option 4"
+          className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
+        />
+        {errors.option4 && (
+          <p className="text-red-500 text-sm mt-1">Question is required</p>
+        )}
+      </div>
 
       <div>
-        <label className="block mb-1 font-medium text-gray-700">Answer</label>
+        <label className="block mb-1 font-medium text-gray-700">Correct Answer</label>
         <input
-          {...register("answer", { required: true })}
+          {...register("correctAnswer", { required: true })}
           placeholder="Write Here"
           className="w-full border border-gray-300 rounded-md px-3 py-2"
         />

@@ -90,7 +90,7 @@ const HazardPage = () => {
         <div className="flex justify-center items-center gap-5">
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
           <p className="text-[#3564d3] font-title text-3xl font-bold">
-            Dashboard Overview
+            Hazard Perception
           </p>
         </div>
         <div className="flex gap-5">
@@ -109,7 +109,7 @@ const HazardPage = () => {
               className="bg-[#3F5EAB] text-white p-3 rounded-xl"
               onClick={() => showModal()}
             >
-              +Add Category
+              +Add Vedio
             </button>
           </div>
         </div>

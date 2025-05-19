@@ -30,13 +30,13 @@ function DashboardPage() {
   return (
     <div className=" container mx-auto font-title mb-5">
         <div className="flex justify-between my-2"> 
-      <div className="flex  justify-center items-center gap-5">
+      <div className="flex  justify-center items-center gap-5 mb-5">
           <SlArrowLeft className="w-5 h-5 text-right  text-[#3564d3]" />
           <p className="text-[#3564d3] font-title text-3xl font-bold">
             Dashboard Overview
           </p>
         </div>
-        <div>
+        {/* <div>
           <div className="relative w-full sm:w-[300px] ">
             <Input
               type="text"
@@ -47,7 +47,7 @@ function DashboardPage() {
               <IoSearch className="text-[1.3rem]" />
             </span>
           </div>
-        </div>
+        </div> */}
         </div>
       <div className="flex flex-col justify-between items-center pt-0 mt-0 mb-1">
 

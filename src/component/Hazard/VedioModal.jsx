@@ -99,17 +99,17 @@ const sampleVideoUrl = vedioData?.vedio
           className="w-full h-full object-cover"
         />
         {/* Rear mirror */}
-        <div className="absolute top-2 left-2 w-24 h-16 border border-gray-300 rounded overflow-hidden">
+        {/* <div className="absolute top-2 left-2 w-24 h-16 border border-gray-300 rounded overflow-hidden">
           <video src={sampleVideoUrl} muted autoPlay loop className="w-full h-full object-cover" />
-        </div>
+        </div> */}
         {/* Left mirror */}
-        <div className="absolute top-2 right-2 w-24 h-16 border border-gray-300 rounded overflow-hidden">
+        {/* <div className="absolute top-2 right-2 w-24 h-16 border border-gray-300 rounded overflow-hidden">
           <video src={sampleVideoUrl} muted autoPlay loop className="w-full h-full object-cover" />
-        </div>
+        </div> */}
         {/* Right mirror */}
-        <div className="absolute bottom-2 right-2 w-24 h-16 border border-gray-300 rounded overflow-hidden">
+        {/* <div className="absolute bottom-2 right-2 w-24 h-16 border border-gray-300 rounded overflow-hidden">
           <video src={sampleVideoUrl} muted autoPlay loop className="w-full h-full object-cover" />
-        </div>
+        </div> */}
       </div>
 
       <div>

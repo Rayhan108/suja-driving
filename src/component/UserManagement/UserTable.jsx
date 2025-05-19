@@ -59,7 +59,7 @@ const UserTable = ({ user }) => {
       render: (text, record) => (
         <div className=" ">
           <button onClick={() => showModal(record)}>
-            <MdOutlineMessage className="text-[#C8CAD8] w-5 h-5" />
+            <MdOutlineMessage className="text-[#3F5EAB] w-5 h-5" />
           </button>
         </div>
       ),
@@ -74,7 +74,7 @@ const UserTable = ({ user }) => {
               
                 </Link> */}
           <button>
-            <MdBlockFlipped className="text-[#C8CAD8] w-5 h-5" />
+            <MdBlockFlipped className="text-[#3F5EAB] w-5 h-5" />
           </button>
         </div>
       ),
@@ -82,23 +82,28 @@ const UserTable = ({ user }) => {
   ];
   return (
     <div>
-      <ConfigProvider
-        theme={{
-          components: {
-            InputNumber: {
-              activeBorderColor: "#00c0b5",
-            },
-            Pagination: {
-              colorPrimaryBorder: "#00c0b5",
-              colorBorder: "#00c0b5",
-              colorPrimaryHover: "#00c0b5",
-              colorTextPlaceholder: "#00c0b5",
-              itemActiveBgDisabled: "#00c0b5",
-              colorPrimary: "#00c0b5",
-            },
-          },
-        }}
-      >
+<ConfigProvider
+  theme={{
+    components: {
+      InputNumber: {
+        activeBorderColor: "#00c0b5",
+      },
+      Pagination: {
+        colorPrimaryBorder: "#00c0b5",
+        colorBorder: "#00c0b5",
+        colorPrimaryHover: "#00c0b5",
+        colorTextPlaceholder: "#00c0b5",
+        itemActiveBgDisabled: "#00c0b5",
+        colorPrimary: "#00c0b5",
+      },
+      Table: {
+        colorFillAlter: "#3F5EAB", // usually header row background
+      },
+    },
+  }}
+>
+
+
         <Table
           dataSource={user}
          columns={columns.map((column) => ({
@@ -145,7 +150,7 @@ const UserTable = ({ user }) => {
               <div className="w-[100%]">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="bg-[#00c0b5] text-white font-semibold  py-3 rounded-lg px-16"
+                  className="bg-[#3F5EAB] text-white font-semibold  py-3 rounded-lg px-16"
                 >
                   CONFIRM
                 </button>

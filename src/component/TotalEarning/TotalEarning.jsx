@@ -77,7 +77,7 @@ const TotalEarning = () => {
   ];
 
   return (
-    <div className="bg-white rounded-xl px-4 py-5 shadow-sm mt-3">
+    <div className="bg-white rounded-xl px-4 py-5 shadow-sm mt-3 font-title">
       <p className="font-bold text-lg mb-2 text-black font-title">Total Earning</p>
       <Chart
         options={chartOptions}

@@ -7,20 +7,20 @@ const MainHeader = ({ toggleSidebar }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative ">
+    <div className="relative font-title">
       <header className=" bg-[#3F5EAB] shadow-sm">
         <div className="flex justify-end items-center px-5 md:px-10 h-[80px]">
    
           <div className="flex gap-5 items-center">
             <div>
-        {/* <Link to={"/notification"}> 
+        <Link to={"/notification"}> 
            <Badge count={5}>
      <IoIosNotificationsOutline className="text-[#35BEBD] bg-white rounded-full w-8 p-1 text-3xl"/>
     </Badge>
-        </Link> */}
+        </Link>
             </div>
             <div
-              // onClick={() => navigate("/profile")}
+              onClick={() => navigate("/setting/updateProfile")}
               className="flex items-center gap-2 cursor-default  px-5 py-2 rounded-2xl"
             >
               <img

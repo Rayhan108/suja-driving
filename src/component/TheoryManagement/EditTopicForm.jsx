@@ -24,7 +24,7 @@ const EditTopicForm = () => {
       className="max-w-md mx-auto p-6 space-y-6"
       noValidate
     >
-      <div className="flex justify-between space-x-4">
+      <div className="flex justify-between space-x-4 font-title">
         <div className="w-1/2">
           <label className="block mb-1 font-medium text-gray-700">
             Select Category
@@ -49,7 +49,7 @@ const EditTopicForm = () => {
       </div>
 
       <div>
-        <label className="block mb-1 font-medium text-gray-700">Topic Name</label>
+        <label className="block mb-1 font-medium text-gray-700 font-title">Topic Name</label>
         <input
           {...register("topicName", { required: true })}
           placeholder="Enter Name"
@@ -94,7 +94,7 @@ const EditTopicForm = () => {
 
 
 
-      <div className="flex gap-12  mt-6">
+      <div className="flex gap-12  mt-6 font-title">
         <button
           type="button"
           onClick={onCancel}

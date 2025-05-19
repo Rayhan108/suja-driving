@@ -96,7 +96,7 @@ const SubscriptionTable = ({ subscriptionData }) => {
   ];
 
   return (
-    <div>
+    <div className="font-title">
       <ConfigProvider
         theme={{
           components: {

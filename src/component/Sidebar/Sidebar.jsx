@@ -23,7 +23,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const [isSettingsOpen, setIsSettingsOpen] = useState(false); // Track the dropdown state
-  const user = true;
+  const user = false;
   // Check if current path matches a menu item
   const isActive = (path) => currentPath === path;
 
@@ -72,7 +72,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <FaHome className="w-5 h-5" />
-            <p className="text-lg font-semibold">Dashboard</p>
+            <p className="text-lg ">Dashboard</p>
           </li>
         </Link>
 
@@ -89,7 +89,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <FaRegUser className="w-5 h-5" />
-            <p className="text-lg font-semibold">User Management</p>
+            <p className="text-lg">User Management</p>
           </li>
         </Link>
 
@@ -106,7 +106,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <MdOutlineEditRoad  className="w-5 h-5" />
-            <p className="text-lg font-semibold">Theory Management</p>
+            <p className="text-lg">Theory Management</p>
           </li>
         </Link>
 
@@ -126,7 +126,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <FaCarAlt  className="w-5 h-5" />
-            <p className="text-lg font-semibold">ADI Theory Management</p>
+            <p className="text-lg">ADI Theory Management</p>
           </li>
         </Link>
         {/* Hazard */}
@@ -142,7 +142,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <GoDeviceCameraVideo  className="w-5 h-5" />
-            <p className="text-lg font-semibold">Hazard Perception</p>
+            <p className="text-lg">Hazard Perception</p>
           </li>
         </Link>
         {/* Highway */}
@@ -158,7 +158,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <IoArrowRedoCircleSharp  className="w-5 h-5" />
-            <p className="text-lg font-semibold">Highway Code</p>
+            <p className="text-lg">Highway Code</p>
           </li>
         </Link>
         {/* Test */}
@@ -174,7 +174,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <MdOutlinePayment className="w-5 h-5" />
-            <p className="text-lg font-semibold">Test & Scoring Settings</p>
+            <p className="text-lg">Test & Scoring Settings</p>
           </li>
         </Link>
         {/* Subscription */}
@@ -190,7 +190,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <CgMail className="w-5 h-5" />
-            <p className="text-lg font-semibold">Subscriptions & Payment</p>
+            <p className="text-lg">Subscriptions & Payment</p>
           </li>
         </Link>
         {/* feedback */}
@@ -206,7 +206,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <RiFeedbackLine className="w-5 h-5" />
-            <p className="text-lg font-semibold">Feedback & Support</p>
+            <p className="text-lg">Feedback & Support</p>
           </li>
         </Link>
         {/* Analysis */}
@@ -222,7 +222,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             }`}
           >
             <SiSimpleanalytics className="w-5 h-5" />
-            <p className="text-lg font-semibold">Analytics & Reports</p>
+            <p className="text-lg">Analytics & Reports</p>
           </li>
         </Link>
 
@@ -251,7 +251,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out w-[98%]`}
               >
                 <IoMdSettings className="w-5 h-5 " />
-                <p className="text-lg font-semibold">Settings</p>
+                <p className="text-lg">Settings</p>
 
           <SlArrowDown
   className={`w-5 h-5 text-right ml-5 hover:-rotate-90 ${
@@ -276,8 +276,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     : ""
                 }`}
               >
-                <IoMdInformationCircleOutline className="w-5 h-5 text-lg font-semibold" />
-                <p className="text-lg font-semibold">Profile</p>
+                <IoMdInformationCircleOutline className="w-5 h-5 text-lg " />
+                <p className="text-lg ">Profile</p>
               </li>
             </Link>
             <Link to="/setting/terms">
@@ -288,8 +288,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     : ""
                 }`}
               >
-                <FaRegBookmark className="w-5 h-5 text-lg font-semibold" />
-                <p className="text-lg font-semibold">Terms and Condition</p>
+                <FaRegBookmark className="w-5 h-5 text-lg " />
+                <p className="text-lg ">Terms and Condition</p>
               </li>
             </Link>
             <Link to="/setting/privacy" className="">
@@ -300,8 +300,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     : ""
                 }`}
               >
-                <MdOutlinePrivacyTip className="w-5 h-5 text-lg font-semibold" />
-                <p className="text-lg font-semibold">Privacy Policy</p>
+                <MdOutlinePrivacyTip className="w-5 h-5 text-lg " />
+                <p className="text-lg ">Privacy Policy</p>
               </li>
             </Link>
           </ul>

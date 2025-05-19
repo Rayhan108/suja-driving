@@ -116,7 +116,7 @@ const UserManagement = () => {
 
 
     return (
-        <div>
+        <div className="title">
         <div className="flex justify-between mb-12 mt-5"> 
       <div className="flex  justify-center items-center gap-5">
           <SlArrowLeft className="w-5 h-5 text-right  text-[#3564d3]" />

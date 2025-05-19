@@ -21,11 +21,11 @@ const EditCategoryForm = () => {
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-md mx-auto p-6 space-y-6"
+        className="max-w-md mx-auto p-6 space-y-6 font-title"
         noValidate
       >
         <div>
-          <label className="block mb-1 font-medium text-gray-700">
+          <label className="block mb-1 font-medium text-gray-700 font-title">
             Category Name
           </label>
           <input
@@ -41,7 +41,7 @@ const EditCategoryForm = () => {
         </div>
 
         <div>
-          <label className="block mb-1 font-medium text-gray-700">
+          <label className="block mb-1 font-medium text-gray-700 font-title">
             Upload Icon
           </label>
           <label
@@ -76,7 +76,7 @@ const EditCategoryForm = () => {
           )}
         </div>
 
-        <div className="flex gap-12  mt-6">
+        <div className="flex gap-12  mt-6 font-title">
           <button
             type="button"
             onClick={onCancel}

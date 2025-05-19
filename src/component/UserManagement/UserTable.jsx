@@ -81,7 +81,7 @@ const UserTable = ({ user }) => {
     },
   ];
   return (
-    <div>
+    <div className="font-title">
 <ConfigProvider
    theme={{
           components: {

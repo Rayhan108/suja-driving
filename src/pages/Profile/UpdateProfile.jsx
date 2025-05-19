@@ -1,16 +1,29 @@
-import { Input, Form, message } from "antd";
 import { useState } from "react";
+import { Input, Form, message } from "antd";
 import gallery from "../../assets/gallery.png";
 import profile from "../../assets/profileImg.png";
 import { SlArrowLeft } from "react-icons/sl";
 import ChangePass from "./ChangePass";
 
 const UpdateProfile = () => {
-  const [activeTab, setActiveTab] = useState("edit"); 
-console.log(activeTab);
+  const [activeTab, setActiveTab] = useState("edit");
+  const [profileImg, setProfileImg] = useState(profile); // initial profile image
   const onFinish = (values) => {
     console.log("Form values:", values);
     message.success("Profile updated successfully!");
+  };
+
+  // file input change handler
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // read file as data URL to preview
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfileImg(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -21,27 +34,34 @@ console.log(activeTab);
       </div>
 
       <div style={{ maxWidth: 400, margin: "auto" }}>
-        {/* Profile Picture Section */}
         <div>
           <div className="relative text-center items-center justify-center flex">
             <div>
-              <img src={profile} alt="Profile" className="w-36" />
+              <img src={profileImg} alt="Profile" className="w-36" />
             </div>
             <div className="absolute top-20 left-[224px]">
-              <div className="bg-[#3564d3] w-12 h-12 rounded-full relative">
+              {/* label for hidden input */}
+              <label htmlFor="fileInput" className="bg-[#3564d3] w-12 h-12 rounded-full relative cursor-pointer flex items-center justify-center">
                 <img
                   src={gallery}
                   alt=""
-                  className="text-white text-3xl left-2.5 top-2.5 absolute w-7"
+                  className="text-white text-3xl w-7"
                 />
-              </div>
+              </label>
+              {/* hidden file input */}
+              <input
+                id="fileInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
             </div>
           </div>
           <p className="text-[#3564d3] text-center font-title my-3">
             Israa Khan
           </p>
 
-          {/* Tabs */}
           <div className="flex gap-12 justify-center">
             <button
               onClick={() => setActiveTab("edit")}
@@ -62,7 +82,6 @@ console.log(activeTab);
           </div>
         </div>
 
-        {/* Conditionally Rendered Forms */}
         {activeTab === "edit" && (
           <Form
             name="profile-form"
@@ -70,7 +89,6 @@ console.log(activeTab);
             onFinish={onFinish}
             layout="vertical"
           >
-            {/* Name Input */}
             <div className="mt-3">
               <Form.Item
                 name="name"
@@ -89,7 +107,6 @@ console.log(activeTab);
               </Form.Item>
             </div>
 
-            {/* Email Input */}
             <div className="mt-3">
               <Form.Item
                 name="email"
@@ -109,7 +126,6 @@ console.log(activeTab);
               </Form.Item>
             </div>
 
-            {/* Save Button */}
             <Form.Item>
               <button
                 type="submit"
@@ -123,7 +139,7 @@ console.log(activeTab);
 
         {activeTab === "password" && (
           <div className="mt-5 text-center text-[#313131] font-title">
-          <ChangePass/>
+            <ChangePass />
           </div>
         )}
       </div>

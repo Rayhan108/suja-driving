@@ -16,10 +16,10 @@ const QuestionTable = ({ question }) => {
     setDeleteId(null);
   };
 
-    const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const showEditModal = (id) => {
-    console.log("id",id);
+    console.log("id", id);
     setEditModalOpen(true);
   };
   const handleEditCancel = () => {
@@ -115,7 +115,8 @@ const QuestionTable = ({ question }) => {
       width: 80,
       render: (_, record) => (
         <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
-          <button onClick={()=>showEditModal(record)}
+          <button
+            onClick={() => showEditModal(record)}
             style={{ border: "none", background: "none", cursor: "pointer" }}
           >
             <RiEdit2Line size={20} color="#000" />
@@ -133,28 +134,27 @@ const QuestionTable = ({ question }) => {
 
   return (
     <ConfigProvider
-     theme={{
-          components: {
-            InputNumber: {
-              activeBorderColor: "#00c0b5",
-            },
-            Pagination: {
-              colorPrimaryBorder: "#00c0b5",
-              colorBorder: "#00c0b5",
-              colorPrimaryHover: "#00c0b5",
-              colorTextPlaceholder: "#00c0b5",
-              itemActiveBgDisabled: "#00c0b5",
-              colorPrimary: "#00c0b5",
-            },
-            Table: {
-              headerBg: "#3F5EAB",
-              headerColor: "rgb(255,255,255)",
-              cellFontSize: 14,
-              headerSplitColor: "#ffffff",
-
-            },
+      theme={{
+        components: {
+          InputNumber: {
+            activeBorderColor: "#00c0b5",
           },
-        }}
+          Pagination: {
+            colorPrimaryBorder: "#00c0b5",
+            colorBorder: "#00c0b5",
+            colorPrimaryHover: "#00c0b5",
+            colorTextPlaceholder: "#00c0b5",
+            itemActiveBgDisabled: "#00c0b5",
+            colorPrimary: "#00c0b5",
+          },
+          Table: {
+            headerBg: "#3F5EAB",
+            headerColor: "rgb(255,255,255)",
+            cellFontSize: 14,
+            headerSplitColor: "#ffffff",
+          },
+        },
+      }}
     >
       <Table
         dataSource={question}
@@ -171,7 +171,7 @@ const QuestionTable = ({ question }) => {
         footer={null}
         destroyOnClose
       >
-        <div className="flex flex-col justify-center items-center py-10">
+        <div className="flex flex-col justify-center items-center py-10 font-title">
           <h1 className="text-3xl text-center text-red-500">Are you sure!</h1>
           <p className="text-xl text-center mt-5">
             Do you really want to delete? Please confirm.
@@ -190,19 +190,18 @@ const QuestionTable = ({ question }) => {
         </div>
       </Modal>
 
-                {/* edit modal */}
-          <Modal
-          open={isEditModalOpen}
-          centered
-          onCancel={handleEditCancel}
-          footer={null}
-        >
-          <div >
-            <h1 className="text-3xl text-center text-[#333333]">Edit Question</h1>
- <EditQuesForm/>
-          </div>
-        </Modal>
-
+      {/* edit modal */}
+      <Modal
+        open={isEditModalOpen}
+        centered
+        onCancel={handleEditCancel}
+        footer={null}
+      >
+        <div>
+          <h1 className="text-3xl text-center text-[#333333]">Edit Question</h1>
+          <EditQuesForm />
+        </div>
+      </Modal>
     </ConfigProvider>
   );
 };

@@ -67,7 +67,7 @@ const TheoryManagementTopicTable = ({topic}) => {
 
 
     return (
-         <div>
+         <div className="font-title">
       <ConfigProvider
      theme={{
           components: {
@@ -105,7 +105,7 @@ const TheoryManagementTopicTable = ({topic}) => {
         footer={null}
         destroyOnClose
       >
-        <div className="flex flex-col justify-center items-center py-10">
+        <div className="flex flex-col justify-center items-center py-10 font-title">
           <h1 className="text-3xl text-center text-red-500">Are you sure!</h1>
           <p className="text-xl text-center mt-5">
             Do you really want to delete? Please confirm.

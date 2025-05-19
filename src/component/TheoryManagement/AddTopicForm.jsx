@@ -21,7 +21,7 @@ const AddTopicForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-md mx-auto p-6 space-y-6"
+      className="max-w-md mx-auto p-6 space-y-6 font-title"
       noValidate
     >
       <div className="flex justify-between space-x-4">

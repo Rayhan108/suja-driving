@@ -34,8 +34,8 @@ function TermsCondition() {
   
     // Save content to localStorage whenever it changes
     const handleSave = () => {
-      localStorage.setItem("privacyPolicyContent", content);
-      toast.success("Privacy Policy Saved Successfully!");
+      localStorage.setItem("termsAndConditionsContent", content);
+      toast.success("Terms And Condition Saved Successfully!");
     };
   
     return (

@@ -23,6 +23,8 @@ import UpdateProfile from "../pages/Profile/UpdateProfile";
 import Terms from "../pages/Terms/Terms";
 import Privacy from "../pages/Privacy/Privacy";
 import PassReset from "../pages/PassReset/PassReset";
+import NotificationPage from "../pages/Notification/NotificationPage";
+import NotificationDetails from "../pages/Notification/NotificationDetails";
 
 const router = createBrowserRouter([
   {
@@ -126,6 +128,15 @@ const router = createBrowserRouter([
         path: "/setting/privacy",
         element: <Privacy />,
       },
+            {
+            path: "/notification",
+            element: <NotificationPage/>,
+          },
+         {
+            // Dynamic route for client details
+            path: "/notification/:id",
+            element: <NotificationDetails />, 
+          },
     ],
   },
 ]);

@@ -86,7 +86,7 @@ console.log("activeTabFromURL",activeTabFromURL);
 
   return (
     <div>
-      <div className="flex justify-between mt-2 mb-12">
+      <div className="flex justify-between mt-2 mb-12 font-title">
         <div className="flex justify-center items-center gap-5">
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
           <p className="text-[#3564d3] font-title text-3xl font-bold">
@@ -111,7 +111,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Tabs for Category, Topic, Question */}
-      <div className="flex gap-9 mb-12"> 
+      <div className="flex gap-9 mb-12 font-title"> 
         <div>
           <Link to="/theoryManagement/category">
             <button

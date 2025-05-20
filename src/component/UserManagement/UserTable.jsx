@@ -52,18 +52,18 @@ const UserTable = ({ user }) => {
       },
     },
 
-   {
-      title: "Message",
-      dataIndex: "message",
-      key: "message",
-      render: (text, record) => (
-        <div className=" ">
-          <button onClick={() => showModal(record)}>
-            <MdOutlineMessage className="text-[#3F5EAB] w-5 h-5" />
-          </button>
-        </div>
-      ),
-    },
+  //  {
+  //     title: "Message",
+  //     dataIndex: "message",
+  //     key: "message",
+  //     render: (text, record) => (
+  //       <div className=" ">
+  //         <button onClick={() => showModal(record)}>
+  //           <MdOutlineMessage className="text-[#3F5EAB] w-5 h-5" />
+  //         </button>
+  //       </div>
+  //     ),
+  //   },
 
     {
       title: "Action",

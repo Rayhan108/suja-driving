@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Input, Checkbox, Divider, Typography } from "antd";
+import { Form, Input, Checkbox, Divider, Typography, message } from "antd";
 import { FaApple, FaGoogle, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoEyeOutline } from "react-icons/io5";
@@ -7,6 +7,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import logo from "../../assets/Logo.png";
 import login from "../../assets/login.png";
 import { Link, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../redux/feature/auth/authApi";
 
 const { Title, Text } = Typography;
 
@@ -14,10 +15,26 @@ const Signin = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const onFinish = (values) => {
-    console.log("Form submitted:", values); // Display form values in the console
+const [login]=useLoginMutation()
+  const onFinish = async (values) => {
+    // console.log("Form submitted:", values); // Display form values in the console
     setLoading(true);
+    try {
+      const res = await login(values).unwrap()
+      console.log("response------->",res);
+      if(res?.success){
+        message.success(res?.message)
+        setLoading(false)
+        navigate('/')
+      }else{
+        message.error(res?.message)
+        setLoading(false)
+      }
+    } catch (error) {
+      console.log("login error",error)
+         message.error(error?.data?.message)
+           setLoading(false)
+    }
     // Add your form submission logic here
 
   };

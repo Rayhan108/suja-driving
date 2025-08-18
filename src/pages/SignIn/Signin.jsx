@@ -5,9 +5,13 @@ import { FcGoogle } from "react-icons/fc";
 import { IoEyeOutline } from "react-icons/io5";
 
 import logo from "../../assets/Logo.png";
-import login from "../../assets/login.png";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../redux/feature/auth/authApi";
+
+import { setUser } from "../../redux/feature/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { verifyToken } from "../../utils/verifyToken";
 
 const { Title, Text } = Typography;
 
@@ -15,16 +19,19 @@ const Signin = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch()
 const [login]=useLoginMutation()
   const onFinish = async (values) => {
     // console.log("Form submitted:", values); // Display form values in the console
     setLoading(true);
     try {
       const res = await login(values).unwrap()
+      const user = verifyToken(res.data.accessToken);
       console.log("response------->",res);
       if(res?.success){
         message.success(res?.message)
         setLoading(false)
+        dispatch(setUser({user: user, token: res.data.accessToken }))
         navigate('/')
       }else{
         message.error(res?.message)

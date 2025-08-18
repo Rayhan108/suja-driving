@@ -19,14 +19,21 @@ import logo from "../../assets/Logo.png";
 import { RiDashboard3Line, RiFeedbackLine, RiLogoutCircleLine } from "react-icons/ri";
 import { SiSimpleanalytics } from "react-icons/si";
 import { CgMail } from "react-icons/cg";
+import { useAppSelector } from "../../redux/hooks";
+import { logout, selectCurrentUser } from "../../redux/feature/auth/authSlice";
+import { useMyProfileQuery } from "../../redux/feature/user/userApi";
+import { useDispatch } from "react-redux";
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const [isSettingsOpen, setIsSettingsOpen] = useState(false); // Track the dropdown state
-  const user = false;
+const dispatch = useDispatch()
+  const user = useAppSelector(selectCurrentUser)
+  console.log("user--->",user);
   // Check if current path matches a menu item
   const isActive = (path) => currentPath === path;
-
+const {data:myProfile}=useMyProfileQuery(undefined)
+console.log("my profile data--->",myProfile);
   // Check if any settings submenu is active
   const isSettingsActive = currentPath.startsWith("/setting");
   console.log("setting active", isSettingsActive);
@@ -38,6 +45,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   // Checks if the current URL path starts with the given path
   const isTheory = (path) => location.pathname.startsWith(path);
   const isAdiTheory = (path) => location.pathname.startsWith(path);
+
+
+const handleLogout=()=>{
+dispatch(logout())
+}
+
   return (
     <div
       className={`fixed lg:static px-3 bg-[#3F5EAB]  w-[70%] sm:w-[70%] md:w-[15%] lg:w-[20%]  overflow-y-auto py-5 md:py-0 z-50 transition-transform font-title ${
@@ -311,16 +324,17 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {/* Logout Button */}
       <div className="absolute bottom-5  w-[90%] px-5">
         {user ? (
-          <Link to="/sign-in">
-            <button className="flex items-center gap-2 w-full px-0 py-3 border-2 text-white rounded-xl duration-200 justify-center">
-              <span className="text-lg text-title font-bold">Login</span>
-            </button>
-          </Link>
-        ) : (
-          <Link to="">
-            <button className="flex items-center gap-2 w-full px-0 py-3 border-2 text-white rounded-xl duration-200 justify-center">
+
+            <button onClick={()=>handleLogout()} className="flex items-center gap-2 w-full px-0 py-3 border-2 text-white rounded-xl duration-200 justify-center">
               <RiLogoutCircleLine className="w-7 h-7 font-bold text-2xl text-white rotate-90" />
               <span className="text-lg text-title font-bold">Logout</span>
+            </button>
+        
+   
+        ) : (
+            <Link to="/sign-in">
+            <button className="flex items-center gap-2 w-full px-0 py-3 border-2 text-white rounded-xl duration-200 justify-center">
+              <span className="text-lg text-title font-bold">Login</span>
             </button>
           </Link>
         )}

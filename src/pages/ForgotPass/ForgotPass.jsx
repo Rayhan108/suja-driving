@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Form, Input, Checkbox, Divider, Typography } from "antd";
+import { Form, Input, Checkbox, Divider, Typography, message } from "antd";
 
 import { Link, useNavigate } from "react-router-dom";
+import { useSendOtpMutation } from "../../redux/feature/auth/authApi";
 
 
 
@@ -9,12 +10,30 @@ const ForgotPass = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const onFinish = (values) => {
+const [sendOtp] =useSendOtpMutation()
+  const onFinish = async(values) => {
     console.log("Form submitted:", values); // Display form values in the console
     setLoading(true);
-    // Add your form submission logic here
-navigate("/verify")
+    try {
+      const res = await sendOtp(values).unwrap()
+
+      console.log("response------->",res);
+ 
+      if(res?.success){
+        message.success(res?.message)
+        setLoading(false)
+        navigate('/verify')
+      }else{
+        message.error(res?.message)
+        setLoading(false)
+      }
+    } catch (error) {
+      console.log("login error",error)
+         message.error(error?.data?.message)
+           setLoading(false)
+    }
+ 
+
   };
   return (
     <div  className="flex flex-col justify-center min-h-screen">

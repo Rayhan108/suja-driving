@@ -1,16 +1,35 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useVerifyOtpMutation } from '../../redux/feature/auth/authApi';
+import { useAppSelector } from '../../redux/hooks';
+import { selectCurrentUser } from '../../redux/feature/auth/authSlice';
 
 export default function Verify() {
   const navigate = useNavigate()
   const { register, handleSubmit, watch } = useForm({
     mode: 'onChange',
   });
+  const user = useAppSelector(selectCurrentUser)
+  console.log("user----->",user);
+const [verifyOtp]=useVerifyOtpMutation()
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
+    const verifyCode = `${data.digit1}${data.digit2}${data.digit3}${data.digit4}${data.digit5}${data.digit6}`;
+
     console.log(data);
+    const modifiedData={
+      email:data?.email,
+      verifyCode:parseInt(verifyCode)
+    }
+          console.log("verify otp data--->",modifiedData);
     // handle code verification here
+    try {
+      const res = await verifyOtp(modifiedData).unwrap()
+      console.log("verify otp response--->",res);
+    } catch (error) {
+      
+    }
     navigate("/passReset")
   };
 
@@ -25,19 +44,31 @@ export default function Verify() {
         enter 5 digit code that mentioned in the email
       </p>
 
-      <form className="flex justify-between w-full mb-6" onSubmit={handleSubmit(onSubmit)}>
-        {[...Array(5)].map((_, i) => (
-          <input
-            key={i}
-            type="text"
-            maxLength={1}
-            {...register(`digit${i + 1}`, { required: true, pattern: /^[0-9]$/ })}
-            className="w-10 h-10 border border-gray-300 rounded-md text-center text-lg focus:outline-none focus:border-blue-600"
-            inputMode="numeric"
-          />
-        ))}
-      </form>
+      <form className="flex flex-col w-full mb-6" onSubmit={handleSubmit(onSubmit)}>
+        {/* Email input */}
+        <input
+          type="email"
+          placeholder="Enter your email"
+          {...register('email', { required: 'Email is required', pattern: /^[^@]+@[^@]+\.[^@]+$/ })}
+          className="w-full h-10 mb-4 px-3 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
+        />
 
+        {/* OTP input */}
+        <div className="flex justify-between w-full mb-6">
+          {[...Array(6)].map((_, i) => (
+            <input
+              key={i}
+              type="text"
+              maxLength={1}
+              {...register(`digit${i + 1}`, { required: true, pattern: /^[0-9]$/ })}
+              className="w-10 h-10 border border-gray-300 rounded-md text-center text-lg focus:outline-none focus:border-blue-600"
+              inputMode="numeric"
+            />
+          ))}
+        </div>
+
+        {/* Submit button */}
+     
       <button
         type="submit"
         onClick={handleSubmit(onSubmit)}
@@ -45,6 +76,9 @@ export default function Verify() {
       >
         Verify Code
       </button>
+      </form>
+
+
 
       <p className="text-xs text-gray-500">
         You have not received the email?{' '}

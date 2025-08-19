@@ -1,6 +1,11 @@
 import { useForm } from "react-hook-form";
+import { useCreateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
+import { message } from "antd";
+import { useState } from "react";
 
 const AddCategoryForm = () => {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [createCategory] = useCreateCategoryMutation()
   const {
     register,
     handleSubmit,
@@ -8,9 +13,44 @@ const AddCategoryForm = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  const onSubmit = async(data) => {
+    console.log("Form Data:------>", data);
+      // Creating a new FormData object to handle the form submission
+  const formData = new FormData();
+
+  // Appending fields to the FormData object
+  formData.append("data", JSON.stringify({
+    name:data?.name,
+    testType:data?.testType,
+
+  }));
+
+  // Appending the image file
+  if (data?.category_image) {
+    console.log("inside if block");
+    formData.append("category_image",data?.category_image);  // assuming 'data.image' is the file object
+  }
+
+
+        // Log the FormData contents
+  console.log("Form Data Contents:");
+  for (let [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
+    try {
+      const res = await createCategory(formData).unwrap()
+      console.log("response--->",res);
+         if (res?.success) {
+        message.success(res?.message);
     reset();
+      } else {
+        message.error(res?.message);
+       
+      }
+    } catch (error) {
+          message.error(error?.data?.message);
+    }
+
   };
 
   const onCancel = () => {
@@ -29,13 +69,28 @@ const AddCategoryForm = () => {
             Category Name
           </label>
           <input
-            {...register("categoryName", { required: true })}
+            {...register("name", { required: true })}
             placeholder="category..."
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           />
           {errors.categoryName && (
             <p className="text-red-500 text-sm mt-1">
               Category Name is required
+            </p>
+          )}
+        </div>
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Test Type
+          </label>
+          <input
+            {...register("testType", { required: true })}
+            placeholder="test type..."
+            className="w-full border border-gray-300 rounded-md px-3 py-2"
+          />
+          {errors.categoryName && (
+            <p className="text-red-500 text-sm mt-1">
+              Test Type is required
             </p>
           )}
         </div>
@@ -63,10 +118,21 @@ const AddCategoryForm = () => {
               />
             </svg>
             <input
-              {...register("icon", { required: true })}
+              {...register("category_image", { required: true })}
               id="file-upload"
               type="file"
               className="hidden"
+                      onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  setSelectedImage(reader.result); // Update the image preview
+                };
+                reader.readAsDataURL(file); // Convert file to base64 string
+                onChange(file); // Pass the file to react-hook-form
+              }
+            }}
             />
           </label>
           {errors.icon && (

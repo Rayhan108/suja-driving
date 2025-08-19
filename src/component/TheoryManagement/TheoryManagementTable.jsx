@@ -1,11 +1,9 @@
-import { Checkbox, ConfigProvider, Input, Modal, Table } from "antd";
-import TextArea from "antd/es/input/TextArea";
+import { ConfigProvider, Input, Modal, Table } from "antd";
 import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
-import { Link } from "react-router-dom";
 import EditCategoryForm from "./EditCategoryForm";
 
-const TheoryManagementTable = ({ category }) => {
+const TheoryManagementTable = ({ category,meta }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const showModal = () => {
@@ -21,7 +19,7 @@ const TheoryManagementTable = ({ category }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
+console.log("category---->",category);
   const columns = [
     {
     title: "SL",
@@ -32,14 +30,14 @@ const TheoryManagementTable = ({ category }) => {
   },
     {
       title: "Category Name",
-      dataIndex: "categoryName",
-      key: "categoryName",
+      dataIndex: "name",
+      key: "name",
       align: "center", // Center-aligned Category Name column
     },
     {
       title: "Category Icon",
-      dataIndex: "categoryIcon",
-      key: "categoryIcon",
+      dataIndex: "category_image",
+      key: "category_image",
       align: "center", // Center-aligned Category Icon column
       render: (text) => <div style={{ display: "flex", justifyContent: "center" }}> <img src={text} alt="Category Icon" style={{ width: 70, height: 40 }} /></div> ,
     },

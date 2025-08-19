@@ -5,61 +5,17 @@ import TheoryManagementTable from "../../component/TheoryManagement/TheoryManage
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AddCategoryForm from "../../component/TheoryManagement/AddCategoryForm";
+import { useGetAllCateroryQuery } from "../../redux/feature/theoryManagement/theoryApi";
+
 
 const TheoryManagement = () => {
-  const category = [
-    {
-      "sl": "01",
-      "categoryName": "Bus",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "02",
-      "categoryName": "Car",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "03",
-      "categoryName": "Bike",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "04",
-      "categoryName": "Train",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "05",
-      "categoryName": "Plane",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "06",
-      "categoryName": "Boat",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "07",
-      "categoryName": "Truck",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "08",
-      "categoryName": "Ship",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "09",
-      "categoryName": "Scooter",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    },
-    {
-      "sl": "10",
-      "categoryName": "Helicopter",
-      "categoryIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-    }
-  ];
 
+    const [searchTerm, setSearchTerm] = useState(""); 
+const {data:allCategory}=useGetAllCateroryQuery(searchTerm)
+
+console.log("all category--->",allCategory);
+const meta = allCategory?.data?.meta;
+const category = allCategory?.data?.result
   const location = useLocation(); // Get the current location (URL)
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
@@ -83,7 +39,9 @@ console.log("activeTabFromURL",activeTabFromURL);
     setDeleteId(null);
   };
 
-
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
+  };
   return (
     <div>
       <div className="flex justify-between mt-2 mb-12 font-title">
@@ -99,6 +57,7 @@ console.log("activeTabFromURL",activeTabFromURL);
               type="text"
               placeholder="Search anything here..."
               className="border border-[#e5eaf2] py-3 outline-none w-full rounded-full px-3"
+                onChange={handleSearchChange} // Handle input change
             />
             <span className="text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center cursor-pointer">
               <IoSearch className="text-[1.3rem]" />
@@ -154,7 +113,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTable category={category} />
+      <TheoryManagementTable category={category} meta={meta}/>
 
 
 

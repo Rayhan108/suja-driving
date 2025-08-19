@@ -1,26 +1,48 @@
 import { useState } from "react";
-import { Form, Input, Checkbox, Divider, Typography } from "antd";
+import { Form, Input, Checkbox, Divider, Typography, message } from "antd";
 import { FaApple, FaGoogle, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoEyeOutline } from "react-icons/io5";
 
 import logo from "../../assets/Logo.png";
 import login from "../../assets/login.png";
-import { Link, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
+import {
+
+  useResetPassMutation,
+} from "../../redux/feature/auth/authApi";
 
 const { Title, Text } = Typography;
 
 const Signin = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const onFinish = (values) => {
+  const [loading, setLoading] = useState(false);
+  const [resetPassword] = useResetPassMutation();
+
+  const onFinish = async (values) => {
     console.log("Form submitted:", values); // Display form values in the console
     setLoading(true);
-    // Add your form submission logic here
-    navigate("/");
+    try {
+      setEmail(values?.email);
+      const res = await resetPassword(values).unwrap();
+      console.log("reset pass response--->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        setLoading(false);
+        navigate("/sign-in");
+      } else {
+        message.error(res?.message);
+        setLoading(false);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+      setLoading(false);
+    }
   };
+
+
   return (
     <div className="max-w-7xl mx-auto w-full flex md:flex-row flex-col justify-center items-center gap-8 md:ml-16 lg:ml-96 min-h-screen">
       <div className="flex w-1/2 bg-white] rounded-lg overflow-hidden font-title shadow-2xl ">
@@ -42,10 +64,32 @@ const Signin = () => {
               className="space-y-6"
               initialValues={{ remember: true }}
             >
+              {" "}
+              {/* Email Field */}
+              <div className="">
+                <Form.Item
+                  name="email"
+                  rules={[
+                    { required: true, message: "Please input your email!" },
+                    { type: "email", message: "Please enter a valid email!" },
+                  ]}
+                >
+                  <div>
+                    <label className={` px-1 text-lg bg-white transition-all`}>
+                      Email
+                    </label>
+                    <Input
+                      placeholder="john.doe@gmail.com"
+                      type="email"
+                      className="w-full px-3 py-5 border border-[#3F5EAB] rounded-md focus:outline-none focus:ring-2 "
+                    />
+                  </div>
+                </Form.Item>
+              </div>
               {/* Password Field */}
               <div className=" pt-2">
                 <Form.Item
-                  name="newPassword" // This binds the input to form state
+                  name="password" // This binds the input to form state
                   rules={[
                     { required: true, message: "Please input your password!" },
                   ]}
@@ -76,7 +120,7 @@ const Signin = () => {
               {/*confirm Password Field */}
               <div className=" pt-2">
                 <Form.Item
-                  name="confirmNewPassword" // This binds the input to form state
+                  name="confirmPassword" // This binds the input to form state
                   rules={[
                     { required: true, message: "Please input your password!" },
                   ]}
@@ -104,7 +148,6 @@ const Signin = () => {
                   </div>
                 </Form.Item>
               </div>
-
               {/* Login Button */}
               <Form.Item>
                 <button

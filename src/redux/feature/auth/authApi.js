@@ -19,6 +19,15 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    resendOtp: builder.mutation({
+      query: (args) => ({
+        url: '/auth/resend-reset-code',
+        method: "POST",
+        body: args,
+        
+      }),
+      invalidatesTags: ["user"],
+    }),
     verifyOtp: builder.mutation({
       query: (args) => ({
         url: '/auth/verify-reset-otp',
@@ -37,17 +46,9 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
-    changePassword: builder.mutation({
-      query: (args) => ({
-        url: '/auth/change-password',
-        method: "POST",
-        body: args,
-        
-      }),
-      invalidatesTags: ["user"],
-    }),
+
 
   }),
 });
 
-export const { useLoginMutation,useChangePasswordMutation,useResetPassMutation,useSendOtpMutation,useVerifyOtpMutation} = authApi;
+export const { useLoginMutation,useResetPassMutation,useSendOtpMutation,useVerifyOtpMutation,useResendOtpMutation} = authApi;

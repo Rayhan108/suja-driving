@@ -3,9 +3,12 @@ import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import UserTable from "../../component/UserManagement/UserTable";
 import { SlArrowLeft } from "react-icons/sl";
-
 const UserManagement = () => {
       const [activeTab, setActiveTab] = useState("allOrder");
+        const [searchTerm, setSearchTerm] = useState(""); 
+          const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
+  };
   const user = [
   {
     userId: "U12345",
@@ -115,6 +118,8 @@ const UserManagement = () => {
 ];
 
 
+
+
     return (
         <div className="title">
         <div className="flex justify-between mb-12 mt-5"> 
@@ -130,6 +135,7 @@ const UserManagement = () => {
               type="text"
               placeholder="Search anything here..."
               className="border border-[#e5eaf2] py-3   outline-none w-full rounded-full px-3"
+                onChange={handleSearchChange} // Handle input change
             />
             <span className=" text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center  cursor-pointer">
               <IoSearch className="text-[1.3rem]" />
@@ -139,7 +145,7 @@ const UserManagement = () => {
         </div>
 
     {/* Table with filtered data */}
-    <UserTable user={user} />
+    <UserTable searchTerm={searchTerm}/>
   </div>
     );
 };

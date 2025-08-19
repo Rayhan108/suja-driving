@@ -2,11 +2,14 @@ import { ConfigProvider, Input, Modal, Table } from "antd";
 import Checkbox from "antd/es/checkbox/Checkbox";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
-import { MdBlockFlipped, MdOutlineMessage } from "react-icons/md";
-import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { MdBlockFlipped, } from "react-icons/md";
+import { useGetAllUserQuery } from "../../redux/feature/user/userApi";
 
-const UserTable = ({ user }) => {
+
+
+const UserTable = ({searchTerm}) => {
+  const {data:allUser}=useGetAllUserQuery(searchTerm)
+  console.log("all user--->",allUser?.data?.result);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = (userdata) => {
 
@@ -34,22 +37,22 @@ const UserTable = ({ user }) => {
       key: "email",
     },
     {
-      title: "Test Type",
-      dataIndex: "test-type",
-      key: "test-type",
+      title: "Country",
+      dataIndex: "country",
+      key: "country",
     },
 
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (text) => {
-        let color = "";
-        if (text === "Active") color = "bg-green-500 p-2 rounded-xl ";
-        else if (text === "Deactive") color = "bg-[#CFC9DD] p-2 rounded-xl ";
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+      // render: (text) => {
+      //   let color = "";
+      //   if (text === "Active") color = "bg-green-500 p-2 rounded-xl ";
+      //   else if (text === "Deactive") color = "bg-[#CFC9DD] p-2 rounded-xl ";
 
-        return <div className={`font-semibold ${color} `}>{text}</div>;
-      },
+      //   return <div className={`font-semibold ${color} `}>{text}</div>;
+      // },
     },
 
   //  {
@@ -109,7 +112,7 @@ const UserTable = ({ user }) => {
 
 
         <Table
-          dataSource={user}
+          dataSource={allUser?.data?.result}
          columns={columns.map((column) => ({
     ...column,
     align: 'center', // Center align content for every column

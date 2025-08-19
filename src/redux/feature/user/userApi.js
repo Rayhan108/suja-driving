@@ -9,6 +9,12 @@ const userApi = baseApi.injectEndpoints({
         method: "GET",      
       }),
     }),
+    getAllUser: builder.query({
+      query: (searchTerm) => ({
+        url:`/normal-user/get-all-user?searchTerm=${searchTerm}`,
+        method: "GET",      
+      }),
+    }),
 
   }),
 
@@ -17,4 +23,4 @@ const userApi = baseApi.injectEndpoints({
 
 });
 
-export const {useMyProfileQuery} =userApi;
+export const {useMyProfileQuery,useGetAllUserQuery} =userApi;

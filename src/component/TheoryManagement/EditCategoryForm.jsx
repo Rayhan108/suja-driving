@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-const EditCategoryForm = () => {
+const EditCategoryForm = ({refetch}) => {
   const {
     register,
     handleSubmit,

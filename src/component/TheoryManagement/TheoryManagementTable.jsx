@@ -3,7 +3,7 @@ import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import EditCategoryForm from "./EditCategoryForm";
 
-const TheoryManagementTable = ({ category,meta }) => {
+const TheoryManagementTable = ({ category,refetch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const showModal = () => {
@@ -127,7 +127,7 @@ console.log("category---->",category);
         >
           <div >
             <h1 className="text-3xl text-center text-[#333333]">Edit Category</h1>
- <EditCategoryForm/>
+ <EditCategoryForm refetch={refetch}/>
           </div>
         </Modal>
       </ConfigProvider>

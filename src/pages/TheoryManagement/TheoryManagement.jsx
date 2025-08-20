@@ -11,7 +11,7 @@ import { useGetAllCateroryQuery } from "../../redux/feature/theoryManagement/the
 const TheoryManagement = () => {
 
     const [searchTerm, setSearchTerm] = useState(""); 
-const {data:allCategory}=useGetAllCateroryQuery(searchTerm)
+const {data:allCategory,refetch}=useGetAllCateroryQuery(searchTerm)
 
 console.log("all category--->",allCategory);
 const meta = allCategory?.data?.meta;
@@ -113,7 +113,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTable category={category} meta={meta}/>
+      <TheoryManagementTable category={category} refetch={refetch}/>
 
 
 
@@ -126,7 +126,7 @@ console.log("activeTabFromURL",activeTabFromURL);
  
       >
   <div>
-    <AddCategoryForm/>
+    <AddCategoryForm refetch={refetch}/>
   </div>
       </Modal>
     </div>

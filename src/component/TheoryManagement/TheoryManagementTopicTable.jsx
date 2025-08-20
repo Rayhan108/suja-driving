@@ -1,15 +1,16 @@
 
-import { Checkbox, ConfigProvider, Input, Modal, Table } from "antd";
-import TextArea from "antd/es/input/TextArea";
+import { Checkbox, ConfigProvider, Input, message, Modal, Table } from "antd";
 import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
-import { Link } from "react-router-dom";
 import EditTopicForm from "./EditTopicForm";
+import { useDeleteTopicMutation } from "../../redux/feature/theoryManagement/theoryApi";
 const TheoryManagementTopicTable = ({topic,refetch}) => {
     // console.log(topic);
       const [singleData, setSingleData] = useState({});
       const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
+      const [deleteTopic]=useDeleteTopicMutation()
+  const showModal = (id) => {
+    setSingleData(id)
     setIsModalOpen(true);
   };
   const handleCancel = () => {
@@ -25,6 +26,24 @@ const TheoryManagementTopicTable = ({topic,refetch}) => {
   };
   const handleEditCancel = () => {
     setEditModalOpen(false);
+  };
+
+
+    const handleDelete = async (id) => {
+    console.log("delete id-->",id);
+    try {
+      const res = await deleteTopic(id).unwrap();
+      console.log("response-->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        refetch();
+      } else {
+        message.error(res?.data?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
+    setIsModalOpen(false);
   };
   const columns = [
     {
@@ -58,7 +77,7 @@ const TheoryManagementTopicTable = ({topic,refetch}) => {
               <RiEdit2Line className="text-black  w-5 h-5" />
             </button>
   
-          <button onClick={showModal}>
+          <button onClick={()=>showModal(record)}>
             <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
           </button>
         </div>
@@ -115,8 +134,7 @@ const TheoryManagementTopicTable = ({topic,refetch}) => {
           <div className="text-center py-5 w-full">
             <button
               onClick={() => {
-                // handle delete logic here
-                setIsModalOpen(false);
+                handleDelete(singleData?._id);
               }}
               className="bg-red-500 text-white font-semibold w-1/3 py-3 px-5 rounded-lg"
             >

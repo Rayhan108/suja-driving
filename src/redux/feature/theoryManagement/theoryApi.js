@@ -54,6 +54,16 @@ deleteCategory: builder.mutation({
     };
   },
 }),
+deleteTopic: builder.mutation({
+  query: (id) => {
+    console.log("Received ID in mutation query:", id); // Log to see if the id is passed correctly
+    return {
+      url: `/topic/delete-topic/${id}`,
+      method: "DELETE",
+    
+    };
+  },
+}),
 
 
   }),
@@ -63,4 +73,4 @@ deleteCategory: builder.mutation({
 
 });
 
-export const {useGetAllCateroryQuery,useCreateCategoryMutation,useUpdateCategoryMutation,useDeleteCategoryMutation,useGetAllTopicQuery,useCreateTopicMutation,useUpdateTopicMutation} =theoryApi;
+export const {useGetAllCateroryQuery,useCreateCategoryMutation,useUpdateCategoryMutation,useDeleteCategoryMutation,useGetAllTopicQuery,useCreateTopicMutation,useUpdateTopicMutation,useDeleteTopicMutation} =theoryApi;

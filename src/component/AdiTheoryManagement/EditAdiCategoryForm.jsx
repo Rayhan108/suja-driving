@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
+import { useUpdateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
+import { message } from "antd";
 
-const EditAdiCategoryForm = () => {
+const EditAdiCategoryForm = ({refetch,singleData}) => {
+  console.log("single data->",singleData);
+  const [updateCategory]=useUpdateCategoryMutation()
   const {
     register,
     handleSubmit,
@@ -8,28 +12,65 @@ const EditAdiCategoryForm = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     console.log("Form Data:", data);
-    reset();
+     // Creating a new FormData object to handle the form submission
+        const formData = new FormData();
+    
+        // Appending fields to the FormData object
+        formData.append(
+          "data",
+          JSON.stringify({
+            name: data?.name,
+            testType: singleData?.testType,
+          })
+        );
+    
+        const file = data?.category_image?.[0];
+        if (file) {
+          formData.append("category_image", file, file.name);
+        } 
+    
+        // Log the FormData contents
+        console.log("Form Data Contents:");
+        for (let [key, value] of formData.entries()) {
+          console.log(`${key}:`, value);
+        }
+        try {
+          const res = await updateCategory({
+      args: formData,
+      id: singleData?._id,
+    }).unwrap();
+          console.log("response--->", res);
+          if (res?.success) {
+            message.success(res?.message);
+            refetch()
+            reset();
+          } else {
+            message.error(res?.message);
+          }
+        } catch (error) {
+          message.error(error?.data?.message);
+        }
+  
   };
 
   const onCancel = () => {
     reset();
   };
-
   return (
     <div>
-      <form
+        <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-md mx-auto p-6 space-y-6"
+        className="max-w-md mx-auto p-6 space-y-6 font-title"
         noValidate
       >
         <div>
-          <label className="block mb-1 font-medium text-gray-700">
+          <label className="block mb-1 font-medium text-gray-700 font-title">
             Category Name
           </label>
           <input
-            {...register("categoryName", { required: true })}
+            {...register("name", { required: true })}
             placeholder="category..."
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           />
@@ -63,20 +104,17 @@ const EditAdiCategoryForm = () => {
               />
             </svg>
             <input
-              {...register("icon", { required: true })}
               id="file-upload"
               type="file"
+              accept="image/*"
               className="hidden"
+              {...register("category_image")}
             />
           </label>
-          {errors.icon && (
-            <p className="text-red-500 text-sm mt-1">
-              Upload Field is required
-            </p>
-          )}
+     
         </div>
 
-        <div className="flex gap-12  mt-6">
+        <div className="flex gap-12  mt-6 font-title">
           <button
             type="button"
             onClick={onCancel}

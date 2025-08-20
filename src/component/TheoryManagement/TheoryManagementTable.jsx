@@ -3,6 +3,8 @@ import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import EditCategoryForm from "./EditCategoryForm";
 import { useDeleteCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
+import { BsEye } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const TheoryManagementTable = ({ category, refetch }) => {
   const [singleData, setSingleData] = useState({});
@@ -86,6 +88,11 @@ const TheoryManagementTable = ({ category, refetch }) => {
           <button onClick={() => showModal(record)}>
             <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
           </button>
+                 <Link to={`/theoryManagement/topic/${record?._id}`}>
+          <button >
+            <BsEye className="text-black   w-5 h-5" />
+          </button>
+          </Link>
         </div>
       ),
     },

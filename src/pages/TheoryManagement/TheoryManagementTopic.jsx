@@ -1,7 +1,7 @@
 import { Input, Modal } from "antd";
 import { IoSearch } from "react-icons/io5";
 import { SlArrowLeft } from "react-icons/sl";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import TheoryManagementTopicTable from "../../component/TheoryManagement/TheoryManagementTopicTable";
 import AddTopicForm from "../../component/TheoryManagement/AddTopicForm";
@@ -11,9 +11,11 @@ import {
 } from "../../redux/feature/theoryManagement/theoryApi";
 
 const TheoryManagementTopic = () => {
+  const {id} = useParams()
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: allCategory } = useGetAllCateroryQuery(searchTerm);
-  const { data: allTopic, refetch } = useGetAllTopicQuery(undefined);
+const type = "THEORY"
+const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
+  const { data: allTopic, refetch } = useGetAllTopicQuery(id);
   const topic = allTopic?.data?.result;
 
   console.log("all category--->", allCategory);

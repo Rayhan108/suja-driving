@@ -29,9 +29,6 @@ const EditCategoryForm = ({refetch,singleData}) => {
         const file = data?.category_image?.[0];
         if (file) {
           formData.append("category_image", file, file.name);
-        } else {
-          message.error("Please select an image file.");
-          return;
         }
     
         // Log the FormData contents
@@ -112,17 +109,10 @@ const EditCategoryForm = ({refetch,singleData}) => {
               type="file"
               accept="image/*"
               className="hidden"
-              {...register("category_image", {
-                required: "Upload is required",
-                validate: (fl) => (fl && fl.length > 0) || "Upload is required",
-              })}
+              {...register("category_image",)}
             />
           </label>
-          {errors.icon && (
-            <p className="text-red-500 text-sm mt-1">
-              Upload Field is required
-            </p>
-          )}
+
         </div>
 
         <div className="flex gap-12  mt-6 font-title">

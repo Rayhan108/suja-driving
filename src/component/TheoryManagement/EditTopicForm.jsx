@@ -28,10 +28,7 @@ const EditTopicForm = ({singleData,refetch}) => {
         const file = data?.topic_icon?.[0];
         if (file) {
           formData.append("topic_icon", file, file.name);
-        } else {
-          message.error("Please select an image file.");
-          return;
-        }
+        } 
     
         // Log the FormData contents
         console.log("Form Data Contents:");
@@ -111,17 +108,10 @@ const EditTopicForm = ({singleData,refetch}) => {
               type="file"
               accept="image/*"
               className="hidden"
-              {...register("topic_icon", {
-                required: "Upload is required",
-                validate: (fl) => (fl && fl.length > 0) || "Upload is required",
-              })}
+              {...register("topic_icon")}
             />
           </label>
-          {errors.topic_icon && (
-            <p className="text-red-500 text-sm mt-1">
-              Upload Field is required
-            </p>
-          )}
+    
         </div>
 
         <div className="flex gap-12  mt-6">

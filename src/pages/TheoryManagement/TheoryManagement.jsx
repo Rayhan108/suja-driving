@@ -11,7 +11,8 @@ import { useGetAllCateroryQuery } from "../../redux/feature/theoryManagement/the
 const TheoryManagement = () => {
 
     const [searchTerm, setSearchTerm] = useState(""); 
-const {data:allCategory,refetch}=useGetAllCateroryQuery(searchTerm)
+const type = "THEORY"
+const {data:allCategory,refetch}=useGetAllCateroryQuery({searchTerm,type})
 
 console.log("all category--->",allCategory);
 const meta = allCategory?.data?.meta;
@@ -85,7 +86,7 @@ console.log("activeTabFromURL",activeTabFromURL);
           </Link>
         </div>
         <div>
-          <Link to="/theoryManagement/topic">
+          {/* <Link to="/theoryManagement/topic"> */}
             <button
               className={`${
                 activeTab === "topic"
@@ -95,7 +96,7 @@ console.log("activeTabFromURL",activeTabFromURL);
             >
               Topic
             </button>
-          </Link>
+          {/* </Link> */}
         </div>
         <div>
           <Link to="/theoryManagement/question">

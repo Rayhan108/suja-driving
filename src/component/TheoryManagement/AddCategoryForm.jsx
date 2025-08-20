@@ -2,8 +2,7 @@ import { useForm } from "react-hook-form";
 import { useCreateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { message } from "antd";
 
-const AddCategoryForm = ({refetch}) => {
-
+const AddCategoryForm = ({ refetch }) => {
   const [createCategory] = useCreateCategoryMutation();
   const {
     register,
@@ -22,7 +21,7 @@ const AddCategoryForm = ({refetch}) => {
       "data",
       JSON.stringify({
         name: data?.name,
-        testType: data?.testType,
+        testType: "THEORY",
       })
     );
 
@@ -44,7 +43,7 @@ const AddCategoryForm = ({refetch}) => {
       console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
-        refetch()
+        refetch();
         reset();
       } else {
         message.error(res?.message);
@@ -80,22 +79,22 @@ const AddCategoryForm = ({refetch}) => {
             </p>
           )}
         </div>
-  <div>
-  <label className="block mb-1 font-medium text-gray-700">
-    Test Type
-  </label>
-  <select
-    {...register("testType", { required: true })}
-    className="w-full border border-gray-300 rounded-md px-3 py-2"
-  >
-    <option value="">Select Test Type</option>
-    <option value="ADI">ADI</option>
-    <option value="THEORY">THEORY</option>
-  </select>
-  {errors.testType && (
-    <p className="text-red-500 text-sm mt-1">Test Type is required</p>
-  )}
-</div>
+        {/* <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Test Type
+          </label>
+          <select
+            {...register("testType", { required: true })}
+            className="w-full border border-gray-300 rounded-md px-3 py-2"
+          >
+            <option value="">Select Test Type</option>
+            <option value="ADI">ADI</option>
+            <option value="THEORY">THEORY</option>
+          </select>
+          {errors.testType && (
+            <p className="text-red-500 text-sm mt-1">Test Type is required</p>
+          )}
+        </div> */}
 
         <div>
           <label className="block mb-1 font-medium text-gray-700">

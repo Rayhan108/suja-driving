@@ -1,15 +1,19 @@
 
-import { Checkbox, ConfigProvider, Input, Modal, Table } from "antd";
+import { Checkbox, ConfigProvider, Input, message, Modal, Table } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 import EditAdiTopicForm from "./EditAdiTopicForm";
-const AdiTheoryManagementTopicTable = ({topic}) => {
-    // console.log(topic);
+import { useDeleteTopicMutation } from "../../redux/feature/theoryManagement/theoryApi";
+const AdiTheoryManagementTopicTable = ({topic,refetch}) => {
+     // console.log(topic);
+      const [singleData, setSingleData] = useState({});
       const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
+      const [deleteTopic]=useDeleteTopicMutation()
+  const showModal = (id) => {
+    setSingleData(id)
     setIsModalOpen(true);
   };
   const handleCancel = () => {
@@ -20,10 +24,29 @@ const AdiTheoryManagementTopicTable = ({topic}) => {
 
   const showEditModal = (id) => {
     console.log("id",id);
+        setSingleData(id);
     setEditModalOpen(true);
   };
   const handleEditCancel = () => {
     setEditModalOpen(false);
+  };
+
+
+    const handleDelete = async (id) => {
+    console.log("delete id-->",id);
+    try {
+      const res = await deleteTopic(id).unwrap();
+      console.log("response-->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        refetch();
+      } else {
+        message.error(res?.data?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
+    setIsModalOpen(false);
   };
   const columns = [
     {
@@ -35,16 +58,16 @@ const AdiTheoryManagementTopicTable = ({topic}) => {
   },
     {
       title: "Topic Name",
-      dataIndex: "topicName",
-      key: "topicName",
+      dataIndex: "name",
+      key: "name",
       align: "center", 
     },
     {
       title: "Topic  Icon",
-      dataIndex: "topicIcon",
-      key: "categoryIcon",
+      dataIndex: "topic_icon",
+      key: "topic_icon",
       align: "center", 
-      render: (text) => <div style={{ display: "flex", justifyContent: "center" }}> <img src={text} alt="Category Icon" style={{ width: 70, height: 40 }} /></div>,
+      render: (text) => <div style={{ display: "flex", justifyContent: "center" }}><img src={text} alt="Category Icon" style={{ width: 70, height: 40 }} /> </div> ,
     },
     {
       title: "Action",
@@ -57,7 +80,7 @@ const AdiTheoryManagementTopicTable = ({topic}) => {
               <RiEdit2Line className="text-black  w-5 h-5" />
             </button>
   
-          <button onClick={showModal}>
+          <button onClick={()=>showModal(record)}>
             <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
           </button>
         </div>
@@ -111,17 +134,14 @@ const AdiTheoryManagementTopicTable = ({topic}) => {
           <p className="text-xl text-center mt-5">
             Do you really want to delete? Please confirm.
           </p>
-          <div className="text-center py-5 w-full">
-            <button
+         <button
               onClick={() => {
-                // handle delete logic here
-                setIsModalOpen(false);
+                handleDelete(singleData?._id);
               }}
               className="bg-red-500 text-white font-semibold w-1/3 py-3 px-5 rounded-lg"
             >
               CONFIRM
             </button>
-          </div>
         </div>
       </Modal>
                 {/* edit modal */}
@@ -133,7 +153,7 @@ const AdiTheoryManagementTopicTable = ({topic}) => {
         >
           <div >
             <h1 className="text-3xl text-center text-[#333333]">Edit Topic</h1>
- <EditAdiTopicForm/>
+ <EditAdiTopicForm refetch={refetch} singleData={singleData}/>
           </div>
         </Modal>
       </ConfigProvider>

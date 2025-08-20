@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
+import { useCreateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
+import { message } from "antd";
 
-const AddAdiCategoryForm = () => {
+const AddAdiCategoryForm = ({refetch}) => {
+  const [createCategory] = useCreateCategoryMutation();
   const {
     register,
     handleSubmit,
@@ -8,9 +11,46 @@ const AddAdiCategoryForm = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    reset();
+  const onSubmit = async (data) => {
+    console.log("Form Data:------>", data);
+    // Creating a new FormData object to handle the form submission
+    const formData = new FormData();
+
+    // Appending fields to the FormData object
+    formData.append(
+      "data",
+      JSON.stringify({
+        name: data?.name,
+        testType: "ADI",
+      })
+    );
+
+    const file = data?.category_image?.[0];
+    if (file) {
+      formData.append("category_image", file, file.name);
+    } else {
+      message.error("Please select an image file.");
+      return;
+    }
+
+    // Log the FormData contents
+    console.log("Form Data Contents:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+    try {
+      const res = await createCategory(formData).unwrap();
+      console.log("response--->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        refetch();
+        reset();
+      } else {
+        message.error(res?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
   };
 
   const onCancel = () => {
@@ -19,9 +59,9 @@ const AddAdiCategoryForm = () => {
 
   return (
     <div>
-      <form
+     <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-md mx-auto p-6 space-y-6"
+        className="max-w-md mx-auto p-6 space-y-6 font-title"
         noValidate
       >
         <div>
@@ -29,7 +69,7 @@ const AddAdiCategoryForm = () => {
             Category Name
           </label>
           <input
-            {...register("categoryName", { required: true })}
+            {...register("name", { required: true })}
             placeholder="category..."
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           />
@@ -39,6 +79,22 @@ const AddAdiCategoryForm = () => {
             </p>
           )}
         </div>
+        {/* <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Test Type
+          </label>
+          <select
+            {...register("testType", { required: true })}
+            className="w-full border border-gray-300 rounded-md px-3 py-2"
+          >
+            <option value="">Select Test Type</option>
+            <option value="ADI">ADI</option>
+            <option value="THEORY">THEORY</option>
+          </select>
+          {errors.testType && (
+            <p className="text-red-500 text-sm mt-1">Test Type is required</p>
+          )}
+        </div> */}
 
         <div>
           <label className="block mb-1 font-medium text-gray-700">
@@ -63,13 +119,17 @@ const AddAdiCategoryForm = () => {
               />
             </svg>
             <input
-              {...register("icon", { required: true })}
               id="file-upload"
               type="file"
+              accept="image/*"
               className="hidden"
+              {...register("category_image", {
+                required: "Upload is required",
+                validate: (fl) => (fl && fl.length > 0) || "Upload is required",
+              })}
             />
           </label>
-          {errors.icon && (
+          {errors.category_image && (
             <p className="text-red-500 text-sm mt-1">
               Upload Field is required
             </p>

@@ -1,10 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useCreateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { message } from "antd";
-import { useState } from "react";
 
 const AddCategoryForm = ({refetch}) => {
-  const [selectedImage, setSelectedImage] = useState(null);
+
   const [createCategory] = useCreateCategoryMutation();
   const {
     register,
@@ -131,7 +130,7 @@ const AddCategoryForm = ({refetch}) => {
               })}
             />
           </label>
-          {errors.icon && (
+          {errors.category_image && (
             <p className="text-red-500 text-sm mt-1">
               Upload Field is required
             </p>

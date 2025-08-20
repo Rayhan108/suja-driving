@@ -36,6 +36,13 @@ const theoryApi = baseApi.injectEndpoints({
         body:args   
       }),
     }),
+    updateTopic: builder.mutation({
+    query: ({args,id}) => ({
+        url:`/topic/update-topic/${id}`,
+        method: "PATCH", 
+        body:args   
+      }),
+    }),
  // Mutation definition (RTK Query)
 deleteCategory: builder.mutation({
   query: (id) => {
@@ -56,4 +63,4 @@ deleteCategory: builder.mutation({
 
 });
 
-export const {useGetAllCateroryQuery,useCreateCategoryMutation,useUpdateCategoryMutation,useDeleteCategoryMutation,useGetAllTopicQuery,useCreateTopicMutation} =theoryApi;
+export const {useGetAllCateroryQuery,useCreateCategoryMutation,useUpdateCategoryMutation,useDeleteCategoryMutation,useGetAllTopicQuery,useCreateTopicMutation,useUpdateTopicMutation} =theoryApi;

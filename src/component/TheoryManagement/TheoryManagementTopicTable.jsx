@@ -5,8 +5,9 @@ import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import EditTopicForm from "./EditTopicForm";
-const TheoryManagementTopicTable = ({topic}) => {
+const TheoryManagementTopicTable = ({topic,refetch}) => {
     // console.log(topic);
+      const [singleData, setSingleData] = useState({});
       const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -19,6 +20,7 @@ const TheoryManagementTopicTable = ({topic}) => {
 
   const showEditModal = (id) => {
     console.log("id",id);
+        setSingleData(id);
     setEditModalOpen(true);
   };
   const handleEditCancel = () => {
@@ -132,7 +134,7 @@ const TheoryManagementTopicTable = ({topic}) => {
         >
           <div >
             <h1 className="text-3xl text-center text-[#333333]">Edit Topic</h1>
- <EditTopicForm/>
+ <EditTopicForm refetch={refetch} singleData={singleData}/>
           </div>
         </Modal>
       </ConfigProvider>

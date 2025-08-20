@@ -5,19 +5,21 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import TheoryManagementTopicTable from "../../component/TheoryManagement/TheoryManagementTopicTable";
 import AddTopicForm from "../../component/TheoryManagement/AddTopicForm";
-import { useGetAllCateroryQuery, useGetAllTopicQuery } from "../../redux/feature/theoryManagement/theoryApi";
+import {
+  useGetAllCateroryQuery,
+  useGetAllTopicQuery,
+} from "../../redux/feature/theoryManagement/theoryApi";
 
 const TheoryManagementTopic = () => {
-      const [searchTerm, setSearchTerm] = useState(""); 
-      const {data:allCategory}=useGetAllCateroryQuery(searchTerm)
-      const {data:allTopic,refetch}=useGetAllTopicQuery(undefined)
-      const topic = allTopic?.data?.result
+  const [searchTerm, setSearchTerm] = useState("");
+  const { data: allCategory } = useGetAllCateroryQuery(searchTerm);
+  const { data: allTopic, refetch } = useGetAllTopicQuery(undefined);
+  const topic = allTopic?.data?.result;
 
-console.log("all category--->",allCategory);
-console.log("all topic--->",topic);
+  console.log("all category--->", allCategory);
+  console.log("all topic--->", topic);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-
+const category = allCategory?.data?.result
   const showModal = () => {
     // setDeleteId(id);
     setIsModalOpen(true);
@@ -29,27 +31,26 @@ console.log("all topic--->",topic);
   const location = useLocation(); // Get the current location (URL)
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
-  const activeTabFromURL = location.pathname.split('/')[2]; // Assuming your routes look like "/category", "/topic", "/question"
-console.log("activeTabFromURL",activeTabFromURL);
+  const activeTabFromURL = location.pathname.split("/")[2]; // Assuming your routes look like "/category", "/topic", "/question"
+  console.log("activeTabFromURL", activeTabFromURL);
   // Set the initial active tab based on the URL
-  const [activeTab, setActiveTab] = useState(activeTabFromURL || 'category');
+  const [activeTab, setActiveTab] = useState(activeTabFromURL || "category");
 
   // Update active tab when URL changes
   useEffect(() => {
-    setActiveTab(activeTabFromURL || 'category');
+    setActiveTab(activeTabFromURL || "category");
   }, [location]);
 
-
-   const handleSearchChange = (e) => {
+  const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
   };
-    return (
-         <div className="font-title">
+  return (
+    <div className="font-title">
       <div className="flex justify-between mt-2 mb-8 font-title">
         <div className="flex justify-center items-center gap-5">
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
           <p className="text-[#3564d3] font-title text-3xl font-bold">
-          Theory Management
+            Theory Management
           </p>
         </div>
         <div className="flex gap-5">
@@ -57,7 +58,7 @@ console.log("activeTabFromURL",activeTabFromURL);
             <Input
               type="text"
               placeholder="Search anything here..."
-                       onChange={handleSearchChange} // Handle input change
+              onChange={handleSearchChange} // Handle input change
               className="border border-[#e5eaf2] py-3 outline-none w-full rounded-full px-3"
             />
             <span className="text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center cursor-pointer">
@@ -65,7 +66,12 @@ console.log("activeTabFromURL",activeTabFromURL);
             </span>
           </div>
           <div>
-            <button className="bg-[#3F5EAB] text-white p-3 rounded-xl" onClick={() => showModal()}>+Add Topic</button>
+            <button
+              className="bg-[#3F5EAB] text-white p-3 rounded-xl"
+              onClick={() => showModal()}
+            >
+              +Add Topic
+            </button>
           </div>
         </div>
       </div>
@@ -114,24 +120,15 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTopicTable topic={topic} refetch={refetch}/>
+      <TheoryManagementTopicTable topic={topic} refetch={refetch} />
 
-
-
-
-            <Modal
-        open={isModalOpen}
-        centered
-        onCancel={handleCancel}
-        footer={null}
- 
-      >
-  <div>
-    <AddTopicForm refetch={refetch}/>
-  </div>
+      <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
+        <div>
+          <AddTopicForm category={category}  refetch={refetch} />
+        </div>
       </Modal>
     </div>
-    );
+  );
 };
 
 export default TheoryManagementTopic;

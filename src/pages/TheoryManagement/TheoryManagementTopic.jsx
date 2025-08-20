@@ -5,86 +5,16 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import TheoryManagementTopicTable from "../../component/TheoryManagement/TheoryManagementTopicTable";
 import AddTopicForm from "../../component/TheoryManagement/AddTopicForm";
+import { useGetAllCateroryQuery, useGetAllTopicQuery } from "../../redux/feature/theoryManagement/theoryApi";
 
 const TheoryManagementTopic = () => {
-const topic = [
-  {
-    "id": "01",
-    "topicName": "Alertness",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "02",
-    "topicName": "Awareness",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "03",
-    "topicName": "Concentration",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "04",
-    "topicName": "Focus",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "05",
-    "topicName": "Memory",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "06",
-    "topicName": "Motivation",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "07",
-    "topicName": "Problem Solving",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "08",
-    "topicName": "Creativity",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "09",
-    "topicName": "Decision Making",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "10",
-    "topicName": "Time Management",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "11",
-    "topicName": "Communication",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "12",
-    "topicName": "Leadership",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "13",
-    "topicName": "Teamwork",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "14",
-    "topicName": "Stress Management",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  },
-  {
-    "id": "15",
-    "topicName": "Adaptability",
-    "topicIcon": "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740"
-  }
-];
+      const [searchTerm, setSearchTerm] = useState(""); 
+      const {data:allCategory}=useGetAllCateroryQuery(searchTerm)
+      const {data:allTopic,refetch}=useGetAllTopicQuery(undefined)
+      const topic = allTopic?.data?.result
 
+console.log("all category--->",allCategory);
+console.log("all topic--->",topic);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 
@@ -108,6 +38,11 @@ console.log("activeTabFromURL",activeTabFromURL);
   useEffect(() => {
     setActiveTab(activeTabFromURL || 'category');
   }, [location]);
+
+
+   const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
+  };
     return (
          <div className="font-title">
       <div className="flex justify-between mt-2 mb-8 font-title">
@@ -122,6 +57,7 @@ console.log("activeTabFromURL",activeTabFromURL);
             <Input
               type="text"
               placeholder="Search anything here..."
+                       onChange={handleSearchChange} // Handle input change
               className="border border-[#e5eaf2] py-3 outline-none w-full rounded-full px-3"
             />
             <span className="text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center cursor-pointer">
@@ -178,7 +114,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTopicTable topic={topic} />
+      <TheoryManagementTopicTable topic={topic} refetch={refetch}/>
 
 
 
@@ -191,7 +127,7 @@ console.log("activeTabFromURL",activeTabFromURL);
  
       >
   <div>
-    <AddTopicForm/>
+    <AddTopicForm refetch={refetch}/>
   </div>
       </Modal>
     </div>

@@ -34,14 +34,14 @@ const TheoryManagementTopicTable = ({topic}) => {
   },
     {
       title: "Topic Name",
-      dataIndex: "topicName",
-      key: "topicName",
+      dataIndex: "name",
+      key: "name",
       align: "center", 
     },
     {
       title: "Topic  Icon",
-      dataIndex: "topicIcon",
-      key: "categoryIcon",
+      dataIndex: "topic_icon",
+      key: "topic_icon",
       align: "center", 
       render: (text) => <div style={{ display: "flex", justifyContent: "center" }}><img src={text} alt="Category Icon" style={{ width: 70, height: 40 }} /> </div> ,
     },

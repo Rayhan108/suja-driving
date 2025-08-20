@@ -16,6 +16,13 @@ const theoryApi = baseApi.injectEndpoints({
         body:args   
       }),
     }),
+    updateCategory: builder.mutation({
+    query: ({args,id}) => ({
+        url:`/category/update-category/${id}`,
+        method: "PATCH", 
+        body:args   
+      }),
+    }),
 
   }),
 
@@ -24,4 +31,4 @@ const theoryApi = baseApi.injectEndpoints({
 
 });
 
-export const {useGetAllCateroryQuery,useCreateCategoryMutation} =theoryApi;
+export const {useGetAllCateroryQuery,useCreateCategoryMutation,useUpdateCategoryMutation} =theoryApi;

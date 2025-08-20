@@ -1,6 +1,10 @@
 import { useForm } from "react-hook-form";
+import { useUpdateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
+import { message } from "antd";
 
-const EditCategoryForm = ({refetch}) => {
+const EditCategoryForm = ({refetch,singleData}) => {
+  console.log("single data->",singleData);
+  const [updateCategory]=useUpdateCategoryMutation()
   const {
     register,
     handleSubmit,
@@ -8,9 +12,50 @@ const EditCategoryForm = ({refetch}) => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     console.log("Form Data:", data);
-    reset();
+     // Creating a new FormData object to handle the form submission
+        const formData = new FormData();
+    
+        // Appending fields to the FormData object
+        formData.append(
+          "data",
+          JSON.stringify({
+            name: data?.name,
+            testType: singleData?.testType,
+          })
+        );
+    
+        const file = data?.category_image?.[0];
+        if (file) {
+          formData.append("category_image", file, file.name);
+        } else {
+          message.error("Please select an image file.");
+          return;
+        }
+    
+        // Log the FormData contents
+        console.log("Form Data Contents:");
+        for (let [key, value] of formData.entries()) {
+          console.log(`${key}:`, value);
+        }
+        try {
+          const res = await updateCategory({
+      args: formData,
+      id: singleData?._id,
+    }).unwrap();
+          console.log("response--->", res);
+          if (res?.success) {
+            message.success(res?.message);
+            refetch()
+            reset();
+          } else {
+            message.error(res?.message);
+          }
+        } catch (error) {
+          message.error(error?.data?.message);
+        }
+  
   };
 
   const onCancel = () => {
@@ -29,7 +74,7 @@ const EditCategoryForm = ({refetch}) => {
             Category Name
           </label>
           <input
-            {...register("categoryName", { required: true })}
+            {...register("name", { required: true })}
             placeholder="category..."
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           />
@@ -41,7 +86,7 @@ const EditCategoryForm = ({refetch}) => {
         </div>
 
         <div>
-          <label className="block mb-1 font-medium text-gray-700 font-title">
+          <label className="block mb-1 font-medium text-gray-700">
             Upload Icon
           </label>
           <label
@@ -63,10 +108,14 @@ const EditCategoryForm = ({refetch}) => {
               />
             </svg>
             <input
-              {...register("icon", { required: true })}
               id="file-upload"
               type="file"
+              accept="image/*"
               className="hidden"
+              {...register("category_image", {
+                required: "Upload is required",
+                validate: (fl) => (fl && fl.length > 0) || "Upload is required",
+              })}
             />
           </label>
           {errors.icon && (

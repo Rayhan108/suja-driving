@@ -23,6 +23,18 @@ const theoryApi = baseApi.injectEndpoints({
         body:args   
       }),
     }),
+ // Mutation definition (RTK Query)
+deleteCategory: builder.mutation({
+  query: (id) => {
+    console.log("Received ID in mutation query:", id); // Log to see if the id is passed correctly
+    return {
+      url: `/category/delete-category/${id}`,
+      method: "DELETE",
+    
+    };
+  },
+}),
+
 
   }),
 
@@ -31,4 +43,4 @@ const theoryApi = baseApi.injectEndpoints({
 
 });
 
-export const {useGetAllCateroryQuery,useCreateCategoryMutation,useUpdateCategoryMutation} =theoryApi;
+export const {useGetAllCateroryQuery,useCreateCategoryMutation,useUpdateCategoryMutation,useDeleteCategoryMutation} =theoryApi;

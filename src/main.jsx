@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./redux/store";
+import { ConfigProvider } from "antd";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,7 +16,10 @@ createRoot(document.getElementById("root")).render(
        <PersistGate loading={null} persistor={persistor}>
 
     <ToastContainer/>
+      <ConfigProvider>
+
     <RouterProvider router={router} />
+      </ConfigProvider>
        </PersistGate>
        </Provider>
   </StrictMode>

@@ -3,8 +3,8 @@ import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { useState } from "react";
 import EditAdiQuesForm from "./EditAdiQuesForm";
 
-
 const AdiQuestionTable = ({ question }) => {
+  console.log("quest---->",question);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
@@ -12,17 +12,19 @@ const AdiQuestionTable = ({ question }) => {
     setDeleteId(id);
     setIsModalOpen(true);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
     setDeleteId(null);
   };
 
-    const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const showEditModal = (id) => {
-    console.log("id",id);
+    console.log("id", id);
     setEditModalOpen(true);
   };
+
   const handleEditCancel = () => {
     setEditModalOpen(false);
   };
@@ -37,7 +39,7 @@ const AdiQuestionTable = ({ question }) => {
       width: 60,
     },
     {
-      title: "Questions",
+      title: "Question",
       dataIndex: "question",
       key: "question",
       align: "left",
@@ -45,11 +47,11 @@ const AdiQuestionTable = ({ question }) => {
     },
     {
       title: "Answer",
-      dataIndex: "answere",
-      key: "answere",
+      dataIndex: "answer",
+      key: "answer",
       align: "left",
-      width: "50%",
-      render: (answere) => {
+      width: "25%",
+      render: (answer, record) => {
         const circleStyle = (filled) => ({
           display: "inline-block",
           width: 24,
@@ -67,32 +69,43 @@ const AdiQuestionTable = ({ question }) => {
 
         // Split options into pairs of 2 for two per row
         const chunkedOptions = [];
-        for (let i = 0; i < answere.options.length; i += 2) {
-          chunkedOptions.push(answere.options.slice(i, i + 2));
+        for (let i = 0; i < record.options.length; i += 2) {
+          chunkedOptions.push(record.options.slice(i, i + 2));
         }
 
         return (
           <div>
+            <div
+              style={{
+                marginTop: 8,
+                fontSize: 16,
+                color: "#444",
+                paddingLeft: 16,
+                lineHeight: 1.3,
+              }}
+            >
+              <strong>Answer: </strong>
+              {answer}
+            </div>
             {chunkedOptions.map((optionPair, index) => (
               <div
                 key={index}
                 style={{ display: "flex", gap: 40, marginBottom: 16 }}
               >
-                {optionPair.map(({ label, text }) => {
-                  const isCorrect = answere.correctOptions.includes(label);
+                {optionPair.map((option) => {
+                  const isCorrect = record?.correctOptions?.includes(option?.label);
                   return (
                     <div
-                      key={label}
+                      key={option.label}
                       style={{ display: "flex", alignItems: "center", flex: 1 }}
                     >
-                      <span style={circleStyle(isCorrect)}>{label}</span>
-                      <span>{text}</span>
+                      <span style={circleStyle(isCorrect)}>{option.label}</span>
+                      <span>{option.text}</span>
                     </div>
                   );
                 })}
               </div>
             ))}
-
             <div
               style={{
                 marginTop: 8,
@@ -103,7 +116,7 @@ const AdiQuestionTable = ({ question }) => {
               }}
             >
               <strong>Explanation: </strong>
-              {answere.explanation}
+              {record.explanation}
             </div>
           </div>
         );
@@ -116,7 +129,8 @@ const AdiQuestionTable = ({ question }) => {
       width: 80,
       render: (_, record) => (
         <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
-          <button onClick={()=>showEditModal(record)}
+          <button
+            onClick={() => showEditModal(record)}
             style={{ border: "none", background: "none", cursor: "pointer" }}
           >
             <RiEdit2Line size={20} color="#000" />
@@ -134,28 +148,27 @@ const AdiQuestionTable = ({ question }) => {
 
   return (
     <ConfigProvider
-   theme={{
-          components: {
-            InputNumber: {
-              activeBorderColor: "#00c0b5",
-            },
-            Pagination: {
-              colorPrimaryBorder: "#00c0b5",
-              colorBorder: "#00c0b5",
-              colorPrimaryHover: "#00c0b5",
-              colorTextPlaceholder: "#00c0b5",
-              itemActiveBgDisabled: "#00c0b5",
-              colorPrimary: "#00c0b5",
-            },
-            Table: {
-              headerBg: "#3F5EAB",
-              headerColor: "rgb(255,255,255)",
-              cellFontSize: 16,
-              headerSplitColor: "#ffffff",
-
-            },
+      theme={{
+        components: {
+          InputNumber: {
+            activeBorderColor: "#00c0b5",
           },
-        }}
+          Pagination: {
+            colorPrimaryBorder: "#00c0b5",
+            colorBorder: "#00c0b5",
+            colorPrimaryHover: "#00c0b5",
+            colorTextPlaceholder: "#00c0b5",
+            itemActiveBgDisabled: "#00c0b5",
+            colorPrimary: "#00c0b5",
+          },
+          Table: {
+            headerBg: "#3F5EAB",
+            headerColor: "rgb(255,255,255)",
+            cellFontSize: 16,
+            headerSplitColor: "#ffffff",
+          },
+        },
+      }}
     >
       <Table
         dataSource={question}
@@ -191,19 +204,18 @@ const AdiQuestionTable = ({ question }) => {
         </div>
       </Modal>
 
-                {/* edit modal */}
-          <Modal
-          open={isEditModalOpen}
-          centered
-          onCancel={handleEditCancel}
-          footer={null}
-        >
-          <div >
-            <h1 className="text-3xl text-center text-[#333333]">Edit Question</h1>
- <EditAdiQuesForm/>
-          </div>
-        </Modal>
-
+      {/* Edit modal */}
+      <Modal
+        open={isEditModalOpen}
+        centered
+        onCancel={handleEditCancel}
+        footer={null}
+      >
+        <div>
+          <h1 className="text-3xl text-center text-[#333333]">Edit Question</h1>
+          <EditAdiQuesForm />
+        </div>
+      </Modal>
     </ConfigProvider>
   );
 };

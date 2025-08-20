@@ -1,4 +1,3 @@
-
 import { Checkbox, ConfigProvider, Input, message, Modal, Table } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
@@ -7,33 +6,33 @@ import { Link } from "react-router-dom";
 
 import EditAdiTopicForm from "./EditAdiTopicForm";
 import { useDeleteTopicMutation } from "../../redux/feature/theoryManagement/theoryApi";
-const AdiTheoryManagementTopicTable = ({topic,refetch}) => {
-     // console.log(topic);
-      const [singleData, setSingleData] = useState({});
-      const [isModalOpen, setIsModalOpen] = useState(false);
-      const [deleteTopic]=useDeleteTopicMutation()
+import { BsEye } from "react-icons/bs";
+const AdiTheoryManagementTopicTable = ({ topic, refetch }) => {
+  // console.log(topic);
+  const [singleData, setSingleData] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteTopic] = useDeleteTopicMutation();
   const showModal = (id) => {
-    setSingleData(id)
+    setSingleData(id);
     setIsModalOpen(true);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-    const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const showEditModal = (id) => {
-    console.log("id",id);
-        setSingleData(id);
+    console.log("id", id);
+    setSingleData(id);
     setEditModalOpen(true);
   };
   const handleEditCancel = () => {
     setEditModalOpen(false);
   };
 
-
-    const handleDelete = async (id) => {
-    console.log("delete id-->",id);
+  const handleDelete = async (id) => {
+    console.log("delete id-->", id);
     try {
       const res = await deleteTopic(id).unwrap();
       console.log("response-->", res);
@@ -50,24 +49,32 @@ const AdiTheoryManagementTopicTable = ({topic,refetch}) => {
   };
   const columns = [
     {
-    title: "SL",
-    dataIndex: "sl",
-    key: "sl",
-    align: "center",
-    render: (text, record, index) => index + 1,  // Use the index + 1 as serial number
-  },
+      title: "SL",
+      dataIndex: "sl",
+      key: "sl",
+      align: "center",
+      render: (text, record, index) => index + 1, // Use the index + 1 as serial number
+    },
     {
       title: "Topic Name",
       dataIndex: "name",
       key: "name",
-      align: "center", 
+      align: "center",
     },
     {
       title: "Topic  Icon",
       dataIndex: "topic_icon",
       key: "topic_icon",
-      align: "center", 
-      render: (text) => <div style={{ display: "flex", justifyContent: "center" }}><img src={text} alt="Category Icon" style={{ width: 70, height: 40 }} /> </div> ,
+      align: "center",
+      render: (text) => (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <img
+            src={text}
+            alt="Category Icon"
+            style={{ width: 70, height: 40 }}
+          />{" "}
+        </div>
+      ),
     },
     {
       title: "Action",
@@ -75,25 +82,27 @@ const AdiTheoryManagementTopicTable = ({topic,refetch}) => {
       align: "center", // Center-aligned Action column
       render: (_, record) => (
         <div className="flex items-center justify-center gap-5">
-    
-            <button onClick={()=>showEditModal(record)}>
-              <RiEdit2Line className="text-black  w-5 h-5" />
-            </button>
-  
-          <button onClick={()=>showModal(record)}>
+          <button onClick={() => showEditModal(record)}>
+            <RiEdit2Line className="text-black  w-5 h-5" />
+          </button>
+
+          <button onClick={() => showModal(record)}>
             <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
           </button>
+          <Link to={`/adiTheoryManagement/question/${record?._id}`}>
+            <button>
+              <BsEye className="text-black   w-5 h-5" />
+            </button>
+          </Link>
         </div>
       ),
     },
   ];
 
-
-
-    return (
-         <div>
+  return (
+    <div>
       <ConfigProvider
-   theme={{
+        theme={{
           components: {
             InputNumber: {
               activeBorderColor: "#00c0b5",
@@ -111,7 +120,6 @@ const AdiTheoryManagementTopicTable = ({topic,refetch}) => {
               headerColor: "rgb(255,255,255)",
               cellFontSize: 16,
               headerSplitColor: "#ffffff",
-
             },
           },
         }}
@@ -122,19 +130,19 @@ const AdiTheoryManagementTopicTable = ({topic,refetch}) => {
           pagination={{ pageSize: 10 }}
           scroll={{ x: "max-content" }}
         />
-          <Modal
-        open={isModalOpen}
-        centered
-        onCancel={handleCancel}
-        footer={null}
-        destroyOnClose
-      >
-        <div className="flex flex-col justify-center items-center py-10">
-          <h1 className="text-3xl text-center text-red-500">Are you sure!</h1>
-          <p className="text-xl text-center mt-5">
-            Do you really want to delete? Please confirm.
-          </p>
-         <button
+        <Modal
+          open={isModalOpen}
+          centered
+          onCancel={handleCancel}
+          footer={null}
+          destroyOnClose
+        >
+          <div className="flex flex-col justify-center items-center py-10">
+            <h1 className="text-3xl text-center text-red-500">Are you sure!</h1>
+            <p className="text-xl text-center mt-5">
+              Do you really want to delete? Please confirm.
+            </p>
+            <button
               onClick={() => {
                 handleDelete(singleData?._id);
               }}
@@ -142,23 +150,23 @@ const AdiTheoryManagementTopicTable = ({topic,refetch}) => {
             >
               CONFIRM
             </button>
-        </div>
-      </Modal>
-                {/* edit modal */}
-          <Modal
+          </div>
+        </Modal>
+        {/* edit modal */}
+        <Modal
           open={isEditModalOpen}
           centered
           onCancel={handleEditCancel}
           footer={null}
         >
-          <div >
+          <div>
             <h1 className="text-3xl text-center text-[#333333]">Edit Topic</h1>
- <EditAdiTopicForm refetch={refetch} singleData={singleData}/>
+            <EditAdiTopicForm refetch={refetch} singleData={singleData} />
           </div>
         </Modal>
       </ConfigProvider>
     </div>
-    );
+  );
 };
 
 export default AdiTheoryManagementTopicTable;

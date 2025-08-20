@@ -96,7 +96,7 @@ const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
           </Link>
         </div>
         <div>
-          <Link to="/adiTheoryManagement/topic">
+
             <button
               className={`${
                 activeTab === "topic"
@@ -106,11 +106,10 @@ const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
             >
               Topic
             </button>
-          </Link>
+    
         </div>
         <div>
-          <Link to="/adiTheoryManagement/question">
-            <button
+       <button
               className={`${
                 activeTab === "question"
                   ? "bg-[#2C4581] text-[#ffffff]"
@@ -119,7 +118,7 @@ const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
             >
               Question
             </button>
-          </Link>
+    
         </div>
       </div>
 

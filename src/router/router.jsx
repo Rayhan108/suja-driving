@@ -73,7 +73,7 @@ const router = createBrowserRouter([
         element: <TheoryManagementTopic />,
       },
       {
-        path: "/theoryManagement/question",
+        path: "/theoryManagement/question/:id",
         element: <QuestionManagement />,
       },
       {
@@ -89,7 +89,7 @@ const router = createBrowserRouter([
         element: <AdiTheoryManagementTopic />,
       },
       {
-        path: "/adiTheoryManagement/question",
+        path: "/adiTheoryManagement/question/:id",
         element: <AdiQuestionManagement />,
       },
       {

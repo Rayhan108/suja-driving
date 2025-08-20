@@ -1,92 +1,23 @@
 import { Input, Modal } from "antd";
 import { IoSearch } from "react-icons/io5";
 import { SlArrowLeft } from "react-icons/sl";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import QuestionTable from "../../component/TheoryManagement/QuestionTable";
 import AddQuesForm from "../../component/TheoryManagement/AddQuesForm";
 import AddAdiQuesForm from "../../component/AdiTheoryManagement/AddAdiQuesForm";
 import AdiQuestionTable from "../../component/AdiTheoryManagement/AdiQuestionTable";
+import { useGetAllQuesQuery } from "../../redux/feature/theoryManagement/theoryApi";
 
 
 
 const AdiQuestionManagement = () => {
-const question = [
-  {
-    id: "01",
-    question: "What should you do when driving in foggy conditions?",
-    answere: {
-      options: [
-        { label: "A", text: "Use fog lights if visibility is seriously reduced" },
-        { label: "B", text: "Keep close to the car in front at all times" },
-        { label: "C", text: "Flash your headlights to warn other drivers" },
-        { label: "D", text: "Do not use your demister and windscreen wipers" }
-      ],
-      correctOptions: ["A"],  
-      explanation: "If visibility is seriously reduced due to fog, you must use dipped headlights."
-    }
-  },
-  {
-    id: "02",
-    question: "What is the safe following distance under normal conditions?",
-    answere: {
-      options: [
-        { label: "A", text: "1 second" },
-        { label: "B", text: "2 seconds" },
-        { label: "C", text: "3 seconds" },
-        { label: "D", text: "4 seconds" }
-      ],
-      correctOptions: ["C"],  
-      explanation: "A 3-second gap is recommended to maintain a safe following distance."
-    }
-  },
-  {
-    id: "03",
-    question: "When are you allowed to use a mobile phone while driving?",
-    answere: {
-      options: [
-        { label: "A", text: "Only with a hands-free device" },
-        { label: "B", text: "When stopped at a red light" },
-        { label: "C", text: "While driving on a quiet road" },
-        { label: "D", text: "Never" }
-      ],
-      correctOptions: ["A"],  
-      explanation: "Using a hands-free device is allowed, but holding a phone while driving is prohibited."
-    }
-  },
-  {
-    id: "04",
-    question: "What should you do at a pedestrian crossing with no traffic lights?",
-    answere: {
-      options: [
-        { label: "A", text: "Stop if pedestrians are waiting to cross" },
-        { label: "B", text: "Slow down and sound your horn" },
-        { label: "C", text: "Speed up to clear the crossing quickly" },
-        { label: "D", text: "Ignore if no pedestrians are on the road" }
-      ],
-      correctOptions: ["A"],  
-      explanation: "You must stop if pedestrians are waiting to cross to allow them to do so safely."
-    }
-  },
-  {
-    id: "05",
-    question: "How should you react to an emergency vehicle approaching with flashing lights?",
-    answere: {
-      options: [
-        { label: "A", text: "Speed up to get out of the way" },
-        { label: "B", text: "Move to the side of the road and stop" },
-        { label: "C", text: "Continue driving normally" },
-        { label: "D", text: "Ignore and keep going" }
-      ],
-      correctOptions: ["B"],  
-      explanation: "You should move to the side and stop to give way to emergency vehicles."
-    }
-  }
-];
-
+  const {id} =useParams()
+  const {data:getAllQues,refetch}=useGetAllQuesQuery(id)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const question =getAllQues?.data?.result;
 
-
+console.log("get all ques-->",getAllQues);
   const showModal = () => {
     // setDeleteId(id);
     setIsModalOpen(true);
@@ -150,7 +81,7 @@ console.log("activeTabFromURL",activeTabFromURL);
           </Link>
         </div>
         <div>
-          <Link to="/adiTheoryManagement/topic">
+      
             <button
               className={`${
                 activeTab === "topic"
@@ -160,10 +91,10 @@ console.log("activeTabFromURL",activeTabFromURL);
             >
               Topic
             </button>
-          </Link>
+      
         </div>
         <div>
-          <Link to="/adiTheoryManagement/question">
+      
             <button
               className={`${
                 activeTab === "question"
@@ -173,7 +104,7 @@ console.log("activeTabFromURL",activeTabFromURL);
             >
               Question
             </button>
-          </Link>
+      
         </div>
       </div>
 
@@ -190,7 +121,7 @@ console.log("activeTabFromURL",activeTabFromURL);
  
       >
   <div>
-    <AddAdiQuesForm/>
+    <AddAdiQuesForm refetch={refetch}/>
   </div>
       </Modal>
 

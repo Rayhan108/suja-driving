@@ -4,6 +4,8 @@ import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import EditTopicForm from "./EditTopicForm";
 import { useDeleteTopicMutation } from "../../redux/feature/theoryManagement/theoryApi";
+import { Link } from "react-router-dom";
+import { BsEye } from "react-icons/bs";
 const TheoryManagementTopicTable = ({topic,refetch}) => {
     // console.log(topic);
       const [singleData, setSingleData] = useState({});
@@ -80,6 +82,11 @@ const TheoryManagementTopicTable = ({topic,refetch}) => {
           <button onClick={()=>showModal(record)}>
             <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
           </button>
+                    <Link to={`/theoryManagement/question/${record?._id}`}>
+          <button >
+            <BsEye className="text-black   w-5 h-5" />
+          </button>
+          </Link>
         </div>
       ),
     },

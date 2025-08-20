@@ -94,7 +94,7 @@ const category = allCategory?.data?.result
           </Link>
         </div>
         <div>
-          <Link to="/theoryManagement/topic">
+         
             <button
               className={`${
                 activeTab === "topic"
@@ -104,10 +104,10 @@ const category = allCategory?.data?.result
             >
               Topic
             </button>
-          </Link>
+         
         </div>
         <div>
-          <Link to="/theoryManagement/question">
+        
             <button
               className={`${
                 activeTab === "question"
@@ -117,7 +117,7 @@ const category = allCategory?.data?.result
             >
               Question
             </button>
-          </Link>
+        
         </div>
       </div>
 

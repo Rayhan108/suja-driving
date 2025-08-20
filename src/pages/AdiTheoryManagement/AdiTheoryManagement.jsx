@@ -86,7 +86,7 @@ console.log("activeTabFromURL",activeTabFromURL);
           </Link>
         </div>
         <div>
-          {/* <Link to="/adiTheoryManagement/topic"> */}
+       
             <button
               className={`${
                 activeTab === "topic"
@@ -96,10 +96,10 @@ console.log("activeTabFromURL",activeTabFromURL);
             >
               Topic
             </button>
-          {/* </Link> */}
+        
         </div>
         <div>
-          <Link to="/adiTheoryManagement/question">
+     
             <button
               className={`${
                 activeTab === "question"
@@ -109,7 +109,7 @@ console.log("activeTabFromURL",activeTabFromURL);
             >
               Question
             </button>
-          </Link>
+   
         </div>
       </div>
 

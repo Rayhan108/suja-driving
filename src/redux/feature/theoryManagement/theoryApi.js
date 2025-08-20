@@ -29,6 +29,20 @@ const theoryApi = baseApi.injectEndpoints({
         body:args   
       }),
     }),
+    createQues: builder.mutation({
+    query: ({args,id}) => ({
+        url:`/question/create-question?topic=${id}`,
+        method: "POST", 
+        body:args   
+      }),
+    }),
+    getAllQues: builder.query({
+    query: (id) => ({
+        url:`/question/get-all-question?topic=${id}`,
+        method: "GET", 
+  
+      }),
+    }),
     updateCategory: builder.mutation({
     query: ({args,id}) => ({
         url:`/category/update-category/${id}`,
@@ -73,4 +87,4 @@ deleteTopic: builder.mutation({
 
 });
 
-export const {useGetAllCateroryQuery,useCreateCategoryMutation,useUpdateCategoryMutation,useDeleteCategoryMutation,useGetAllTopicQuery,useCreateTopicMutation,useUpdateTopicMutation,useDeleteTopicMutation} =theoryApi;
+export const {useGetAllCateroryQuery,useCreateCategoryMutation,useUpdateCategoryMutation,useDeleteCategoryMutation,useGetAllTopicQuery,useCreateTopicMutation,useUpdateTopicMutation,useDeleteTopicMutation,useCreateQuesMutation,useGetAllQuesQuery} =theoryApi;

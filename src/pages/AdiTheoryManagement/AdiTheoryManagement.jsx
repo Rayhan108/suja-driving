@@ -127,7 +127,7 @@ console.log("activeTabFromURL",activeTabFromURL);
  
       >
   <div>
-    <AddAdiCategoryForm refetch={refetch}/>
+    <AddAdiCategoryForm refetch={refetch} />
   </div>
       </Modal>
     </div>

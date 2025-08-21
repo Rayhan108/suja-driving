@@ -137,13 +137,13 @@ const AddQuesForm = () => {
       </div>
 
       <div className="flex gap-12  mt-6">
-        <button
+        {/* <button
           type="button"
           onClick={onCancel}
           className="w-full px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-100 "
         >
           Cancel
-        </button>
+        </button> */}
         <button
           type="submit"
           className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"

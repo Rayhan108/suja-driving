@@ -147,7 +147,7 @@ const AdiTheoryManagementTable = ({ category,refetch }) => {
           <div className="text-center py-5 w-full">
               <button
                 onClick={() => {
-                  // handle delete logic here
+                  // handle delete logic here   
                   handleDelete(singleData?._id);
                 }}
                 className="bg-red-500 text-white font-semibold w-1/3 py-3 px-5 rounded-lg"

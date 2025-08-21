@@ -12,7 +12,7 @@ import { useGetAllQuesQuery } from "../../redux/feature/theoryManagement/theoryA
 
 
 const AdiQuestionManagement = () => {
-  const {id} =useParams()
+  const {id} =useParams() 
   const {data:getAllQues,refetch}=useGetAllQuesQuery(id)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const question =getAllQues?.data?.result;
@@ -109,7 +109,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <AdiQuestionTable question={question} />
+      <AdiQuestionTable question={question} refetch={refetch}/>
 
 
 

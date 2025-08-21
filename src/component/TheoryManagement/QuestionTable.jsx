@@ -1,109 +1,108 @@
-import { Table, Modal, ConfigProvider } from "antd";
+import { Table, Modal, ConfigProvider, message } from "antd";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { useState } from "react";
 import EditQuesForm from "./EditQuestionForm";
+import { useDeleteQuesMutation } from "../../redux/feature/theoryManagement/theoryApi";
+import { circleStyle, normalizeOptions } from "../AdiTheoryManagement/AdiQuestionTable";
 
-const QuestionTable = ({ question }) => {
+const QuestionTable = ({ question,refetch }) => {
+  const [deleteQues] =useDeleteQuesMutation()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-
-  const showModal = (id) => {
-    setDeleteId(id);
-    setIsModalOpen(true);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setDeleteId(null);
-  };
-
   const [isEditModalOpen, setEditModalOpen] = useState(false);
+   const [singleData, setSingleData] = useState({});
+  const showModal = (id) => { setDeleteId(id);     setSingleData(id); setIsModalOpen(true); };
+  const handleCancel = () => { setIsModalOpen(false); setDeleteId(null); };
 
   const showEditModal = (id) => {
     console.log("id", id);
+    setSingleData(id);
     setEditModalOpen(true);
   };
-  const handleEditCancel = () => {
-    setEditModalOpen(false);
-  };
 
+  const handleEditCancel = () => { setEditModalOpen(false); };
+  const handleDelete = async (id) => {
+    console.log("delete id-->",id);
+    try {
+      const res = await deleteQues(id).unwrap();
+      console.log("response-->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        refetch();
+      } else {
+        message.error(res?.data?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
+    setIsModalOpen(false);
+  };
   const columns = [
+    { title: "SL", dataIndex: "id", key: "sl", align: "center", render: (_, __, i) => i + 1, width: 60 },
     {
-      title: "SL",
-      dataIndex: "id",
-      key: "sl",
-      align: "center",
-      render: (_, __, index) => index + 1,
-      width: 60,
-    },
-    {
-      title: "Questions",
+      title: "Question",
       dataIndex: "question",
       key: "question",
       align: "left",
       width: "40%",
+      render: (q) => <span style={{ whiteSpace: "pre-wrap" }}>{q}</span>,
     },
     {
       title: "Answer",
-      dataIndex: "answere",
-      key: "answere",
+      dataIndex: "answer",
+      key: "answer",
       align: "left",
-      width: "50%",
-      render: (answere) => {
-        const circleStyle = (filled) => ({
-          display: "inline-block",
-          width: 24,
-          height: 24,
-          borderRadius: "50%",
-          border: filled ? "none" : "1.5px solid #3F5EAB",
-          backgroundColor: filled ? "#3F5EAB" : "transparent",
-          color: filled ? "#fff" : "#3F5EAB",
-          fontWeight: "600",
-          textAlign: "center",
-          lineHeight: "24px",
-          marginRight: 8,
-          userSelect: "none",
-        });
-
-        // Split options into pairs of 2 for two per row
-        const chunkedOptions = [];
-        for (let i = 0; i < answere.options.length; i += 2) {
-          chunkedOptions.push(answere.options.slice(i, i + 2));
-        }
-
+      width: "35%",
+      render: (answer, record) => {
+        const opts = normalizeOptions(record?.options);
+        console.log("options are--------->",opts);
+        console.log("singleData--->",singleData);
         return (
           <div>
-            {chunkedOptions.map((optionPair, index) => (
-              <div
-                key={index}
-                style={{ display: "flex", gap: 40, marginBottom: 16 }}
-              >
-                {optionPair.map(({ label, text }) => {
-                  const isCorrect = answere.correctOptions.includes(label);
-                  return (
-                    <div
-                      key={label}
-                      style={{ display: "flex", alignItems: "center", flex: 1 }}
-                    >
-                      <span style={circleStyle(isCorrect)}>{label}</span>
-                      <span>{text}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
-
+            {/* options: 2 per row, read-only visual */}
             <div
               style={{
-                marginTop: 8,
-                fontSize: 16,
-                color: "#444",
-                paddingLeft: 16,
-                lineHeight: 1.3,
+                display: "grid",
+                gridTemplateColumns: "repeat(2, minmax(0,1fr))",
+                gap: 16,
               }}
             >
-              <strong>Explanation: </strong>
-              {answere.explanation}
+              {opts.map((o,idx) => {
+                const isCorrect =
+                  o.value === record.answer ||
+                  (Array.isArray(record.correctOptions) &&
+                    record.correctOptions.includes(o.value));
+                return (
+                  <div
+                    key={o.value}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    {/* show label inside circle */}
+              <span style={circleStyle(isCorrect)}>
+  {String.fromCharCode(65 + idx)} {/* A=65, B=66 ... */}
+</span>
+                    <span style={{ fontWeight: 600, marginRight: 6 }}>
+                      {o.label}
+                    </span>
+                    {o.text && o.text !== o.label && (
+                      <span style={{ color: "#444" }}>{o.text}</span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
+
+            <div style={{ marginTop: 8, fontSize: 16, color: "#444" }}>
+              <strong>Answer: </strong>{String(answer)}
+            </div>
+            {record.explanation && (
+              <div style={{ marginTop: 4, fontSize: 16, color: "#444" }}>
+                <strong>Explanation: </strong>
+                <span style={{ whiteSpace: "pre-wrap" }}>
+                  {record.explanation}
+                </span>
+              </div>
+            )}
           </div>
         );
       },
@@ -118,12 +117,14 @@ const QuestionTable = ({ question }) => {
           <button
             onClick={() => showEditModal(record)}
             style={{ border: "none", background: "none", cursor: "pointer" }}
+            aria-label="Edit"
           >
             <RiEdit2Line size={20} color="#000" />
           </button>
           <button
+            onClick={() => showModal(record)}
             style={{ border: "none", background: "none", cursor: "pointer" }}
-            onClick={() => showModal(record.id)}
+            aria-label="Delete"
           >
             <RiDeleteBin6Line size={20} color="red" />
           </button>
@@ -178,10 +179,7 @@ const QuestionTable = ({ question }) => {
           </p>
           <div className="text-center py-5 w-full">
             <button
-              onClick={() => {
-                // handle delete logic here
-                setIsModalOpen(false);
-              }}
+                onClick={() => { /* TODO: call delete API with deleteId */ handleDelete(singleData?._id);; }}
               className="bg-red-500 text-white font-semibold w-1/3 py-3 px-5 rounded-lg"
             >
               CONFIRM
@@ -199,7 +197,7 @@ const QuestionTable = ({ question }) => {
       >
         <div>
           <h1 className="text-3xl text-center text-[#333333]">Edit Question</h1>
-          <EditQuesForm />
+          <EditQuesForm  refetch={refetch} singleData={singleData} handleEditCancel={handleEditCancel}/>
         </div>
       </Modal>
     </ConfigProvider>

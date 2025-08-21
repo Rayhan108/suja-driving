@@ -1,17 +1,58 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { useUpdateQuesMutation } from "../../redux/feature/theoryManagement/theoryApi";
+import { message } from "antd";
 
-const EditQuesForm = () => {
+const EditQuesForm = ({ refetch, singleData,handleEditCancel }) => {
+  const { id } = useParams();
+  const topicId = id;
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+    reset,  // to reset the form values
   } = useForm();
 
-  const onSubmit = (data) => {
+  const [updateQues] = useUpdateQuesMutation();
+
+  // Set the default form values when `singleData` is loaded
+  useEffect(() => {
+    if (singleData) {
+      reset({
+        question: singleData.question,
+        options: singleData.options || ["", "", "", ""], // Ensure options are always an array with 4 items
+        answer: singleData.answer,
+        explanation: singleData.explanation,
+      });
+    }
+  }, [singleData, reset]);
+
+  const onSubmit = async (data) => {
     console.log("Form Data:", data);
-    reset();
+    const modifiedData = {
+      topic: topicId,
+      ...data,
+    };
+
+    try {
+      const res = await updateQues({
+        args: modifiedData,
+        id: singleData?._id,
+      }).unwrap();
+      console.log("response--->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        refetch();
+        reset();
+        handleEditCancel()
+      } else {
+        message.error(res?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
   };
 
   const onCancel = () => {
@@ -24,46 +65,6 @@ const EditQuesForm = () => {
       className="max-w-md mx-auto p-6 space-y-6 font-title"
       noValidate
     >
-      <div className="flex justify-between space-x-4 font-title">
-        <div className="w-1/2">
-          <label className="block mb-1 font-medium text-gray-700">
-            Select Category
-          </label>
-          <select
-            {...register("category", { required: true })}
-            className="w-full border border-gray-300 rounded-md px-3 py-2"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Category
-            </option>
-            <option value="cat1">Category 1</option>
-            <option value="cat2">Category 2</option>
-          </select>
-          {errors.category && (
-            <p className="text-red-500 text-sm mt-1">Category is required</p>
-          )}
-        </div>
-
-        <div className="w-1/2">
-          <label className="block mb-1 font-medium text-gray-700">Select Topic</label>
-          <select
-            {...register("topic", { required: true })}
-            className="w-full border border-gray-300 rounded-md px-3 py-2"
-            defaultValue=""
-          >
-            <option value="" disabled>
-              Topics
-            </option>
-            <option value="topic1">Topic 1</option>
-            <option value="topic2">Topic 2</option>
-          </select>
-          {errors.topic && (
-            <p className="text-red-500 text-sm mt-1">Topic is required</p>
-          )}
-        </div>
-      </div>
-
       <div>
         <label className="block mb-1 font-medium text-gray-700">Question</label>
         <input
@@ -76,11 +77,29 @@ const EditQuesForm = () => {
         )}
       </div>
 
+      {/* Options for answers */}
       <div>
-        <label className="block mb-1 font-medium text-gray-700">Answer</label>
+        <label className="block mb-1 font-medium text-gray-700">Answers</label>
+        {["options[0]", "options[1]", "options[2]", "options[3]"].map((option, index) => (
+          <div key={option}>
+            <input
+              {...register(option, { required: true })}
+              placeholder={`Option ${index + 1}`}
+              className="w-full border border-gray-300 rounded-md px-3 py-2 mb-3"
+            />
+            {errors.options?.[index] && (
+              <p className="text-red-500 text-sm mt-1">{`Option ${index + 1} is required`}</p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Correct Answer */}
+      <div>
+        <label className="block mb-1 font-medium text-gray-700">Correct Answer</label>
         <input
           {...register("answer", { required: true })}
-          placeholder="Write Here"
+          placeholder="Correct Answer"
           className="w-full border border-gray-300 rounded-md px-3 py-2"
         />
         {errors.answer && (
@@ -88,6 +107,7 @@ const EditQuesForm = () => {
         )}
       </div>
 
+      {/* Explanation */}
       <div>
         <label className="block mb-1 font-medium text-gray-700">Explanation</label>
         <textarea
@@ -101,7 +121,7 @@ const EditQuesForm = () => {
         )}
       </div>
 
-      <div className="flex gap-12  mt-6">
+      <div className="flex gap-12 mt-6">
         <button
           type="button"
           onClick={onCancel}
@@ -113,7 +133,7 @@ const EditQuesForm = () => {
           type="submit"
           className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
         >
-          Add
+          Update
         </button>
       </div>
     </form>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import EditAdiQuesForm from "./EditAdiQuesForm";
 import { useDeleteQuesMutation } from "../../redux/feature/theoryManagement/theoryApi";
 
-const normalizeOptions = (options = []) =>
+export const normalizeOptions = (options = []) =>
   options.map((opt) => {
     if (typeof opt === "string") return { label: opt, value: opt };
     const value = opt?.value ?? opt?.label ?? opt?.text ?? "";
@@ -12,7 +12,7 @@ const normalizeOptions = (options = []) =>
     return { label, value, text: opt?.text };
   });
 
-const circleStyle = (filled) => ({
+export const circleStyle = (filled) => ({
   display: "inline-block",
   width: 22,
   height: 22,
@@ -207,7 +207,7 @@ const AdiQuestionTable = ({ question,refetch}) => {
       <Modal open={isEditModalOpen} centered onCancel={handleEditCancel} footer={null} destroyOnClose>
         <div>
           <h1 className="text-3xl text-center text-[#333333]">Edit Question</h1>
-          <EditAdiQuesForm  refetch={refetch} singleData={singleData} handleEditCancel={handleEditCancel}/>
+          <EditAdiQuesForm  refetch={refetch} singleData={singleData} handleEditCancel={handleEditCancel}/>  
         </div>
       </Modal>
     </ConfigProvider>

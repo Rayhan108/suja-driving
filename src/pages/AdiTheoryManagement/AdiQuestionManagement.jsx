@@ -49,7 +49,7 @@ console.log("activeTabFromURL",activeTabFromURL);
           </p>
         </div>
         <div className="flex gap-5">
-          <div className="relative w-full sm:w-[300px] ">
+          {/* <div className="relative w-full sm:w-[300px] ">
             <Input
               type="text"
               placeholder="Search anything here..."
@@ -58,7 +58,7 @@ console.log("activeTabFromURL",activeTabFromURL);
             <span className="text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center cursor-pointer">
               <IoSearch className="text-[1.3rem]" />
             </span>
-          </div>
+          </div> */}
           <div>
             <button className="bg-[#3F5EAB] text-white p-3 rounded-xl"  onClick={() => showModal()}>+Add Question</button>
           </div>

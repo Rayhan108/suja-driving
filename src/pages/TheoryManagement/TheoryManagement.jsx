@@ -9,7 +9,6 @@ import { useGetAllCateroryQuery } from "../../redux/feature/theoryManagement/the
 
 
 const TheoryManagement = () => {
-
     const [searchTerm, setSearchTerm] = useState(""); 
 const type = "THEORY"
 const {data:allCategory,refetch}=useGetAllCateroryQuery({searchTerm,type})
@@ -43,6 +42,7 @@ console.log("activeTabFromURL",activeTabFromURL);
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
   };
+  
   return (
     <div>
       <div className="flex justify-between mt-2 mb-12 font-title">

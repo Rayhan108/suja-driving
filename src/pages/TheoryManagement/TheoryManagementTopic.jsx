@@ -11,17 +11,17 @@ import {
 } from "../../redux/feature/theoryManagement/theoryApi";
 
 const TheoryManagementTopic = () => {
-  const {id} = useParams()
+  const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
-const type = "THEORY"
-const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
+  const type = "THEORY";
+  const { data: allCategory } = useGetAllCateroryQuery({ searchTerm, type });
   const { data: allTopic, refetch } = useGetAllTopicQuery(id);
   const topic = allTopic?.data?.result;
 
   console.log("all category--->", allCategory);
   console.log("all topic--->", topic);
   const [isModalOpen, setIsModalOpen] = useState(false);
-const category = allCategory?.data?.result
+  const category = allCategory?.data?.result;
   const showModal = () => {
     // setDeleteId(id);
     setIsModalOpen(true);
@@ -94,30 +94,26 @@ const category = allCategory?.data?.result
           </Link>
         </div>
         <div>
-         
-            <button
-              className={`${
-                activeTab === "topic"
-                  ? "bg-[#2C4581] text-[#ffffff]"
-                  : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
-              }  px-8 py-2 rounded-xl`}
-            >
-              Topic
-            </button>
-         
+          <button
+            className={`${
+              activeTab === "topic"
+                ? "bg-[#2C4581] text-[#ffffff]"
+                : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
+            }  px-8 py-2 rounded-xl`}
+          >
+            Topic
+          </button>
         </div>
         <div>
-        
-            <button
-              className={`${
-                activeTab === "question"
-                  ? "bg-[#2C4581] text-[#ffffff]"
-                  : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
-              }  px-8 py-2 rounded-xl`}
-            >
-              Question
-            </button>
-        
+          <button
+            className={`${
+              activeTab === "question"
+                ? "bg-[#2C4581] text-[#ffffff]"
+                : "bg-[#f1f1f1] text-[#3F5EAB] border-2 border-black"
+            }  px-8 py-2 rounded-xl`}
+          >
+            Question
+          </button>
         </div>
       </div>
 
@@ -126,7 +122,7 @@ const category = allCategory?.data?.result
 
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>
-          <AddTopicForm category={category}  refetch={refetch} />
+          <AddTopicForm category={category} refetch={refetch} />
         </div>
       </Modal>
     </div>

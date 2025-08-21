@@ -6,61 +6,11 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AddCategoryForm from "../../component/TheoryManagement/AddCategoryForm";
 import HazardTable from "../../component/Hazard/HazardTable";
+import { useGetAllHazardTopicQuery } from "../../redux/feature/hazard/hazardApi";
 
 const HazardPage = () => {
-  const hazardData = [
-    {
-      sl: "01",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-      sl: "02",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-      sl: "03",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-      sl: "04",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-      sl: "05",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-      sl: "06",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-      sl: "07",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-      sl: "07",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-      sl: "07",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-    {
-      sl: "07",
-      topicName: "Demo",
-      vedio: "https://www.w3schools.com/html/mov_bbb.mp4",
-    },
-  ];
 
+const {data:allHazardTopic,refetch}=useGetAllHazardTopicQuery(undefined)
   const location = useLocation(); // Get the current location (URL)
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
@@ -83,7 +33,8 @@ const HazardPage = () => {
     setIsModalOpen(false);
     setDeleteId(null);
   };
-
+console.log("All Hazard Data----->",allHazardTopic?.data?.result);
+const hazardData = allHazardTopic?.data?.result
   return (
     <div>
       <div className="flex justify-between my-2 mb-12 font-title">
@@ -116,7 +67,7 @@ const HazardPage = () => {
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <HazardTable hazardData={hazardData} />
+      <HazardTable hazardData={hazardData} refetch={refetch} />
 
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>

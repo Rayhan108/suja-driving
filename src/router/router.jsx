@@ -25,6 +25,7 @@ import Privacy from "../pages/Privacy/Privacy";
 import PassReset from "../pages/PassReset/PassReset";
 import NotificationPage from "../pages/Notification/NotificationPage";
 import NotificationDetails from "../pages/Notification/NotificationDetails";
+import HazardVedioTable from "../component/Hazard/HazardVedioTable";
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: "/adiTheoryManagement/question/:id",
         element: <AdiQuestionManagement />,
+      },
+      {
+        path: "/hazardTopic/vedios/:id",
+        element: <HazardVedioTable/>,
       },
       {
         path: "/hazard",

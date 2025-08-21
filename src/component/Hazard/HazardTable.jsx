@@ -1,29 +1,26 @@
-import { Checkbox, ConfigProvider, Input, Modal, Table } from "antd";
+import { Checkbox, ConfigProvider, Input, message, Modal, Table } from "antd";
 
 import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import EditHazard from "./EditHazard";
-import VedioModal from "./VedioModal";
+import { Link } from "react-router-dom";
+import { BsEye } from "react-icons/bs";
+import { useDeleteHazardTopicMutation } from "../../redux/feature/hazard/hazardApi";
 
-const HazardTable = ({ hazardData }) => {
+const HazardTable = ({ hazardData,refetch}) => {
+    const [singleData, setSingleData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [isVedioModalOpen, setVedioModalOpen] = useState(false);
-  const [vedioData,setVedioData]=useState([])
-  const showModal = () => {
+
+    const [deleteHazardTopic]=useDeleteHazardTopicMutation()
+  const showModal = (id) => {
+    setSingleData(id);
     setIsModalOpen(true);
   };
   const showEditModal = (id) => {
     console.log("id", id);
+    setSingleData(id);
     setEditModalOpen(true);
-  };
-  const showVedioModal = (data) => {
-    console.log("data", data);
-    setVedioData(data)
-    setVedioModalOpen(true);
-  };
-  const handleVedioCancel = () => {
-    setVedioModalOpen(false);
   };
 
   const handleEditCancel = () => {
@@ -32,6 +29,26 @@ const HazardTable = ({ hazardData }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+    const handleDelete = async (id) => {
+    console.log("delete id-->",id);
+  
+    try {
+      const res = await deleteHazardTopic(id).unwrap();
+      console.log("response-->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        refetch();
+      } else {
+        message.error(res?.data?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
+    setIsModalOpen(false);
+  };
+
+
+
 
 const columns = [
   {
@@ -43,66 +60,60 @@ const columns = [
   },
   {
     title: "Topic Name",
-    dataIndex: "topicName",
-    key: "topicName",
+    dataIndex: "name",
+    key: "name",
     align: "center",
   },
 {
-  title: "Videos",
-  dataIndex: "vedio",
-  key: "vedio",
+  title: "Icon",
+  dataIndex: "topic_icon",
+  key: "icon",
   align: "center",
-  render: (videoUrl) => (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <video
-        src={videoUrl}
-        width={100}
-        height={60}
-        muted
-        controls={false}
-        preload="metadata"
-        style={{ objectFit: "cover", borderRadius: 5 }}
-      />
-    </div>
+  render: (text) => (
+    // <div style={{ display: "flex", justifyContent: "center" }}>
+    //   <video
+    //     src={videoUrl}
+    //     width={100}
+    //     height={60}
+    //     muted
+    //     controls={false}
+    //     preload="metadata"
+    //     style={{ objectFit: "cover", borderRadius: 5 }}
+    //   />
+    // </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {" "}
+          <img
+            src={text}
+            alt="Category Icon"
+            style={{ width: 70, height: 40 }}
+          />
+        </div>
+      
   ),
 },
 
-  // {
-  //   title: "Danger Zone",
-  //   dataIndex: "dangerZone",
-  //   key: "dangerZone",
-  //   align: "center",
-  //   render: (_, record) => (
-  //     <button
-  //       className="text-[#3A3A3A] bg-[#CFC9DD] p-2 rounded-xl"
-  //       style={{ display: "inline-block", textAlign: "center" }}
-  //       onClick={() => showVedioModal(record)}
-  //     >
-  //       View
-  //     </button>
-  //   ),
-  // },
+
   {
     title: "Action",
     key: "action",
     align: "center",
     render: (_, record) => (
-      <div className="flex items-center justify-center gap-5">
-        <button
-          // onClick={() => showEditModal(record)}
-          onClick={() => showVedioModal(record)}
-          style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-        >
-          <RiEdit2Line className="text-black w-5 h-5" />
-        </button>
-
-        <button
-          onClick={showModal}
-          style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-        >
-          <RiDeleteBin6Line className="text-red-500 w-5 h-5" />
-        </button>
-      </div>
+            <div className="flex items-center justify-center gap-5">
+    
+            <button onClick={()=>showEditModal(record)}>
+              <RiEdit2Line className="text-black  w-5 h-5" />
+            </button>
+  
+          <button onClick={()=>showModal(record)}>
+            <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
+          </button>
+                    <Link to={`/hazardTopic/vedios/${record?._id}`}>
+          <button >
+            <BsEye className="text-black   w-5 h-5" />
+          </button>
+          </Link>
+        </div>
     ),
   },
 ];
@@ -154,10 +165,9 @@ const columns = [
             </p>
             <div className="text-center py-5 w-full">
               <button
-                onClick={() => {
-                  // handle delete logic here
-                  setIsModalOpen(false);
-                }}
+               onClick={() => {
+                handleDelete(singleData?._id);
+              }}
                 className="bg-red-500 text-white font-semibold w-1/3 py-3 px-5 rounded-lg"
               >
                 CONFIRM
@@ -165,18 +175,7 @@ const columns = [
             </div>
           </div>
         </Modal>
-        {/*vedio modal */}
-        <Modal
-          open={isVedioModalOpen}
-          centered
-          onCancel={handleVedioCancel}
-          footer={null}
-        >
-          <div>
-        
-            <VedioModal vedioData={vedioData}/>
-          </div>
-        </Modal>
+
         {/* edit modal */}
         <Modal
           open={isEditModalOpen}
@@ -185,7 +184,7 @@ const columns = [
           footer={null}
         >
           <div>
-            <h1 className="text-3xl text-center text-[#333333]">Edit Time</h1>
+         
             <EditHazard />
           </div>
         </Modal>

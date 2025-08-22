@@ -7,11 +7,13 @@ import HighwayEdit from "./HighwayEdit";
 import { FiEye } from "react-icons/fi";
 
 const HighTable = ({ category, refetch }) => {
+    const [singleData, setSingleData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDescriptionModalOpen, setDescriptionModalOpen] = useState(false);
   const [data, setData] = useState([]);
-  const showModal = () => {
+  const showModal = (data) => {
+    setSingleData(data)
     setIsModalOpen(true);
   };
   const showDescriptionModal = (data) => {
@@ -86,7 +88,7 @@ const HighTable = ({ category, refetch }) => {
             <RiEdit2Line className="text-black  w-5 h-5" />
           </button>
 
-          <button onClick={showModal}>
+          <button onClick={()=>showModal(record)}>
             <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
           </button>
         </div>

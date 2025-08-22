@@ -1,13 +1,13 @@
 
 import { useForm } from "react-hook-form";
-import { useUpdateHazardTopicMutation } from "../../redux/feature/hazard/hazardApi";
+import { useCreateHazTopicMutation,  } from "../../redux/feature/hazard/hazardApi";
 import { message } from "antd";
 import { useParams } from "react-router-dom";
 
 
-const EditHazard = ({singleData,refetch}) => {
+const AddHazardTopic = ({singleData,refetch}) => {
 
-    const [updateHazardTopic] = useUpdateHazardTopicMutation();
+    const [createHazardTopic] = useCreateHazTopicMutation()
   const {
     register,
     handleSubmit,
@@ -30,8 +30,12 @@ const EditHazard = ({singleData,refetch}) => {
 
     const file = data?.category_image?.[0];
     if (file) {
-      formData.append("category_image", file, file.name);
+      formData.append("topic_icon", file, file.name);
+    }else {
+      message.error("Please select an image file.");
+      return;
     }
+
 
     // Log the FormData contents
     console.log("Form Data Contents:");
@@ -39,10 +43,7 @@ const EditHazard = ({singleData,refetch}) => {
       console.log(`${key}:`, value);
     }
     try {
-      const res = await updateHazardTopic({
-        args: formData,
-        id:singleData?._id,
-      }).unwrap();
+      const res = await createHazardTopic(formData).unwrap();
       console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
@@ -125,4 +126,4 @@ const EditHazard = ({singleData,refetch}) => {
   );
 };
 
-export default EditHazard;
+export default AddHazardTopic;

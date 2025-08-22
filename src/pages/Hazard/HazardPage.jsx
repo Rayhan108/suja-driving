@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import AddCategoryForm from "../../component/TheoryManagement/AddCategoryForm";
 import HazardTable from "../../component/Hazard/HazardTable";
 import { useGetAllHazardTopicQuery } from "../../redux/feature/hazard/hazardApi";
+import AddHazardTopic from "../../component/Hazard/AddHazardTopic";
 
 const HazardPage = () => {
 
@@ -59,14 +60,14 @@ const HazardPage = () => {
             </span>
           </div> */}
 
-          {/* <div>
+          <div>
             <button
               className="bg-[#3F5EAB] text-white p-3 rounded-xl"
               onClick={() => showModal()}
             >
-              +Add Vedio
+              +Add Hazard Topic
             </button>
-          </div> */}
+          </div>
 
         </div>
       </div>
@@ -74,11 +75,11 @@ const HazardPage = () => {
       {/* Pass category data to the TheoryManagementTable component */}
       <HazardTable hazardData={hazardData} refetch={refetch} />
 
-      {/* <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
+      <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>
-          <AddCategoryForm />
+          <AddHazardTopic refetch={refetch}/>
         </div>
-      </Modal> */}
+      </Modal>
     </div>
   );
 };

@@ -185,7 +185,7 @@ const columns = [
         >
           <div>
          
-            <EditHazard />
+            <EditHazard singleData={singleData} refetch={refetch} />
           </div>
         </Modal>
       </ConfigProvider>

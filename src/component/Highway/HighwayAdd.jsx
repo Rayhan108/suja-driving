@@ -2,21 +2,22 @@ import { message } from "antd";
 import { useForm } from "react-hook-form";
 import { useCreateHighwaySignMutation } from "../../redux/feature/highway/highwayApi";
 
-const HighwayAdd  = ({refetch}) => {
+const HighwayAdd = ({ refetch }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
-const [createHighway]=useCreateHighwaySignMutation()
+  const [createHighway] = useCreateHighwaySignMutation();
 
- const onSubmit = async (formValues) => {
+  const onSubmit = async (formValues) => {
     const formData = new FormData();
 
     // prepare JSON payload
     const dataPayload = {
-      name:formValues?.name,
+      name: formValues?.name,
+      // description: formValues?.description,
     };
     formData.append("data", JSON.stringify(dataPayload));
 
@@ -46,7 +47,6 @@ const [createHighway]=useCreateHighwaySignMutation()
     }
   };
 
-
   const onCancel = () => {
     reset();
   };
@@ -60,19 +60,30 @@ const [createHighway]=useCreateHighwaySignMutation()
       >
         <div>
           <label className="block mb-1 font-medium text-gray-700">
-           Topic Name
+          Topic Name
           </label>
           <input
             {...register("name", { required: true })}
-            placeholder="topic name..."
+            placeholder="Topic Name"
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           />
-          {errors.name && (
-            <p className="text-red-500 text-sm mt-1">
-              Topic Name is required
-            </p>
+          {errors.signType && (
+            <p className="text-red-500 text-sm mt-1">Topic Name is required</p>
           )}
         </div>
+        {/* <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Description
+          </label>
+          <textarea
+            {...register("description", { required: true })}
+            placeholder="description"
+            className="w-full border border-gray-300 rounded-md px-3 py-2"
+          />
+          {errors.description && (
+            <p className="text-red-500 text-sm mt-1">Description is required</p>
+          )}
+        </div> */}
 
         <div>
           <label className="block mb-1 font-medium text-gray-700">
@@ -109,9 +120,8 @@ const [createHighway]=useCreateHighwaySignMutation()
             </p>
           )}
         </div>
-  
+
         <div className="flex gap-12  mt-6">
-     
           <button
             type="submit"
             className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"

@@ -5,7 +5,7 @@ import { message } from "antd";
 import { useParams } from "react-router-dom";
 
 
-const AddHazardTopic = ({singleData,refetch}) => {
+const AddHazardTopic = ({refetch}) => {
 
     const [createHazardTopic] = useCreateHazTopicMutation()
   const {

@@ -1,10 +1,11 @@
-import { Checkbox, ConfigProvider, Input, Modal, Table } from "antd";
+import { Checkbox, ConfigProvider, Input, message, Modal, Table } from "antd";
 
 import { useState } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 
 import HighwayEdit from "./HighwayEdit";
 import { FiEye } from "react-icons/fi";
+import { useDeleteHighwayTopicMutation } from "../../redux/feature/highway/highwayApi";
 
 const HighTable = ({ category, refetch }) => {
     const [singleData, setSingleData] = useState({});
@@ -12,10 +13,11 @@ const HighTable = ({ category, refetch }) => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDescriptionModalOpen, setDescriptionModalOpen] = useState(false);
   const [data, setData] = useState([]);
-  const showModal = (data) => {
-    setSingleData(data)
+   const showModal = (id) => {
+    setSingleData(id);
     setIsModalOpen(true);
   };
+  const [deleteHighTopic]=useDeleteHighwayTopicMutation()
   const showDescriptionModal = (data) => {
     console.log("id", data);
     setData(data);
@@ -26,12 +28,32 @@ const HighTable = ({ category, refetch }) => {
   };
   const showEditModal = (id) => {
     console.log("id", id);
+     setSingleData(id);
     setEditModalOpen(true);
   };
   const handleEditCancel = () => {
     setEditModalOpen(false);
   };
   const handleCancel = () => {
+    setIsModalOpen(false);
+
+    // Delete topic
+  };
+    const handleDelete = async (id) => {
+    console.log("delete id-->",id);
+  
+    try {
+      const res = await deleteHighTopic(id).unwrap();
+      console.log("response-->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        refetch();
+      } else {
+        message.error(res?.data?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
     setIsModalOpen(false);
   };
 
@@ -141,10 +163,9 @@ const HighTable = ({ category, refetch }) => {
             </p>
             <div className="text-center py-5 w-full">
               <button
-                onClick={() => {
-                  // handle delete logic here
-                  setIsModalOpen(false);
-                }}
+                  onClick={() => {
+                handleDelete(singleData?._id);
+              }}
                 className="bg-red-500 text-white font-semibold w-1/3 py-3 px-5 rounded-lg"
               >
                 CONFIRM
@@ -175,7 +196,7 @@ const HighTable = ({ category, refetch }) => {
         >
           <div>
             <h1 className="text-3xl text-center text-[#333333]">Edit Code</h1>
-            <HighwayEdit />
+            <HighwayEdit singleData={singleData} refetch={refetch}/>
           </div>
         </Modal>
       </ConfigProvider>

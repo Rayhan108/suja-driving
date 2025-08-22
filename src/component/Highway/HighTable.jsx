@@ -1,47 +1,41 @@
-import { Checkbox, ConfigProvider, Input, message, Modal, Table } from "antd";
-
-import { useState } from "react";
+import { ConfigProvider, Modal, Table, message } from "antd";
+import { useState, useMemo } from "react";
 import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
-
-import HighwayEdit from "./HighwayEdit";
 import { FiEye } from "react-icons/fi";
+import HighwayEdit from "./HighwayEdit";
 import { useDeleteHighwayTopicMutation } from "../../redux/feature/highway/highwayApi";
 
-const HighTable = ({ category, refetch }) => {
-    const [singleData, setSingleData] = useState({});
+const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
+  const [singleData, setSingleData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDescriptionModalOpen, setDescriptionModalOpen] = useState(false);
   const [data, setData] = useState([]);
-   const showModal = (id) => {
-    setSingleData(id);
+
+  const [deleteHighTopic] = useDeleteHighwayTopicMutation();
+
+ 
+  const currentPage = Number(page ?? 1);                
+  const pageSize    = Number(meta?.limit ?? 10);
+  const total       = Number(meta?.total ?? 0);
+  const showModal = (row) => {
+    setSingleData(row);
     setIsModalOpen(true);
   };
-  const [deleteHighTopic]=useDeleteHighwayTopicMutation()
-  const showDescriptionModal = (data) => {
-    console.log("id", data);
-    setData(data);
+  const showDescriptionModal = (row) => {
+    setData(row);
     setDescriptionModalOpen(true);
   };
-  const handleDescriptionCancel = () => {
-    setDescriptionModalOpen(false);
-  };
-  const showEditModal = (id) => {
-    console.log("id", id);
-     setSingleData(id);
+  const handleDescriptionCancel = () => setDescriptionModalOpen(false);
+  const showEditModal = (row) => {
+    setSingleData(row);
     setEditModalOpen(true);
   };
-  const handleEditCancel = () => {
-    setEditModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
+  const handleEditCancel = () => setEditModalOpen(false);
+  const handleCancel = () => setIsModalOpen(false);
 
-    // Delete topic
-  };
-    const handleDelete = async (id) => {
+  const handleDelete = async (id) => {
     console.log("delete id-->",id);
-  
     try {
       const res = await deleteHighTopic(id).unwrap();
       console.log("response-->", res);
@@ -57,82 +51,75 @@ const HighTable = ({ category, refetch }) => {
     setIsModalOpen(false);
   };
 
-  const columns = [
+  const columns = useMemo(() => [
     {
       title: "SL",
-      dataIndex: "sl",
       key: "sl",
       align: "center",
-      render: (text, record, index) => index + 1, // Use the index + 1 as serial number
+      render: (_text, _record, index) =>
+        (currentPage - 1) * pageSize + (index + 1),
     },
     {
       title: "Topics Name",
       dataIndex: "name",
       key: "name",
-      align: "center", // Center-aligned Category Name column
+      align: "center",
     },
     {
       title: "Images",
       dataIndex: "icon",
       key: "icon",
-      align: "center", // Center-aligned Category Icon column
-      render: (text) => (
+      align: "center",
+      render: (src) => (
         <div style={{ display: "flex", justifyContent: "center" }}>
-          {" "}
           <img
-            src={text}
+            src={src}
             alt="Category Icon"
-            style={{ width: 70, height: 40 }}
+            style={{ width: 70, height: 40, objectFit: "cover" }}
           />
         </div>
       ),
     },
     {
       title: "Description",
-      dataIndex: "description",
       key: "description",
-      align: "center", // Center-aligned Category Icon column
-      render: (_, record) => (
+      align: "center",
+      render: (_text, record) => (
         <FiEye
           size={24}
-          className=" mx-auto"
+          className="mx-auto cursor-pointer"
           onClick={() => showDescriptionModal(record)}
+          title="View description"
         />
       ),
     },
     {
       title: "Action",
       key: "action",
-      align: "center", // Center-aligned Action column
-      render: (_, record) => (
+      align: "center",
+      render: (_text, record) => (
         <div className="flex items-center justify-center gap-5">
-          <button onClick={() => showEditModal(record)}>
-            <RiEdit2Line className="text-black  w-5 h-5" />
+          <button onClick={() => showEditModal(record)} title="Edit">
+            <RiEdit2Line className="text-black w-5 h-5" />
           </button>
-
-          <button onClick={()=>showModal(record)}>
-            <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
+          <button onClick={() => showModal(record)} title="Delete">
+            <RiDeleteBin6Line className="text-red-500 w-5 h-5" />
           </button>
         </div>
       ),
     },
-  ];
+  ], [currentPage, pageSize]);
 
   return (
     <div>
       <ConfigProvider
         theme={{
           components: {
-            InputNumber: {
-              activeBorderColor: "#00c0b5",
-            },
             Pagination: {
+              colorPrimary: "#00c0b5",
+              colorPrimaryHover: "#00c0b5",
               colorPrimaryBorder: "#00c0b5",
               colorBorder: "#00c0b5",
-              colorPrimaryHover: "#00c0b5",
-              colorTextPlaceholder: "#00c0b5",
-              itemActiveBgDisabled: "#00c0b5",
-              colorPrimary: "#00c0b5",
             },
             Table: {
               headerBg: "#3F5EAB",
@@ -144,18 +131,29 @@ const HighTable = ({ category, refetch }) => {
         }}
       >
         <Table
+          rowKey="_id"
           dataSource={category}
           columns={columns}
-          pagination={{ pageSize: 10 }}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (typeof handlePageChange === "function" &&
+                (next !== currentPage || size !== pageSize)) {
+              handlePageChange(next, size);
+            }
+          }}
           scroll={{ x: "max-content" }}
         />
-        <Modal
-          open={isModalOpen}
-          centered
-          onCancel={handleCancel}
-          footer={null}
-          destroyOnClose
-        >
+
+        {/* Delete modal */}
+        <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null} destroyOnClose>
           <div className="flex flex-col justify-center items-center py-10">
             <h1 className="text-3xl text-center text-red-500">Are you sure!</h1>
             <p className="text-xl text-center mt-5">
@@ -163,9 +161,7 @@ const HighTable = ({ category, refetch }) => {
             </p>
             <div className="text-center py-5 w-full">
               <button
-                  onClick={() => {
-                handleDelete(singleData?._id);
-              }}
+                onClick={() => handleDelete(singleData?._id)}
                 className="bg-red-500 text-white font-semibold w-1/3 py-3 px-5 rounded-lg"
               >
                 CONFIRM
@@ -174,29 +170,19 @@ const HighTable = ({ category, refetch }) => {
           </div>
         </Modal>
 
-        {/* description modal */}
-        <Modal
-          open={isDescriptionModalOpen}
-          centered
-          onCancel={handleDescriptionCancel}
-          footer={null}
-        >
+        {/* Description modal */}
+        <Modal open={isDescriptionModalOpen} centered onCancel={handleDescriptionCancel} footer={null}>
           <div>
             <h1 className="text-3xl text-center text-[#333333]">Description</h1>
-            <p className="mt-5 p-2">{data.description}</p>
+            <p className="mt-5 p-2">{data?.description}</p>
           </div>
         </Modal>
 
-        {/* edit modal */}
-        <Modal
-          open={isEditModalOpen}
-          centered
-          onCancel={handleEditCancel}
-          footer={null}
-        >
+        {/* Edit modal */}
+        <Modal open={isEditModalOpen} centered onCancel={handleEditCancel} footer={null}>
           <div>
             <h1 className="text-3xl text-center text-[#333333]">Edit Code</h1>
-            <HighwayEdit singleData={singleData} refetch={refetch}/>
+            <HighwayEdit singleData={singleData} refetch={refetch} />
           </div>
         </Modal>
       </ConfigProvider>

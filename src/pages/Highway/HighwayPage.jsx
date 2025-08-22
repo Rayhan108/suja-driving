@@ -12,8 +12,14 @@ import HighwayAdd from "../../component/Highway/HighwayAdd";
 import { useGetAllHighwayTopicQuery } from "../../redux/feature/highway/highwayApi";
 
 const HighwayPage = () => {
-  const {data:highwayTopic,refetch}=useGetAllHighwayTopicQuery(undefined)
+      const [searchTerm, setSearchTerm] = useState(""); 
+    // ---- pagination state (server-side) ----
+  const [page, setPage] = useState(1);
+  
+  const [limit] = useState(10); // fixed on backend
+  const {data:highwayTopic,refetch}=useGetAllHighwayTopicQuery({page,searchTerm})
   console.log("Highway Topic------->",highwayTopic);
+  const meta = highwayTopic?.data?.meta
   const category = highwayTopic?.data?.result
   const location = useLocation(); // Get the current location (URL)
 
@@ -37,7 +43,15 @@ const HighwayPage = () => {
     setIsModalOpen(false);
     setDeleteId(null);
   };
-
+  // ---- pass this to the table ----
+  const handlePageChange = (nextPage /*, pageSize */) => {
+    console.log("calling functon........",nextPage);
+    setPage(nextPage); // triggers RTK Query refetch because query args changed
+  }
+  console.log("page no------------->",page);
+    const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
+  };
   return (
     <div>
       <div className="flex justify-between my-2 font-title mb-12">
@@ -53,6 +67,7 @@ const HighwayPage = () => {
               type="text"
               placeholder="Search anything here..."
               className="border border-[#e5eaf2] py-3 outline-none w-full rounded-full px-3"
+               onChange={handleSearchChange} // Handle input change
             />
             <span className="text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center cursor-pointer">
               <IoSearch className="text-[1.3rem]" />
@@ -70,7 +85,7 @@ const HighwayPage = () => {
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <HighTable category={category} refetch={refetch}/>
+      <HighTable category={category} meta={meta} refetch={refetch} handlePageChange={handlePageChange} page={page}/>
 
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>

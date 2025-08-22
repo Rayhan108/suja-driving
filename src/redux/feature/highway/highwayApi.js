@@ -4,8 +4,8 @@ const highwayApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
     getAllHighwayTopic: builder.query({
-      query: () => ({
-        url:`/sign-type/get-all`,
+    query: ({page,searchTerm}) => ({
+        url:`/sign-type/get-all?page=${page}&&searchTerm=${searchTerm}`,
         method: "GET",      
       }),
     }),

@@ -27,6 +27,16 @@ const hazardApi = baseApi.injectEndpoints({
        };
      },
    }),
+   deleteHazardVedio: builder.mutation({
+     query: (id) => {
+       // console.log("Received ID in mutation query:", id); // Log to see if the id is passed correctly
+       return {
+         url: `/hazard-video/delete/${id}`,
+         method: "DELETE",
+       
+       };
+     },
+   }),
       getAllVedios: builder.query({
     query: (id) => ({
         url:`/hazard-video/get-all?hazardTopic=${id}`,
@@ -52,4 +62,4 @@ const hazardApi = baseApi.injectEndpoints({
 
 });
 
-export const {useGetAllHazardTopicQuery,useUpdateHazardTopicMutation,useDeleteHazardTopicMutation,useGetAllVediosQuery,useCreateHazVedioMutation,useCreateHazTopicMutation} =hazardApi;
+export const {useGetAllHazardTopicQuery,useUpdateHazardTopicMutation,useDeleteHazardTopicMutation,useGetAllVediosQuery,useCreateHazVedioMutation,useCreateHazTopicMutation,useDeleteHazardVedioMutation} =hazardApi;

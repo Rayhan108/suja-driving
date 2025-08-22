@@ -6,23 +6,24 @@ import { Link, useParams } from "react-router-dom";
 import { BsEye } from "react-icons/bs";
 import {
   useDeleteHazardTopicMutation,
+  useDeleteHazardVedioMutation,
   useGetAllVediosQuery,
 } from "../../redux/feature/hazard/hazardApi";
 
 import VedioModal from "./VedioModal";
 import HazardForm from "./AddHazardForm";
-const HazardVedioTable = ({ refetch }) => {
+const HazardVedioTable = () => {
+  const [singleData, setSingleData] = useState({});
   const { id } = useParams();
-  console.log("id--------------->", id);
-  const { data: allVedios } = useGetAllVediosQuery(id);
-  console.log("all Vedios->", allVedios);
+  console.log("singleData--------------->", singleData);
+  const { data: allVedios,refetch } = useGetAllVediosQuery(id);
+  console.log("all Vedios->", allVedios?.data?.result);
 
   const vediosData = allVedios?.data?.result;
-  const [singleData, setSingleData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isVedioModalOpen, setVedioModalOpen] = useState(false);
   const [vedioData, setVedioData] = useState([]);
-  const [deleteHazardTopic] = useDeleteHazardTopicMutation();
+  const [deleteHazardVedio] =useDeleteHazardVedioMutation();
 
   const showModal = (id) => {
     setSingleData(id);
@@ -48,7 +49,7 @@ const HazardVedioTable = ({ refetch }) => {
     console.log("delete id-->", id);
 
     try {
-      const res = await deleteHazardTopic(id).unwrap();
+      const res = await deleteHazardVedio(id).unwrap();
       console.log("response-->", res);
       if (res?.success) {
         message.success(res?.message);
@@ -87,16 +88,17 @@ const HazardVedioTable = ({ refetch }) => {
       align: "center",
       render: (text, record, index) => index + 1, // Use index + 1 as serial number
     },
-    {
-      title: "Topic Name",
-      dataIndex: "topicName",
-      key: "topicName",
-      align: "center",
-    },
+   {
+  title: "Topic Name",
+  dataIndex: "hazardTopic",
+  key: "hazardTopic",
+  align: "center",
+  render: (hazardTopic, record, index) =>`${hazardTopic?.name}`,
+},
     {
       title: "Videos",
-      dataIndex: "vedio",
-      key: "vedio",
+      dataIndex: "video_url",
+      key: "video_url",
       align: "center",
       render: (videoUrl) => (
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -147,7 +149,7 @@ const HazardVedioTable = ({ refetch }) => {
           </button>
 
           <button
-            onClick={showModal}
+            onClick={()=>showModal(record)}
             style={{
               display: "flex",
               alignItems: "center",
@@ -252,7 +254,7 @@ const HazardVedioTable = ({ refetch }) => {
           >
             <div>
               <h1 className="text-3xl text-center text-[#333333]">
-                Edit Topic
+                Edit Vedio
               </h1>
               <VedioModal refetch={refetch} singleData={singleData} />
             </div>

@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 
 // const sampleVideoUrl = 'https://www.w3schools.com/html/mov_bbb.mp4';
 
-export default function DangerZoneVideo({vedioData}) {
+export default function DangerZoneVideo({singleData,refetch}) {
+  console.log("single vedio data--->",singleData);
   const videoRef = useRef(null);
   const timelineRef = useRef(null);
-const sampleVideoUrl = vedioData?.vedio
+const sampleVideoUrl = singleData?.video_url
   const [dangerZones, setDangerZones] = useState([
     { id: 1, time: 54 },
     { id: 2, time: 120 },

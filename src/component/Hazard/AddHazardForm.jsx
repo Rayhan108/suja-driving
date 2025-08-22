@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useCreateHazVedioMutation } from "../../redux/feature/hazard/hazardApi";
 import { message } from "antd";
 
-const HazardForm = () => {
+const HazardForm = ({refetch}) => {
   const { id } = useParams();
   const topicId = id;
   const [createHazVedio] = useCreateHazVedioMutation();
@@ -18,7 +18,22 @@ const HazardForm = () => {
     const formData = new FormData();
 
     // file
+    // const vedio = formValues?.vedio?.[0];
+    //      if (vedio) {
+    //       formData.append("vedio", vedio, vedio.name);
+    //     } else {
+    //       message.error("Please select vedio ");
+    //       return;
+    //     }
     formData.append("video", formValues.video[0]);
+
+     const file = formValues?.thumbnail?.[0];
+        if (file) {
+          formData.append("thumbnail", file, file.name);
+        } else {
+          message.error("Please select an image file.");
+          return;
+        }
 
     // parse dangerTimes
     const parsedDangerTimes = formValues.dangerTimes
@@ -114,7 +129,37 @@ const HazardForm = () => {
           <p className="text-red-500 text-sm mt-1">Video required</p>
         )}
       </div>
-
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Upload Thumbnail Image
+          </label>
+          <label
+            htmlFor="file-upload"
+            className="cursor-pointer flex justify-center items-center border border-gray-300 rounded-md px-3 py-3 hover:bg-gray-100 transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-gray-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5-5m0 0l5 5m-5-5v12"
+              />
+            </svg>
+            <input
+              {...register("thumbnail")}
+              id="file-upload"
+              type="file"
+              className="hidden"
+            />
+          </label>
+    
+        </div>
       {/* Buttons */}
       <div className="flex gap-4">
         <button 

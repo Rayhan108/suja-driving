@@ -9,96 +9,12 @@ import AddAdiCategoryForm from "../../component/AdiTheoryManagement/AddAdiCatego
 import AdiTheoryManagementTable from "../../component/AdiTheoryManagement/AdiTheoryManagementTable";
 import HighTable from "../../component/Highway/HighTable";
 import HighwayAdd from "../../component/Highway/HighwayAdd";
+import { useGetAllHighwayTopicQuery } from "../../redux/feature/highway/highwayApi";
 
 const HighwayPage = () => {
-  const category = [
-    {
-      sl: "01",
-      topicsName: "Bus",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-        description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "02",
-      topicsName: "Car",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "03",
-      topicsName: "Bike",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "01",
-      topicsName: "Bus",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "02",
-      topicsName: "Car",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "03",
-      topicsName: "Bike",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "01",
-      topicsName: "Bus",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "02",
-      topicsName: "Car",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "03",
-      topicsName: "Bike",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "01",
-      topicsName: "Bus",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "02",
-      topicsName: "Car",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-    {
-      sl: "03",
-      topicsName: "Bike",
-      images:
-        "https://img.freepik.com/free-psd/black-isolated-car_23-2151852894.jpg?semt=ais_hybrid&w=740",
-            description:"A road curve to the left means the road ahead bends to the left. Drivers should anticipate the turn and reduce speed accordingly, especially if the curve is sharp or the road is wet. Look ahead to see the curve and maintain a smooth steering line. "
-    },
-  
-  ];
-
+  const {data:highwayTopic,refetch}=useGetAllHighwayTopicQuery(undefined)
+  console.log("Highway Topic------->",highwayTopic);
+  const category = highwayTopic?.data?.result
   const location = useLocation(); // Get the current location (URL)
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
@@ -154,12 +70,12 @@ const HighwayPage = () => {
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <HighTable category={category} />
+      <HighTable category={category} refetch={refetch}/>
 
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>
           <h1 className="text-3xl text-center text-[#333333]">Add Code</h1>
-          <HighwayAdd />
+          <HighwayAdd refetch={refetch}/>
         </div>
       </Modal>
     </div>

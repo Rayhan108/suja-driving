@@ -27,8 +27,22 @@ const hazardApi = baseApi.injectEndpoints({
        };
      },
    }),
+      getAllVedios: builder.query({
+    query: (id) => ({
+        url:`/hazard-video/get-all?hazardTopic=${id}`,
+        method: "GET", 
+  
+      }),
+    }),
+      createHazVedio: builder.mutation({
+      query: (args) => ({
+        url:`/hazard-video/create`,
+        method: "POST", 
+        body:args   
+      }),
+    }),
   }),
 
 });
 
-export const {useGetAllHazardTopicQuery,useUpdateHazardTopicMutation,useDeleteHazardTopicMutation} =hazardApi;
+export const {useGetAllHazardTopicQuery,useUpdateHazardTopicMutation,useDeleteHazardTopicMutation,useGetAllVediosQuery,useCreateHazVedioMutation} =hazardApi;

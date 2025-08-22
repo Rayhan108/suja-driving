@@ -20,7 +20,7 @@ const sampleVideoUrl = vedioData?.vedio
       setVideoDuration(Math.floor(video.duration));
     };
     if (video) {
-      video.addEventListener('loadedmetadata', onLoadedMetadata);
+      video.addEventListener('loadedmetadata', onLoadedMetadata);    
       return () => video.removeEventListener('loadedmetadata', onLoadedMetadata);
     }
   }, []);

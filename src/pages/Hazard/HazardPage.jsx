@@ -2,7 +2,7 @@ import { Input, Modal } from "antd";
 import { IoSearch } from "react-icons/io5";
 import { SlArrowLeft } from "react-icons/sl";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import AddCategoryForm from "../../component/TheoryManagement/AddCategoryForm";
 import HazardTable from "../../component/Hazard/HazardTable";
@@ -10,7 +10,8 @@ import { useGetAllHazardTopicQuery } from "../../redux/feature/hazard/hazardApi"
 
 const HazardPage = () => {
 
-const {data:allHazardTopic,refetch}=useGetAllHazardTopicQuery(undefined)
+  const { data: allHazardTopic, refetch } =
+    useGetAllHazardTopicQuery(undefined);
   const location = useLocation(); // Get the current location (URL)
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
@@ -33,8 +34,9 @@ const {data:allHazardTopic,refetch}=useGetAllHazardTopicQuery(undefined)
     setIsModalOpen(false);
     setDeleteId(null);
   };
-console.log("All Hazard Data----->",allHazardTopic?.data?.result);
-const hazardData = allHazardTopic?.data?.result
+  console.log("All Hazard Data----->", allHazardTopic?.data?.result);
+  const hazardData = allHazardTopic?.data?.result;
+
   return (
     <div>
       <div className="flex justify-between my-2 mb-12 font-title">
@@ -45,7 +47,8 @@ const hazardData = allHazardTopic?.data?.result
           </p>
         </div>
         <div className="flex gap-5">
-          <div className="relative w-full sm:w-[300px] ">
+
+          {/* <div className="relative w-full sm:w-[300px] ">
             <Input
               type="text"
               placeholder="Search anything here..."
@@ -54,26 +57,28 @@ const hazardData = allHazardTopic?.data?.result
             <span className="text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center cursor-pointer">
               <IoSearch className="text-[1.3rem]" />
             </span>
-          </div>
-          <div>
+          </div> */}
+
+          {/* <div>
             <button
               className="bg-[#3F5EAB] text-white p-3 rounded-xl"
               onClick={() => showModal()}
             >
               +Add Vedio
             </button>
-          </div>
+          </div> */}
+
         </div>
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
       <HazardTable hazardData={hazardData} refetch={refetch} />
 
-      <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
+      {/* <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>
           <AddCategoryForm />
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

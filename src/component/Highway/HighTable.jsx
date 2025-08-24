@@ -6,7 +6,7 @@ import HighwayEdit from "./HighwayEdit";
 import { useDeleteHighwayTopicMutation } from "../../redux/feature/highway/highwayApi";
 import { Link } from "react-router-dom";
 
-const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
+const HighTable = ({ category, refetch, meta, handlePageChange, page }) => {
   const [singleData, setSingleData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -15,10 +15,9 @@ const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
 
   const [deleteHighTopic] = useDeleteHighwayTopicMutation();
 
- 
-  const currentPage = Number(page ?? 1);                
-  const pageSize    = Number(meta?.limit ?? 10);
-  const total       = Number(meta?.total ?? 0);
+  const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
   const showModal = (row) => {
     setSingleData(row);
     setIsModalOpen(true);
@@ -36,7 +35,7 @@ const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
   const handleCancel = () => setIsModalOpen(false);
 
   const handleDelete = async (id) => {
-    console.log("delete id-->",id);
+    console.log("delete id-->", id);
     try {
       const res = await deleteHighTopic(id).unwrap();
       console.log("response-->", res);
@@ -52,67 +51,69 @@ const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
     setIsModalOpen(false);
   };
 
-  const columns = useMemo(() => [
-    {
-      title: "SL",
-      key: "sl",
-      align: "center",
-      render: (_text, _record, index) =>
-        (currentPage - 1) * pageSize + (index + 1),
-    },
-    {
-      title: "Topics Name",
-      dataIndex: "name",
-      key: "name",
-      align: "center",
-    },
-    {
-      title: "Images",
-      dataIndex: "icon",
-      key: "icon",
-      align: "center",
-      render: (src) => (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <img
-            src={src}
-            alt="Category Icon"
-            style={{ width: 70, height: 40, objectFit: "cover" }}
-          />
-        </div>
-      ),
-    },
-    {
-      title: "Description",
-      key: "description",
-      align: "center",
-      render: (_text, record) => (
-           <Link to={`/highway/details/${record?._id}`}>
-
-             <FiEye
-               size={24}
-               className="mx-auto cursor-pointer"
-               onClick={() => showDescriptionModal(record)}
-               title="View description"
-             />
-           </Link>
-      ),
-    },
-    {
-      title: "Action",
-      key: "action",
-      align: "center",
-      render: (_text, record) => (
-        <div className="flex items-center justify-center gap-5">
-          <button onClick={() => showEditModal(record)} title="Edit">
-            <RiEdit2Line className="text-black w-5 h-5" />
-          </button>
-          <button onClick={() => showModal(record)} title="Delete">
-            <RiDeleteBin6Line className="text-red-500 w-5 h-5" />
-          </button>
-        </div>
-      ),
-    },
-  ], [currentPage, pageSize]);
+  const columns = useMemo(
+    () => [
+      {
+        title: "SL",
+        key: "sl",
+        align: "center",
+        render: (_text, _record, index) =>
+          (currentPage - 1) * pageSize + (index + 1),
+      },
+      {
+        title: "Topics Name",
+        dataIndex: "name",
+        key: "name",
+        align: "center",
+      },
+      {
+        title: "Images",
+        dataIndex: "icon",
+        key: "icon",
+        align: "center",
+        render: (src) => (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <img
+              src={src}
+              alt="Category Icon"
+              style={{ width: 70, height: 40, objectFit: "cover" }}
+            />
+          </div>
+        ),
+      },
+      {
+        title: "Description",
+        key: "description",
+        align: "center",
+        render: (_text, record) => (
+          <Link to={`/highway/details/${record?._id}`}>
+            <FiEye
+              size={24}
+              className="mx-auto cursor-pointer"
+              onClick={() => showDescriptionModal(record)}
+              title="View description"
+            />
+          </Link>
+        ),
+      },
+      {
+        title: "Action",
+        key: "action",
+        align: "center",
+        render: (_text, record) => (
+          <div className="flex items-center justify-center gap-5">
+            <button onClick={() => showEditModal(record)} title="Edit">
+              <RiEdit2Line className="text-black w-5 h-5" />
+            </button>
+            <button onClick={() => showModal(record)} title="Delete">
+              <RiDeleteBin6Line className="text-red-500 w-5 h-5" />
+            </button>
+          </div>
+        ),
+      },
+    ],
+    [currentPage, pageSize]
+  );
 
   return (
     <div>
@@ -148,8 +149,10 @@ const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
           onChange={(pagination) => {
             const next = pagination?.current ?? 1;
             const size = pagination?.pageSize ?? pageSize;
-            if (typeof handlePageChange === "function" &&
-                (next !== currentPage || size !== pageSize)) {
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
               handlePageChange(next, size);
             }
           }}
@@ -157,7 +160,13 @@ const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
         />
 
         {/* Delete modal */}
-        <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null} destroyOnClose>
+        <Modal
+          open={isModalOpen}
+          centered
+          onCancel={handleCancel}
+          footer={null}
+          destroyOnClose
+        >
           <div className="flex flex-col justify-center items-center py-10">
             <h1 className="text-3xl text-center text-red-500">Are you sure!</h1>
             <p className="text-xl text-center mt-5">
@@ -175,7 +184,12 @@ const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
         </Modal>
 
         {/* Description modal */}
-        <Modal open={isDescriptionModalOpen} centered onCancel={handleDescriptionCancel} footer={null}>
+        <Modal
+          open={isDescriptionModalOpen}
+          centered
+          onCancel={handleDescriptionCancel}
+          footer={null}
+        >
           <div>
             <h1 className="text-3xl text-center text-[#333333]">Description</h1>
             <p className="mt-5 p-2">{data?.description}</p>
@@ -183,7 +197,12 @@ const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
         </Modal>
 
         {/* Edit modal */}
-        <Modal open={isEditModalOpen} centered onCancel={handleEditCancel} footer={null}>
+        <Modal
+          open={isEditModalOpen}
+          centered
+          onCancel={handleEditCancel}
+          footer={null}
+        >
           <div>
             <h1 className="text-3xl text-center text-[#333333]">Edit Code</h1>
             <HighwayEdit singleData={singleData} refetch={refetch} />

@@ -13,18 +13,22 @@ import {
 import VedioModal from "./VedioModal";
 import HazardForm from "./AddHazardForm";
 const HazardVedioTable = () => {
+  const [page, setPage] = useState(1);
   const [singleData, setSingleData] = useState({});
   const { id } = useParams();
   console.log("singleData--------------->", singleData);
-  const { data: allVedios,refetch } = useGetAllVediosQuery(id);
+  const { data: allVedios,refetch } = useGetAllVediosQuery({id,page});
   console.log("all Vedios->", allVedios?.data?.result);
+const meta = allVedios?.data?.meta
 
   const vediosData = allVedios?.data?.result;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isVedioModalOpen, setVedioModalOpen] = useState(false);
   const [vedioData, setVedioData] = useState([]);
   const [deleteHazardVedio] =useDeleteHazardVedioMutation();
-
+  const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
   const showModal = (id) => {
     setSingleData(id);
     setIsModalOpen(true);
@@ -44,7 +48,11 @@ const HazardVedioTable = () => {
   const handleEditCancel = () => {
     setEditModalOpen(false);
   };
-
+  // ---- pass this to the table ----
+  const handlePageChange = (nextPage /*, pageSize */) => {
+    console.log("calling functon........",nextPage);
+    setPage(nextPage); // triggers RTK Query refetch because query args changed
+  }
   const handleDelete = async (id) => {
     console.log("delete id-->", id);
 
@@ -200,12 +208,29 @@ const HazardVedioTable = () => {
             },
           }}
         >
-          <Table
-            dataSource={vediosData}
-            columns={columns}
-            pagination={{ pageSize: 10 }}
-            scroll={{ x: "max-content" }}
-          />
+             <Table
+          rowKey="_id"
+          dataSource={vediosData}
+          columns={columns}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
+              handlePageChange(next, size);
+            }
+          }}
+          scroll={{ x: "max-content" }}
+        />
           <Modal
             open={isModalOpen}
             centered

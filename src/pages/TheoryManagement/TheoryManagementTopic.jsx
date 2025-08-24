@@ -13,11 +13,12 @@ import {
 const TheoryManagementTopic = () => {
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
+    const [page, setPage] = useState(1);
   const type = "THEORY";
-  const { data: allCategory } = useGetAllCateroryQuery({ searchTerm, type });
-  const { data: allTopic, refetch } = useGetAllTopicQuery(id);
+  const { data: allCategory } = useGetAllCateroryQuery({type});
+  const { data: allTopic, refetch } = useGetAllTopicQuery({id,page,searchTerm});
   const topic = allTopic?.data?.result;
-
+const meta = allTopic?.data?.meta
   console.log("all category--->", allCategory);
   console.log("all topic--->", topic);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,7 +43,11 @@ const TheoryManagementTopic = () => {
   useEffect(() => {
     setActiveTab(activeTabFromURL || "category");
   }, [location]);
-
+  // ---- pass this to the table ----
+  const handlePageChange = (nextPage /*, pageSize */) => {
+    console.log("calling functon........",nextPage);
+    setPage(nextPage); // triggers RTK Query refetch because query args changed
+  }
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
   };
@@ -56,7 +61,7 @@ const TheoryManagementTopic = () => {
           </p>
         </div>
         <div className="flex gap-5">
-          {/* <div className="relative w-full sm:w-[300px] ">
+          <div className="relative w-full sm:w-[300px] ">
             <Input
               type="text"
               placeholder="Search anything here..."
@@ -66,7 +71,7 @@ const TheoryManagementTopic = () => {
             <span className="text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center cursor-pointer">
               <IoSearch className="text-[1.3rem]" />
             </span>
-          </div> */}
+          </div>
           <div>
             <button
               className="bg-[#3F5EAB] text-white p-3 rounded-xl"
@@ -118,7 +123,7 @@ const TheoryManagementTopic = () => {
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTopicTable topic={topic} refetch={refetch} />
+      <TheoryManagementTopicTable topic={topic} refetch={refetch} meta={meta} page={page} handlePageChange={handlePageChange}/>
 
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>

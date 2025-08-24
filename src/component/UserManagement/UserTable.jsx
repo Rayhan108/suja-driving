@@ -8,18 +8,28 @@ import { useGetAllUserQuery } from "../../redux/feature/user/userApi";
 
 
 const UserTable = ({searchTerm}) => {
-  const {data:allUser}=useGetAllUserQuery(searchTerm)
+    const [page, setPage] = useState(1);
+  const {data:allUser}=useGetAllUserQuery({searchTerm,page})
   console.log("all user--->",allUser?.data?.result);
+  const meta = allUser?.data?.meta
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = (userdata) => {
 
     console.log("userData",userdata);
     setIsModalOpen(true);
   };
+
+    const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
+  // ---- pass this to the table ----
+  const handlePageChange = (nextPage /*, pageSize */) => {
+    console.log("calling functon........",nextPage);
+    setPage(nextPage); // triggers RTK Query refetch because query args changed
+  }
   const columns = [
     // {
     //   title: "User ID",
@@ -110,15 +120,27 @@ const UserTable = ({searchTerm}) => {
         }}
 >
 
-
-        <Table
+      <Table
+          rowKey="_id"
           dataSource={allUser?.data?.result}
-         columns={columns.map((column) => ({
-    ...column,
-    align: 'center', // Center align content for every column
-
-  }))}
-          pagination={{ pageSize: 10 }}
+          columns={columns}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
+              handlePageChange(next, size);
+            }
+          }}
           scroll={{ x: "max-content" }}
         />
         <Modal

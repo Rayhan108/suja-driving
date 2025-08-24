@@ -7,11 +7,13 @@ import { Link } from "react-router-dom";
 import { BsEye } from "react-icons/bs";
 import { useDeleteHazardTopicMutation } from "../../redux/feature/hazard/hazardApi";
 
-const HazardTable = ({ hazardData,refetch}) => {
+const HazardTable = ({hazardData,refetch,handlePageChange,page,meta}) => {
     const [singleData, setSingleData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
-
+  const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
     const [deleteHazardTopic]=useDeleteHazardTopicMutation()
   const showModal = (id) => {
     setSingleData(id);
@@ -143,10 +145,27 @@ const columns = [
           },
         }}
       >
-        <Table
+          <Table
+          rowKey="_id"
           dataSource={hazardData}
           columns={columns}
-          pagination={{ pageSize: 7 }}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
+              handlePageChange(next, size);
+            }
+          }}
           scroll={{ x: "max-content" }}
         />
         <Modal

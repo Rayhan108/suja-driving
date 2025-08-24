@@ -27,7 +27,7 @@ export const circleStyle = (filled) => ({
   userSelect: "none",
 });
 
-const AdiQuestionTable = ({ question,refetch}) => {
+const AdiQuestionTable = ({ question,refetch,page,meta,handlePageChange}) => {
   const [deleteQues] =useDeleteQuesMutation()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -35,7 +35,9 @@ const AdiQuestionTable = ({ question,refetch}) => {
    const [singleData, setSingleData] = useState({});
   const showModal = (id) => { setDeleteId(id);     setSingleData(id); setIsModalOpen(true); };
   const handleCancel = () => { setIsModalOpen(false); setDeleteId(null); };
-
+  const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
   const showEditModal = (id) => {
     console.log("id", id);
     setSingleData(id);
@@ -177,13 +179,28 @@ const AdiQuestionTable = ({ question,refetch}) => {
       }}
     >
       <Table
-        dataSource={question}
-        columns={columns}
-        pagination={{ pageSize: 5 }}
-        rowKey="id"
-        scroll={{ x: "max-content" }}
-        bordered
-      />
+          rowKey="_id"
+          dataSource={question}
+          columns={columns}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
+              handlePageChange(next, size);
+            }
+          }}
+          scroll={{ x: "max-content" }}
+        />
 
       {/* Delete modal */}
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null} destroyOnClose>

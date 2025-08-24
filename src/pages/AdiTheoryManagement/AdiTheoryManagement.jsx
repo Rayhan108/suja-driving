@@ -12,7 +12,8 @@ import { useGetAllCateroryQuery } from "../../redux/feature/theoryManagement/the
 const AdiTheoryManagement = () => {
      const [searchTerm, setSearchTerm] = useState(""); 
 const type = "ADI"
-const {data:allCategory,refetch}=useGetAllCateroryQuery({searchTerm,type})
+  const [page, setPage] = useState(1);
+const {data:allCategory,refetch}=useGetAllCateroryQuery({searchTerm,type,page})
  
  console.log("all category--->",allCategory);
  const meta = allCategory?.data?.meta;
@@ -42,7 +43,11 @@ console.log("activeTabFromURL",activeTabFromURL);
  const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
   };
-
+  // ---- pass this to the table ----
+  const handlePageChange = (nextPage /*, pageSize */) => {
+    console.log("calling functon........",nextPage);
+    setPage(nextPage); // triggers RTK Query refetch because query args changed
+  }
   return (
     <div>
       <div className="flex justify-between my-2 font-title mb-8">
@@ -114,7 +119,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <AdiTheoryManagementTable category={category} refetch={refetch} />
+      <AdiTheoryManagementTable category={category} refetch={refetch} meta={meta} page={page} handlePageChange={handlePageChange}/>
 
 
 

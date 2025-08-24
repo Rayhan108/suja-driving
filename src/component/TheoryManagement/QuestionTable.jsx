@@ -5,7 +5,7 @@ import EditQuesForm from "./EditQuestionForm";
 import { useDeleteQuesMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { circleStyle, normalizeOptions } from "../AdiTheoryManagement/AdiQuestionTable";
 
-const QuestionTable = ({ question,refetch }) => {
+const QuestionTable = ({ question,refetch,handlePageChange,meta,page }) => {
   const [deleteQues] =useDeleteQuesMutation()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -19,7 +19,9 @@ const QuestionTable = ({ question,refetch }) => {
     setSingleData(id);
     setEditModalOpen(true);
   };
-
+  const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
   const handleEditCancel = () => { setEditModalOpen(false); };
   const handleDelete = async (id) => {
     console.log("delete id-->",id);
@@ -157,14 +159,29 @@ const QuestionTable = ({ question,refetch }) => {
         },
       }}
     >
-      <Table
-        dataSource={question}
-        columns={columns}
-        pagination={{ pageSize: 5 }}
-        rowKey="id"
-        scroll={{ x: "max-content" }}
-        bordered
-      />
+         <Table
+          rowKey="_id"
+          dataSource={question}
+          columns={columns}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
+              handlePageChange(next, size);
+            }
+          }}
+          scroll={{ x: "max-content" }}
+        />
       <Modal
         open={isModalOpen}
         centered

@@ -6,116 +6,11 @@ import { SlArrowLeft } from "react-icons/sl";
 const UserManagement = () => {
       const [activeTab, setActiveTab] = useState("allOrder");
         const [searchTerm, setSearchTerm] = useState(""); 
+        
           const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
   };
-  const user = [
-  {
-    userId: "U12345",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    "test-type": "Standard",
-    status: "Active",
-  },
-  {
-    userId: "U67890",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    "test-type": "Premium",
-    status: "Deactive",
-  },
-  {
-    userId: "U11223",
-    name: "Alice Johnson",
-    email: "alice.johnson@example.com",
-    "test-type": "Advanced",
-    status: "Active",
-  },
-  {
-    userId: "U44556",
-    name: "Bob Brown",
-    email: "bob.brown@example.com",
-    "test-type": "Standard",
-    status: "Deactive",
-  },
-  {
-    userId: "U78901",
-    name: "Charlie Davis",
-    email: "charlie.davis@example.com",
-    "test-type": "Standard",
-    status: "Active",
-  },
-  {
-    userId: "U22334",
-    name: "Emily Evans",
-    email: "emily.evans@example.com",
-    "test-type": "Premium",
-    status: "Active",
-  },
-  {
-    userId: "U33445",
-    name: "David Wilson",
-    email: "david.wilson@example.com",
-    "test-type": "Basic",
-    status: "Deactive",
-  },
-  {
-    userId: "U55678",
-    name: "Grace Lee",
-    email: "grace.lee@example.com",
-    "test-type": "Standard",
-    status: "Active",
-  },
-  {
-    userId: "U66789",
-    name: "Henry Clark",
-    email: "henry.clark@example.com",
-    "test-type": "Advanced",
-    status: "Deactive",
-  },
-  {
-    userId: "U77890",
-    name: "Isabella Martin",
-    email: "isabella.martin@example.com",
-    "test-type": "Premium",
-    status: "Active",
-  },
-  {
-    userId: "U99101",
-    name: "Jack Walker",
-    email: "jack.walker@example.com",
-    "test-type": "Standard",
-    status: "Active",
-  },
-  {
-    userId: "U11234",
-    name: "Liam Lewis",
-    email: "liam.lewis@example.com",
-    "test-type": "Advanced",
-    status: "Deactive",
-  },
-  {
-    userId: "U22345",
-    name: "Megan Carter",
-    email: "megan.carter@example.com",
-    "test-type": "Premium",
-    status: "Active",
-  },
-  {
-    userId: "U33456",
-    name: "Nathan Harris",
-    email: "nathan.harris@example.com",
-    "test-type": "Basic",
-    status: "Deactive",
-  },
-  {
-    userId: "U44567",
-    name: "Olivia Scott",
-    email: "olivia.scott@example.com",
-    "test-type": "Standard",
-    status: "Active",
-  },
-];
+
 
 
 

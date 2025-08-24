@@ -6,7 +6,7 @@ import EditTopicForm from "./EditTopicForm";
 import { useDeleteTopicMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { Link } from "react-router-dom";
 import { BsEye } from "react-icons/bs";
-const TheoryManagementTopicTable = ({topic,refetch}) => {
+const TheoryManagementTopicTable = ({topic,refetch,meta,page,handlePageChange}) => {
     // console.log(topic);
       const [singleData, setSingleData] = useState({});
       const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +18,9 @@ const TheoryManagementTopicTable = ({topic,refetch}) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
+  const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const showEditModal = (id) => {
@@ -120,10 +122,27 @@ const TheoryManagementTopicTable = ({topic,refetch}) => {
           },
         }}
       >
-        <Table
+           <Table
+          rowKey="_id"
           dataSource={topic}
           columns={columns}
-          pagination={{ pageSize: 10 }}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
+              handlePageChange(next, size);
+            }
+          }}
           scroll={{ x: "max-content" }}
         />
             <Modal

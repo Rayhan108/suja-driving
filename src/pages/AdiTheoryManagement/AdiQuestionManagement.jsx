@@ -12,11 +12,13 @@ import { useGetAllQuesQuery } from "../../redux/feature/theoryManagement/theoryA
 
 
 const AdiQuestionManagement = () => {
+    const [searchTerm, setSearchTerm] = useState("");
   const {id} =useParams() 
-  const {data:getAllQues,refetch}=useGetAllQuesQuery(id)
+    const [page, setPage] = useState(1);
+  const {data:getAllQues,refetch}=useGetAllQuesQuery({id,searchTerm,page})
   const [isModalOpen, setIsModalOpen] = useState(false);
   const question =getAllQues?.data?.result;
-
+const meta = getAllQues?.data?.meta
 console.log("get all ques-->",getAllQues);
   const showModal = () => {
     // setDeleteId(id);
@@ -39,6 +41,17 @@ console.log("activeTabFromURL",activeTabFromURL);
   useEffect(() => {
     setActiveTab(activeTabFromURL || 'category');
   }, [location]);
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
+  };
+    // ---- pass this to the table ----
+  const handlePageChange = (nextPage /*, pageSize */) => {
+    console.log("calling functon........",nextPage);
+    setPage(nextPage); // triggers RTK Query refetch because query args changed
+  }
+
+
+
     return (
        <div>
       <div className="flex justify-between my-2 font-title mb-8">
@@ -49,16 +62,17 @@ console.log("activeTabFromURL",activeTabFromURL);
           </p>
         </div>
         <div className="flex gap-5">
-          {/* <div className="relative w-full sm:w-[300px] ">
+          <div className="relative w-full sm:w-[300px] ">
             <Input
               type="text"
               placeholder="Search anything here..."
               className="border border-[#e5eaf2] py-3 outline-none w-full rounded-full px-3"
+               onChange={handleSearchChange} // Handle input change
             />
             <span className="text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center cursor-pointer">
               <IoSearch className="text-[1.3rem]" />
             </span>
-          </div> */}
+          </div>
           <div>
             <button className="bg-[#3F5EAB] text-white p-3 rounded-xl"  onClick={() => showModal()}>+Add Question</button>
           </div>
@@ -109,7 +123,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <AdiQuestionTable question={question} refetch={refetch}/>
+      <AdiQuestionTable question={question} refetch={refetch} meta={meta} page={page} handlePageChange={handlePageChange}/>
 
 
 

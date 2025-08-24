@@ -10,8 +10,9 @@ import { useGetAllCateroryQuery } from "../../redux/feature/theoryManagement/the
 
 const TheoryManagement = () => {
     const [searchTerm, setSearchTerm] = useState(""); 
+      const [page, setPage] = useState(1);
 const type = "THEORY"
-const {data:allCategory,refetch}=useGetAllCateroryQuery({searchTerm,type})
+const {data:allCategory,refetch}=useGetAllCateroryQuery({searchTerm,type,page})
 
 console.log("all category--->",allCategory);
 const meta = allCategory?.data?.meta;
@@ -38,7 +39,11 @@ console.log("activeTabFromURL",activeTabFromURL);
     setIsModalOpen(false);
     setDeleteId(null);
   };
-
+  // ---- pass this to the table ----
+  const handlePageChange = (nextPage /*, pageSize */) => {
+    console.log("calling functon........",nextPage);
+    setPage(nextPage); // triggers RTK Query refetch because query args changed
+  }
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
   };
@@ -114,7 +119,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTable category={category} refetch={refetch}/>
+      <TheoryManagementTable category={category} refetch={refetch} meta={meta} handlePageChange={handlePageChange}/>
 
 
 

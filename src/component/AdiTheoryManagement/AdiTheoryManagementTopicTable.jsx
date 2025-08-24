@@ -7,7 +7,13 @@ import { Link } from "react-router-dom";
 import EditAdiTopicForm from "./EditAdiTopicForm";
 import { useDeleteTopicMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { BsEye } from "react-icons/bs";
-const AdiTheoryManagementTopicTable = ({ topic, refetch }) => {
+const AdiTheoryManagementTopicTable = ({
+  topic,
+  refetch,
+  handlePageChange,
+  meta,
+  page,
+}) => {
   // console.log(topic);
   const [singleData, setSingleData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +36,9 @@ const AdiTheoryManagementTopicTable = ({ topic, refetch }) => {
   const handleEditCancel = () => {
     setEditModalOpen(false);
   };
-
+  const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
   const handleDelete = async (id) => {
     console.log("delete id-->", id);
     try {
@@ -125,9 +133,26 @@ const AdiTheoryManagementTopicTable = ({ topic, refetch }) => {
         }}
       >
         <Table
+          rowKey="_id"
           dataSource={topic}
           columns={columns}
-          pagination={{ pageSize: 10 }}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
+              handlePageChange(next, size);
+            }
+          }}
           scroll={{ x: "max-content" }}
         />
         <Modal

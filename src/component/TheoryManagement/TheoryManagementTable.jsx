@@ -6,7 +6,7 @@ import { useDeleteCategoryMutation } from "../../redux/feature/theoryManagement/
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
-const TheoryManagementTable = ({ category, refetch }) => {
+const TheoryManagementTable = ({ category, refetch,meta,page,handlePageChange }) => {
   const [singleData, setSingleData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -27,6 +27,11 @@ const TheoryManagementTable = ({ category, refetch }) => {
     setIsModalOpen(false);
   };
   console.log("category---->", category);
+
+  const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
+
 
   const handleDelete = async (id) => {
     console.log("delete id-->",id);
@@ -123,10 +128,27 @@ const TheoryManagementTable = ({ category, refetch }) => {
           },
         }}
       >
-        <Table
+           <Table
+          rowKey="_id"
           dataSource={category}
           columns={columns}
-          pagination={{ pageSize: 10 }}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
+              handlePageChange(next, size);
+            }
+          }}
           scroll={{ x: "max-content" }}
         />
         <Modal

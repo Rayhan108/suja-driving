@@ -11,10 +11,11 @@ import AddHazardTopic from "../../component/Hazard/AddHazardTopic";
 
 const HazardPage = () => {
 
+  const [page, setPage] = useState(1);
   const { data: allHazardTopic, refetch } =
-    useGetAllHazardTopicQuery(undefined);
+    useGetAllHazardTopicQuery(page);
   const location = useLocation(); // Get the current location (URL)
-
+const meta = allHazardTopic?.data?.meta
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
   const activeTabFromURL = location.pathname.split("/")[2]; // Assuming your routes look like "/category", "/topic", "/question"
   console.log("activeTabFromURL", activeTabFromURL);
@@ -37,7 +38,11 @@ const HazardPage = () => {
   };
   console.log("All Hazard Data----->", allHazardTopic?.data?.result);
   const hazardData = allHazardTopic?.data?.result;
-
+  // ---- pass this to the table ----
+  const handlePageChange = (nextPage /*, pageSize */) => {
+    console.log("calling functon........",nextPage);
+    setPage(nextPage); // triggers RTK Query refetch because query args changed
+  }
   return (
     <div>
       <div className="flex justify-between my-2 mb-12 font-title">
@@ -73,7 +78,7 @@ const HazardPage = () => {
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <HazardTable hazardData={hazardData} refetch={refetch} />
+      <HazardTable hazardData={hazardData} refetch={refetch} meta={meta} page={page} handlePageChange={handlePageChange}/>
 
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>

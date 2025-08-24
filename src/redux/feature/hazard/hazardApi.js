@@ -4,8 +4,8 @@ const hazardApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
     getAllHazardTopic: builder.query({
-      query: () => ({
-        url:`/hazard-topic/get-all`,
+      query: (page) => ({
+        url:`/hazard-topic/get-all?page=${page}`,
         method: "GET",      
       }),
     }),
@@ -38,8 +38,8 @@ const hazardApi = baseApi.injectEndpoints({
      },
    }),
       getAllVedios: builder.query({
-    query: (id) => ({
-        url:`/hazard-video/get-all?hazardTopic=${id}`,
+    query: ({id,page}) => ({
+        url:`/hazard-video/get-all?hazardTopic=${id}&&page=${page}`,
         method: "GET", 
   
       }),

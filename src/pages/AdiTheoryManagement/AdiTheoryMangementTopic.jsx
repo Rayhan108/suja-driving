@@ -15,11 +15,12 @@ import {
 const AdiTheoryManagementTopic = () => {
     const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
+    const [page, setPage] = useState(1);
 const type = "ADI"
 const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
-  const { data: allTopic, refetch } = useGetAllTopicQuery(id);
+  const { data: allTopic, refetch } = useGetAllTopicQuery({id,searchTerm,page});
   const topic = allTopic?.data?.result;
-
+const meta = allTopic?.data?.meta
   console.log("all category--->", allCategory);
   console.log("all topic--->", topic);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,6 +49,11 @@ const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
   };
+    // ---- pass this to the table ----
+  const handlePageChange = (nextPage /*, pageSize */) => {
+    console.log("calling functon........",nextPage);
+    setPage(nextPage); // triggers RTK Query refetch because query args changed
+  }
   return (
     <div>
       <div className="flex justify-between my-2 font-title mb-8">
@@ -58,7 +64,7 @@ const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
           </p>
         </div>
         <div className="flex gap-5">
-          {/* <div className="relative w-full sm:w-[300px] ">
+          <div className="relative w-full sm:w-[300px] ">
             <Input
               type="text"
               placeholder="Search anything here..."
@@ -68,7 +74,7 @@ const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
             <span className="text-gray-500 absolute top-0 right-0 h-full px-5 flex items-center justify-center cursor-pointer">
               <IoSearch className="text-[1.3rem]" />
             </span>
-          </div> */}
+          </div>
           <div>
             <button
               className="bg-[#3F5EAB] text-white p-3 rounded-xl"
@@ -123,7 +129,7 @@ const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <AdiTheoryManagementTopicTable topic={topic} refetch={refetch} />
+      <AdiTheoryManagementTopicTable topic={topic} refetch={refetch} meta={meta} page={page} handlePageChange={handlePageChange}/>
 
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>

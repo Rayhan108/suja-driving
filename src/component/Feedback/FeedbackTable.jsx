@@ -8,17 +8,22 @@ import EditFeedback from "./EditFeedback";
 import { LuReply } from "react-icons/lu";
 
 
-const FeedbackTable = ({ feedbackData }) => {
+const FeedbackTable = ({ feedbackData,meta,page,handlePageChange }) => {
+    const currentPage = Number(page ?? 1);
+  const pageSize = Number(meta?.limit ?? 10);
+  const total = Number(meta?.total ?? 0);
+  const [singleData, setSingleData] = useState({});
+  // console.log("single  data------>", singleData);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isDescriptionModalOpen, setDescriptionModalOpen] = useState(false);
-  const [data, setData] = useState([]);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const showDescriptionModal = (testData) => {
-    console.log("id", data);
-    setData(data);
+  const showDescriptionModal = (data) => {
+    console.log("data--->", data);
+    setSingleData(data)
     setDescriptionModalOpen(true);
   };
   const handleDescriptionCancel = () => {
@@ -26,6 +31,7 @@ const FeedbackTable = ({ feedbackData }) => {
   };
   const showEditModal = (id) => {
     console.log("id", id);
+    setSingleData(id)
     setEditModalOpen(true);
   };
   const handleEditCancel = () => {
@@ -57,22 +63,27 @@ const FeedbackTable = ({ feedbackData }) => {
     },
     {
       title: "Last Update",
-      dataIndex: "lastUpdate",
+      dataIndex: "updatedAt",
       key: "lastUpdate",
       align: "center",
+      render:(text)=>(
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <p>{text?.split("T")[0]}</p>
+        </div>
+      )
     },
-      {
-      title: "View",
-     key:"view",
-      align: "center", // Center-aligned Category Icon column
-      render: (_, record) => (
-        <FiEye
-          size={24}
-          className=" mx-auto"
-          onClick={() => showDescriptionModal(record)}
-        />
-      ),
-    },
+    //   {
+    //   title: "View",
+    //  key:"view",
+    //   align: "center", // Center-aligned Category Icon column
+    //   render: (_, record) => (
+    //     <FiEye
+    //       size={24}
+    //       className=" mx-auto"
+    //       onClick={() => showDescriptionModal(record)}
+    //     />
+    //   ),
+    // },
  
     {
       title: "Reply",
@@ -116,40 +127,32 @@ const FeedbackTable = ({ feedbackData }) => {
           },
         }}
       >
-        <Table
+          <Table
+          rowKey="_id"
           dataSource={feedbackData}
           columns={columns}
-          pagination={{ pageSize: 10 }}
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total,
+            showSizeChanger: false,
+          }}
+          // IMPORTANT: handle page change here (Table's onChange)
+          onChange={(pagination) => {
+            const next = pagination?.current ?? 1;
+            const size = pagination?.pageSize ?? pageSize;
+            if (
+              typeof handlePageChange === "function" &&
+              (next !== currentPage || size !== pageSize)
+            ) {
+              handlePageChange(next, size);
+            }
+          }}
           scroll={{ x: "max-content" }}
         />
-        <Modal
-          open={isModalOpen}
-          centered
-          onCancel={handleCancel}
-          footer={null}
-          destroyOnClose
-        >
-          <div className="flex flex-col justify-center items-center py-10">
-            <h1 className="text-3xl text-center text-red-500">Are you sure!</h1>
-            <p className="text-xl text-center mt-5">
-              Do you really want to delete? Please confirm.
-            </p>
-            <div className="text-center py-5 w-full">
-              <button
-                onClick={() => {
-                  // handle delete logic here
-                  setIsModalOpen(false);
-                }}
-                className="bg-red-500 text-white font-semibold w-1/3 py-3 px-5 rounded-lg"
-              >
-                CONFIRM
-              </button>
-            </div>
-          </div>
-        </Modal>
 
         {/* description modal */}
-        <Modal
+        {/* <Modal
           open={isDescriptionModalOpen}
           centered
           onCancel={handleDescriptionCancel}
@@ -180,7 +183,7 @@ const FeedbackTable = ({ feedbackData }) => {
 </div>
 
 
-        </Modal>
+        </Modal> */}
 
         {/* edit modal */}
         <Modal
@@ -191,7 +194,7 @@ const FeedbackTable = ({ feedbackData }) => {
         >
           <div>
             <h1 className="text-3xl text-center text-[#333333]">Reply</h1>
-            <EditFeedback/>
+            <EditFeedback singleData={singleData}/>
           </div>
         </Modal>
       </ConfigProvider>

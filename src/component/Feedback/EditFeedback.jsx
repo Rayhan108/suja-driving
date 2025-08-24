@@ -1,21 +1,38 @@
 import { useForm } from "react-hook-form";
+import { useSendFeedbackMutation } from "../../redux/feature/feedback/feedbackApi";
+import { message } from "antd";
 
-const EditFeedback = () => {
+const EditFeedback = ({singleData}) => {
+  const id = singleData?._id
+    // console.log("single  data------>", singleData);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
+const [sendFeedback] = useSendFeedbackMutation()
+  const onSubmit = async (formValues) => {
+console.log("form values------>",formValues);
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
-    reset();
+
+    try {
+      const res = await sendFeedback({args:formValues,id}).unwrap();
+      console.log("response--->", res);
+      if (res?.success) {
+        message.success(res?.message);
+      
+        reset();
+      } else {
+        message.error(res?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
   };
 
-  const onCancel = () => {
-    reset();
-  };
+
+
   return (
     <div>
       <form
@@ -26,11 +43,11 @@ const EditFeedback = () => {
         <div>
           <label className="block mb-1 font-medium text-gray-700">Reply</label>
           <textarea
-            {...register("reply", { required: true })}
+            {...register("replyMessage", { required: true })}
             placeholder="Type here"
             className="w-full border border-gray-300 rounded-md px-3 py-4"
           />
-          {errors.reply && (
+          {errors.replyMessage && (
             <p className="text-red-500 text-sm mt-1">reply is required</p>
           )}
         </div>

@@ -46,9 +46,18 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+updateAdminProfile: builder.mutation({
+      query: (args) => ({
+        url: '/super-admin/update-profile',
+        method: "PATCH",
+        body: args,
+        
+      }),
+      invalidatesTags: ["user"],
+    }),
 
 
   }),
 });
 
-export const { useLoginMutation,useResetPassMutation,useSendOtpMutation,useVerifyOtpMutation,useResendOtpMutation} = authApi;
+export const { useLoginMutation,useResetPassMutation,useSendOtpMutation,useVerifyOtpMutation,useResendOtpMutation,useUpdateAdminProfileMutation} = authApi;

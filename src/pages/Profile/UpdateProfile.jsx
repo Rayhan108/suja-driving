@@ -1,26 +1,71 @@
 import { useState } from "react";
-import { Input, Form, message } from "antd";
+import { Input, Form, message, Avatar } from "antd";
 import gallery from "../../assets/gallery.png";
 import profile from "../../assets/profileImg.png";
 import { SlArrowLeft } from "react-icons/sl";
 import ChangePass from "./ChangePass";
+import { useUpdateAdminProfileMutation } from "../../redux/feature/auth/authApi";
+import { useMyProfileQuery } from "../../redux/feature/user/userApi";
+
 
 const UpdateProfile = () => {
+  const { data: myProfile } = useMyProfileQuery(undefined);
+  console.log("my profile data--->", );
+const img = myProfile?.data?.profile_image
   const [activeTab, setActiveTab] = useState("edit");
-  const [profileImg, setProfileImg] = useState(profile); // initial profile image
-  const onFinish = (values) => {
-    console.log("Form values:", values);
-    message.success("Profile updated successfully!");
+  const [profileImg, setProfileImg] = useState("");
+  const [profileImgPreview, setProfileImgPreview] = useState("");
+  const [updateAdminProfile]=useUpdateAdminProfileMutation()
+  const onFinish = async(values) => {
+
+ console.log("Form Data:------>", values);
+    // Creating a new FormData object to handle the form submission
+    const formData = new FormData();
+
+    // Appending fields to the FormData object
+    formData.append(
+      "data",
+      JSON.stringify({
+        name: values?.name,
+      })
+    );
+
+    const file = profileImg
+    if (file) {
+      formData.append("profile_image", file, file.name);
+    } else {
+      message.error("Please select an image file.");
+      return;
+    }
+
+    // Log the FormData contents
+    console.log("Form Data Contents:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+    try {
+      const res = await updateAdminProfile(formData).unwrap();
+      console.log("response--->", res);
+      if (res?.success) {
+        message.success(res?.message);
+   
+      } else {
+        message.error(res?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
   };
 
   // file input change handler
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    setProfileImg(file)
     if (file) {
       // read file as data URL to preview
       const reader = new FileReader();
       reader.onload = () => {
-        setProfileImg(reader.result);
+        setProfileImgPreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -36,11 +81,23 @@ const UpdateProfile = () => {
       <div style={{ maxWidth: 400, margin: "auto" }}>
         <div>
           <div className="relative text-center items-center justify-center flex">
-            <div>
-              <img src={profileImg} alt="Profile" className="w-36" />
-            </div>
+       <div>
+  {img ? 
+    <img
+      src={img}
+      alt="Profile Preview"
+      className="w-36 h-36 object-cover rounded-full"
+    />:
+   
+    <img
+      src={profileImgPreview}
+      alt="Profile"
+      className="w-36 h-36 object-cover rounded-full"
+    />
+  }
+</div>
             <div className="absolute top-20 left-[224px]">
-              {/* label for hidden input */}
+  
               <label htmlFor="fileInput" className="bg-[#3564d3] w-12 h-12 rounded-full relative cursor-pointer flex items-center justify-center">
                 <img
                   src={gallery}
@@ -48,7 +105,7 @@ const UpdateProfile = () => {
                   className="text-white text-3xl w-7"
                 />
               </label>
-              {/* hidden file input */}
+    
               <input
                 id="fileInput"
                 type="file"
@@ -59,7 +116,7 @@ const UpdateProfile = () => {
             </div>
           </div>
           <p className="text-[#3564d3] text-center font-title my-3">
-            Israa Khan
+           {myProfile?.data?.name}
           </p>
 
           <div className="flex gap-12 justify-center mt-12">
@@ -107,24 +164,6 @@ const UpdateProfile = () => {
               </Form.Item>
             </div>
 
-            <div className="mt-3">
-              <Form.Item
-                name="email"
-                rules={[
-                  { required: true, message: "Please input your email!" },
-                  { type: "email", message: "Please enter a valid email!" },
-                ]}
-              >
-                <div>
-                  <label className="px-1 text-lg">Email</label>
-                  <Input
-                    placeholder="israakhan@gmail.com"
-                    type="email"
-                    className="w-full px-3 py-5 border border-[#3564d3] rounded-xl focus:outline-none focus:ring-2"
-                  />
-                </div>
-              </Form.Item>
-            </div>
 
             <Form.Item>
               <button

@@ -231,8 +231,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <p className="text-lg">Feedback & Support</p>
           </li>
         </Link>
+
+
         {/* Analysis */}
-        <Link to="/analytics" className="flex justify-between ">
+        {/* <Link to="/analytics" className="flex justify-between ">
           {isActive("/analytics") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
@@ -246,7 +248,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <SiSimpleanalytics className="w-5 h-5" />
             <p className="text-lg">Analytics & Reports</p>
           </li>
-        </Link>
+        </Link> */}
+
+
+        
 
         {/* Settings */}
         <div className="relative mt-3">

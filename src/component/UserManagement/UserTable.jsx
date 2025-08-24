@@ -1,25 +1,25 @@
-import { ConfigProvider, Input, Modal, Table } from "antd";
+import { ConfigProvider, Input, message, Modal, Table } from "antd";
 import Checkbox from "antd/es/checkbox/Checkbox";
 import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
-import { MdBlockFlipped, } from "react-icons/md";
-import { useGetAllUserQuery } from "../../redux/feature/user/userApi";
+import { MdBlockFlipped } from "react-icons/md";
+import {
+  useBlockUserMutation,
+  useGetAllUserQuery,
+} from "../../redux/feature/user/userApi";
 
-
-
-const UserTable = ({searchTerm}) => {
-    const [page, setPage] = useState(1);
-  const {data:allUser}=useGetAllUserQuery({searchTerm,page})
-  console.log("all user--->",allUser?.data?.result);
-  const meta = allUser?.data?.meta
+const UserTable = ({ searchTerm }) => {
+  const [page, setPage] = useState(1);
+  const { data: allUser } = useGetAllUserQuery({ searchTerm, page });
+  console.log("all user--->", allUser?.data?.result);
+  const meta = allUser?.data?.meta;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = (userdata) => {
-
-    console.log("userData",userdata);
+    console.log("userData", userdata);
     setIsModalOpen(true);
   };
-
-    const currentPage = Number(page ?? 1);
+  const [blockUser] = useBlockUserMutation();
+  const currentPage = Number(page ?? 1);
   const pageSize = Number(meta?.limit ?? 10);
   const total = Number(meta?.total ?? 0);
   const handleCancel = () => {
@@ -27,9 +27,25 @@ const UserTable = ({searchTerm}) => {
   };
   // ---- pass this to the table ----
   const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........",nextPage);
+    console.log("calling functon........", nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
-  }
+  };
+
+  const handleBlockUser = async (id) => {
+    console.log("id--------->>>>>", id);
+    try {
+      const res = await blockUser(id?.user?._id).unwrap();
+      console.log("block user response--->", res);
+      if (res.success) {
+        message.success(res?.message);
+      } else {
+        message.error(res?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
+  };
+
   const columns = [
     // {
     //   title: "User ID",
@@ -65,18 +81,18 @@ const UserTable = ({searchTerm}) => {
       // },
     },
 
-  //  {
-  //     title: "Message",
-  //     dataIndex: "message",
-  //     key: "message",
-  //     render: (text, record) => (
-  //       <div className=" ">
-  //         <button onClick={() => showModal(record)}>
-  //           <MdOutlineMessage className="text-[#3F5EAB] w-5 h-5" />
-  //         </button>
-  //       </div>
-  //     ),
-  //   },
+    //  {
+    //     title: "Message",
+    //     dataIndex: "message",
+    //     key: "message",
+    //     render: (text, record) => (
+    //       <div className=" ">
+    //         <button onClick={() => showModal(record)}>
+    //           <MdOutlineMessage className="text-[#3F5EAB] w-5 h-5" />
+    //         </button>
+    //       </div>
+    //     ),
+    //   },
 
     {
       title: "Action",
@@ -86,7 +102,7 @@ const UserTable = ({searchTerm}) => {
           {/* <Link to={`/user/${record.userId}`}>
               
                 </Link> */}
-          <button>
+          <button onClick={() => handleBlockUser(record)}>
             <MdBlockFlipped className="text-[#3F5EAB] w-5 h-5" />
           </button>
         </div>
@@ -95,8 +111,8 @@ const UserTable = ({searchTerm}) => {
   ];
   return (
     <div className="font-title">
-<ConfigProvider
-   theme={{
+      <ConfigProvider
+        theme={{
           components: {
             InputNumber: {
               activeBorderColor: "#00c0b5",
@@ -114,13 +130,11 @@ const UserTable = ({searchTerm}) => {
               headerColor: "rgb(255,255,255)",
               cellFontSize: 16,
               headerSplitColor: "#ffffff",
-
             },
           },
         }}
->
-
-      <Table
+      >
+        <Table
           rowKey="_id"
           dataSource={allUser?.data?.result}
           columns={columns}
@@ -169,7 +183,7 @@ const UserTable = ({searchTerm}) => {
               </div>
             </div>
             <div className="text-center py-5 w-full flex ">
-              <div  className="w-[100%]">
+              <div className="w-[100%]">
                 <button
                   onClick={() => setIsModalOpen(false)}
                   className=" text-[#3F5EAB] border-2 border-[#FFE2D4] font-semibold  py-3 rounded-lg px-16"

@@ -2,15 +2,32 @@ import { Input, Form, message } from "antd";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { useState } from "react";
+import { useChangePasswordMutation } from "../../redux/feature/auth/authApi";
+import { useNavigate } from "react-router-dom";
 
 const ChangePass = () => {
+  const navigate = useNavigate()
+  const [changePassword]=useChangePasswordMutation()
   const [oldPasswordVisible, setOldPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
-  const onFinish = (values) => {
+  const onFinish =async (values) => {
     console.log("Form values:", values);
-    message.success("Profile updated successfully!");
+
+      try {
+      const res = await changePassword(values).unwrap();
+      console.log("response--->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        navigate('/sign-in')
+   
+      } else {
+        message.error(res?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
   };
 
   return (
@@ -25,7 +42,7 @@ const ChangePass = () => {
       >
         {/* Old Password */}
         <Form.Item
-          name="old-password"
+          name="oldPassword"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
           <div className="relative text-left">
@@ -52,7 +69,7 @@ const ChangePass = () => {
 
         {/* New Password */}
         <Form.Item
-          name="new-password"
+          name="newPassword"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
           <div className="relative text-left">
@@ -79,7 +96,7 @@ const ChangePass = () => {
 
         {/* Confirm Password */}
         <Form.Item
-          name="confirm-password"
+          name="confirmNewPassword"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
           <div className="relative text-left">

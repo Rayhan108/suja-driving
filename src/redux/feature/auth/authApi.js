@@ -46,6 +46,15 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    changePassword: builder.mutation({
+      query: (args) => ({
+        url: '/auth/change-password',
+        method: "POST",
+        body: args,
+        
+      }),
+      invalidatesTags: ["user"],
+    }),
 updateAdminProfile: builder.mutation({
       query: (args) => ({
         url: '/super-admin/update-profile',
@@ -60,4 +69,4 @@ updateAdminProfile: builder.mutation({
   }),
 });
 
-export const { useLoginMutation,useResetPassMutation,useSendOtpMutation,useVerifyOtpMutation,useResendOtpMutation,useUpdateAdminProfileMutation} = authApi;
+export const { useLoginMutation,useResetPassMutation,useSendOtpMutation,useVerifyOtpMutation,useResendOtpMutation,useUpdateAdminProfileMutation,useChangePasswordMutation} = authApi;

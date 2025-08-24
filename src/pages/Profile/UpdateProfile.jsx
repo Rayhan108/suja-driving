@@ -121,6 +121,7 @@ const img = myProfile?.data?.profile_image
 
           <div className="flex gap-12 justify-center mt-12">
             <button
+             type="button"
               onClick={() => setActiveTab("edit")}
               className={`text-center font-title my-3 underline text-lg ${
                 activeTab === "edit" ? "text-blue-600 font-bold" : "text-[#313131]"
@@ -129,6 +130,7 @@ const img = myProfile?.data?.profile_image
               Edit Profile
             </button>
             <button
+             type="button"
               onClick={() => setActiveTab("password")}
               className={`text-center font-title my-3 underline text-lg ${
                 activeTab === "password" ? "text-blue-600 font-bold" : "text-[#313131]"
@@ -149,9 +151,9 @@ const img = myProfile?.data?.profile_image
             <div className="mt-3">
               <Form.Item
                 name="name"
-                rules={[
-                  { required: true, message: "Please input your Name!" },
-                ]}
+                // rules={[
+                //   { required: true, message: "Please input your Name!" },
+                // ]}
               >
                 <div>
                   <label className="px-1 text-lg">Name</label>

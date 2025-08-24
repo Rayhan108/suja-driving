@@ -4,6 +4,7 @@ import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
 import { FiEye } from "react-icons/fi";
 import HighwayEdit from "./HighwayEdit";
 import { useDeleteHighwayTopicMutation } from "../../redux/feature/highway/highwayApi";
+import { Link } from "react-router-dom";
 
 const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
   const [singleData, setSingleData] = useState({});
@@ -85,12 +86,15 @@ const HighTable = ({ category, refetch, meta, handlePageChange,page }) => {
       key: "description",
       align: "center",
       render: (_text, record) => (
-        <FiEye
-          size={24}
-          className="mx-auto cursor-pointer"
-          onClick={() => showDescriptionModal(record)}
-          title="View description"
-        />
+           <Link to={`/highway/details/${record?._id}`}>
+
+             <FiEye
+               size={24}
+               className="mx-auto cursor-pointer"
+               onClick={() => showDescriptionModal(record)}
+               title="View description"
+             />
+           </Link>
       ),
     },
     {

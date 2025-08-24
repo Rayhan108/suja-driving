@@ -9,6 +9,12 @@ const highwayApi = baseApi.injectEndpoints({
         method: "GET",      
       }),
     }),
+    getAllHighwaySign: builder.query({
+    query: (id) => ({
+        url:`/highway-sign/get-all?signType=${id}`,
+        method: "GET",      
+      }),
+    }),
     updateHighwayTopic: builder.mutation({
        query: ({args,id}) => ({
            url:`/sign-type/update/${id}`,
@@ -38,4 +44,4 @@ const highwayApi = baseApi.injectEndpoints({
 
 });
 
-export const {useGetAllHighwayTopicQuery,useUpdateHighwayTopicMutation,useDeleteHighwayTopicMutation,useCreateHighwaySignMutation} =highwayApi;
+export const {useGetAllHighwayTopicQuery,useUpdateHighwayTopicMutation,useDeleteHighwayTopicMutation,useCreateHighwaySignMutation,useGetAllHighwaySignQuery} =highwayApi;

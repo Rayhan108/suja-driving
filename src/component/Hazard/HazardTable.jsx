@@ -108,7 +108,7 @@ const columns = [
           <button onClick={()=>showModal(record)}>
             <RiDeleteBin6Line className="text-red-500   w-5 h-5" />
           </button>
-                    <Link to={`/hazardTopic/vedios/${record?._id}`}>
+                    <Link to={`/hazard/vedios/${record?._id}`}>
           <button >
             <BsEye className="text-black   w-5 h-5" />
           </button>

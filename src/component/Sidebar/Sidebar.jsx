@@ -9,14 +9,22 @@ import {
   IoVideocamOutline,
 } from "react-icons/io5";
 import { RxDashboard } from "react-icons/rx";
-import { MdOutlineEditRoad, MdOutlinePayment, MdOutlinePrivacyTip } from "react-icons/md";
+import {
+  MdOutlineEditRoad,
+  MdOutlinePayment,
+  MdOutlinePrivacyTip,
+} from "react-icons/md";
 import { SlArrowDown } from "react-icons/sl";
 import { GoDeviceCameraVideo, GoQuestion } from "react-icons/go";
 
 import { LuSquareMenu } from "react-icons/lu";
 import { useState } from "react"; // Import useState
 import logo from "../../assets/Logo.png";
-import { RiDashboard3Line, RiFeedbackLine, RiLogoutCircleLine } from "react-icons/ri";
+import {
+  RiDashboard3Line,
+  RiFeedbackLine,
+  RiLogoutCircleLine,
+} from "react-icons/ri";
 import { SiSimpleanalytics } from "react-icons/si";
 import { CgMail } from "react-icons/cg";
 import { useAppSelector } from "../../redux/hooks";
@@ -27,13 +35,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const [isSettingsOpen, setIsSettingsOpen] = useState(false); // Track the dropdown state
-const dispatch = useDispatch()
-  const user = useAppSelector(selectCurrentUser)
-  console.log("user--->",user);
+  const dispatch = useDispatch();
+  const user = useAppSelector(selectCurrentUser);
+  console.log("user--->", user);
   // Check if current path matches a menu item
   const isActive = (path) => currentPath === path;
-const {data:myProfile}=useMyProfileQuery(undefined)
-console.log("my profile data--->",myProfile);
+  const { data: myProfile } = useMyProfileQuery(undefined);
+  console.log("my profile data--->", myProfile);
   // Check if any settings submenu is active
   const isSettingsActive = currentPath.startsWith("/setting");
   console.log("setting active", isSettingsActive);
@@ -44,12 +52,13 @@ console.log("my profile data--->",myProfile);
 
   // Checks if the current URL path starts with the given path
   const isTheory = (path) => location.pathname.startsWith(path);
+  const isHighway = (path) => location.pathname.startsWith(path);
+  const isHazard = (path) => location.pathname.startsWith(path);
   const isAdiTheory = (path) => location.pathname.startsWith(path);
 
-
-const handleLogout=()=>{
-dispatch(logout())
-}
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div
@@ -118,7 +127,7 @@ dispatch(logout())
                 : ""
             }`}
           >
-            <MdOutlineEditRoad  className="w-5 h-5" />
+            <MdOutlineEditRoad className="w-5 h-5" />
             <p className="text-lg">Theory Management</p>
           </li>
         </Link>
@@ -138,39 +147,39 @@ dispatch(logout())
                 : ""
             }`}
           >
-            <FaCarAlt  className="w-5 h-5" />
+            <FaCarAlt className="w-5 h-5" />
             <p className="text-lg">ADI Theory Management</p>
           </li>
         </Link>
         {/* Hazard */}
         <Link to="/hazard" className="flex justify-between ">
-          {isActive("/hazard") && (
+          {isHazard("/hazard") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
-              isActive("/hazard")
+              isHazard("/hazard")
                 ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
                 : ""
             }`}
           >
-            <GoDeviceCameraVideo  className="w-5 h-5" />
+            <GoDeviceCameraVideo className="w-5 h-5" />
             <p className="text-lg">Hazard Perception</p>
           </li>
         </Link>
         {/* Highway */}
         <Link to="/highway" className="flex justify-between ">
-          {isActive("/highway") && (
+          {isHighway("/highway") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
           <li
             className={`flex items-center gap-2 mt-5 cursor-pointer transition-all duration-300 ease-in-out  w-[98%] ${
-              isActive("/highway")
+              isHighway("/highway")
                 ? "bg-[#F3F3F3] text-[#193985]  px-3 py-3 rounded-2xl"
                 : ""
             }`}
           >
-            <IoArrowRedoCircleSharp  className="w-5 h-5" />
+            <IoArrowRedoCircleSharp className="w-5 h-5" />
             <p className="text-lg">Highway Code</p>
           </li>
         </Link>
@@ -266,13 +275,13 @@ dispatch(logout())
                 <IoMdSettings className="w-5 h-5 " />
                 <p className="text-lg">Settings</p>
 
-          <SlArrowDown
-  className={`w-5 h-5 text-right ml-5 hover:-rotate-90 ${
-    isSettingsActive
-      ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
-      : "text-white"
-  }`}
-/>
+                <SlArrowDown
+                  className={`w-5 h-5 text-right ml-5 hover:-rotate-90 ${
+                    isSettingsActive
+                      ? "bg-[#F3F3F3] text-[#193985] px-3 py-3 rounded-2xl"
+                      : "text-white"
+                  }`}
+                />
               </li>
             </button>
           </Link>
@@ -324,15 +333,15 @@ dispatch(logout())
       {/* Logout Button */}
       <div className="absolute bottom-5  w-[90%] px-5">
         {user ? (
-
-            <button onClick={()=>handleLogout()} className="flex items-center gap-2 w-full px-0 py-3 border-2 text-white rounded-xl duration-200 justify-center">
-              <RiLogoutCircleLine className="w-7 h-7 font-bold text-2xl text-white rotate-90" />
-              <span className="text-lg text-title font-bold">Logout</span>
-            </button>
-        
-   
+          <button
+            onClick={() => handleLogout()}
+            className="flex items-center gap-2 w-full px-0 py-3 border-2 text-white rounded-xl duration-200 justify-center"
+          >
+            <RiLogoutCircleLine className="w-7 h-7 font-bold text-2xl text-white rotate-90" />
+            <span className="text-lg text-title font-bold">Logout</span>
+          </button>
         ) : (
-            <Link to="/sign-in">
+          <Link to="/sign-in">
             <button className="flex items-center gap-2 w-full px-0 py-3 border-2 text-white rounded-xl duration-200 justify-center">
               <span className="text-lg text-title font-bold">Login</span>
             </button>

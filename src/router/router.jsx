@@ -26,6 +26,7 @@ import PassReset from "../pages/PassReset/PassReset";
 import NotificationPage from "../pages/Notification/NotificationPage";
 import NotificationDetails from "../pages/Notification/NotificationDetails";
 import HazardVedioTable from "../component/Hazard/HazardVedioTable";
+import SignTypeDetails from "../component/Highway/SignTypeDetails";
 
 const router = createBrowserRouter([
   {
@@ -94,7 +95,7 @@ const router = createBrowserRouter([
         element: <AdiQuestionManagement />,
       },
       {
-        path: "/hazardTopic/vedios/:id",
+        path: "/hazard/vedios/:id",
         element: <HazardVedioTable/>,
       },
       {
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
       {
         path: "/highway",
         element: <HighwayPage />,
+      },
+      {
+        path: "/highway/details/:id",
+        element: <SignTypeDetails/>,
       },
       {
         path: "/testScore",

@@ -25,7 +25,7 @@ import {
   RiFeedbackLine,
   RiLogoutCircleLine,
 } from "react-icons/ri";
-import { SiSimpleanalytics } from "react-icons/si";
+
 import { CgMail } from "react-icons/cg";
 import { useAppSelector } from "../../redux/hooks";
 import { logout, selectCurrentUser } from "../../redux/feature/auth/authSlice";
@@ -40,8 +40,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   console.log("user--->", user);
   // Check if current path matches a menu item
   const isActive = (path) => currentPath === path;
-  const { data: myProfile } = useMyProfileQuery(undefined);
-  console.log("my profile data--->", myProfile);
+
   // Check if any settings submenu is active
   const isSettingsActive = currentPath.startsWith("/setting");
   console.log("setting active", isSettingsActive);

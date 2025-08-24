@@ -29,6 +29,24 @@ const othersApi = baseApi.injectEndpoints({
         method: "GET",      
       }),
     }),
+     getAllNotification: builder.query({
+      query: () => ({
+        url:`/notification/get-notifications`,
+        method: "GET",      
+      }),
+    }),
+     getStats: builder.query({
+      query: () => ({
+        url:`/meta/get-dashboard-meta-data`,
+        method: "GET",      
+      }),
+    }),
+     getUserCharts: builder.query({
+      query: () => ({
+        url:`/meta/user-chart-data`,
+        method: "GET",      
+      }),
+    }),
 
   }),
 
@@ -37,4 +55,4 @@ const othersApi = baseApi.injectEndpoints({
 
 });
 
-export const {useAddPrivacyPolicyMutation,useAddTermsPolicyMutation,useGetPrivacyQuery,useGetTermsQuery} = othersApi;
+export const {useAddPrivacyPolicyMutation,useAddTermsPolicyMutation,useGetPrivacyQuery,useGetTermsQuery,useGetAllNotificationQuery,useGetStatsQuery,useGetUserChartsQuery} = othersApi;

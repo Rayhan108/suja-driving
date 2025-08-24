@@ -33,10 +33,11 @@ const img = myProfile?.data?.profile_image
     const file = profileImg
     if (file) {
       formData.append("profile_image", file, file.name);
-    } else {
-      message.error("Please select an image file.");
-      return;
     }
+    //  else {
+    //   message.error("Please select an image file.");
+    //   return;
+    // }
 
     // Log the FormData contents
     console.log("Form Data Contents:");

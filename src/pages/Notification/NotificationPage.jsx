@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { useGetAllNotificationQuery } from "../../redux/feature/others/othersApi";
 
 const NotificationPage = () => {
+  const {data:notifications}=useGetAllNotificationQuery(undefined)
+  console.log("all notification---->",notifications);
     return (
   <div>
       <h1 className="text-start text-3xl font-bold mb-5 text-[#3564d3] font-title ">
@@ -21,12 +23,12 @@ const NotificationPage = () => {
             </div>
           </div>
           <div>
-          <Link  to={`/notification/${1}`}>
+          {/* <Link  to={`/notification/${1}`}>
 
             <button className="bg-[#3564d3]  text-white font-semibold py-2 px-6  mx-auto block rounded-xl">
               View
             </button>
-          </Link>
+          </Link> */}
           </div>
         </div>
 

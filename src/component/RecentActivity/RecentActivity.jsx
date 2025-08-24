@@ -1,11 +1,16 @@
 import { Avatar } from "antd";
 import { UserOutlined } from '@ant-design/icons';
+import { useGetAllUserQuery } from "../../redux/feature/user/userApi";
 
 const RecentActivity = () => {
+  const searchTerm=""
+  const page = 1
+  const {data:allUsers}=useGetAllUserQuery({searchTerm,page})
+  console.log("all user------>",allUsers);
   return (
     <div className="bg-[#e6e6e6] text-black p-5 mt-3 font-title w-[30%]">
       <div>
-        <h3 className="text-lg font-bold mb-3 ">Recent Activity</h3>
+        <h3 className="text-lg font-bold mb-3 ">Recent User</h3>
         
         {/* Activity Item 1 */}
         <div className="activity-item flex justify-start items-center gap-2 mb-3">

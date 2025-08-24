@@ -28,11 +28,11 @@ const data = [
   }
 
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="w-[90%] mx-auto gap-3">
       {/* User charts */}
       <User />
       
-      <div className="p-5 bg-[#3F5EAB] rounded-xl" style={{ height: "300px" }}>
+      {/* <div className="p-5 bg-[#3F5EAB] rounded-xl" style={{ height: "300px" }}>
         <p className="font-title text-lg py-3 font-bold tracking-wide">
           Practice Session
         </p>
@@ -47,27 +47,27 @@ const data = [
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" stroke="white" /> {/* XAxis should use the "Theory" field */}
+            <XAxis dataKey="name" stroke="white" /> 
             <YAxis
               ticks={vendorTicks}
               tickFormatter={(tick) => `${tick}`}
-              stroke="white" // Change YAxis text color
+              stroke="white" 
             />
             <Tooltip />
             <Legend />
             <Bar
-              dataKey="Theory" // Use the "Hazard" key for the dataKey
+              dataKey="Theory" 
               fill="#01FFD5"
               activeBar={<Rectangle fill="gold" />}
             />
             <Bar
-              dataKey="Hazard" // Use the "Hazard" key for the dataKey (you can add different colors if needed)
+              dataKey="Hazard" 
               fill="#FFC300"
               activeBar={<Rectangle fill="pink" />}
             />
           </BarChart>
         </ResponsiveContainer>
-      </div>
+      </div> */}
     </div>
   );
 };

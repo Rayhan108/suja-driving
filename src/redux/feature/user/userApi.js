@@ -11,7 +11,7 @@ const userApi = baseApi.injectEndpoints({
     }),
     
     getAllUser: builder.query({
-      query: ({searchTerm,page}) => ({
+      query: ({searchTerm,page}) =>({
         url:`/normal-user/get-all-user?searchTerm=${searchTerm}&&page=${page}`,
         method: "GET",      
       }),

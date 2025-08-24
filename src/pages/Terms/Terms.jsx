@@ -3,39 +3,47 @@ import { SlArrowLeft } from "react-icons/sl";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
+import { useAddTermsPolicyMutation, useGetTermsQuery } from "../../redux/feature/others/othersApi";
+import { message } from "antd";
 
 function TermsCondition() {
+    const { data: terms, refetch } = useGetTermsQuery(undefined);
+    const termsData = terms?.data?.description;
+    console.log("terms data from backend-->", termsData);
   const [content, setContent] = useState("");
-  
+  const [addTerms]=useAddTermsPolicyMutation()
     // Load saved content from localStorage when the page loads
     useEffect(() => {
-      const savedContent = localStorage.getItem("privacyPolicyContent");
+      const savedContent = localStorage.getItem("termsAndConditionsContent");
       if (savedContent) {
         setContent(savedContent);
-      } else {
-        // default content if nothing is saved
-        setContent(`
-          <h2>1. Introduction</h2>
-          <ul>
-            <li>Explain that the app values user privacy and is committed to protecting personal information.</li>
-            <li>Mention the types of data collected (e.g., personal information, transaction data, usage data).</li>
-          </ul>
-  
-          <h2>2. Information We Collect</h2>
-          <ul>
-            <li>Personal Information: Names, email addresses, phone numbers, etc.</li>
-            <li>Payment Information: Credit/debit card details (if applicable).</li>
-            <li>Usage Data: How users interact with the app, device details, IP addresses.</li>
-            <li>Cookies and Tracking Technologies: Information about the cookies or other tracking methods used.</li>
-          </ul>
-        `);
-      }
+      } 
+      // else {
+       
+      //   setContent("");
+      // }
     }, []);
   
     // Save content to localStorage whenever it changes
-    const handleSave = () => {
+    const handleSave = async() => {
       localStorage.setItem("termsAndConditionsContent", content);
-      toast.success("Terms And Condition Saved Successfully!");
+        const privacyContent = {
+      description: content,
+    };
+    console.log("privacy content->", privacyContent);
+    // message.success("Privacy Policy Saved Successfully!");
+    try {
+      const res = await addTerms(privacyContent).unwrap();
+      console.log("privacy content response ---->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        refetch();
+      } else {
+        message.error(res?.error);
+      }
+    } catch (error) {
+      message.error(res?.data?.error);
+    }
     };
   
     return (

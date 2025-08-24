@@ -3,40 +3,29 @@ import { baseApi } from "../../api/baseApi";
 const othersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
-     aboutUs: builder.mutation({
+
+     addPrivacyPolicy: builder.mutation({
       query: () => ({
-        url:`/about-us/create-or-update`,
-        method: "POST",
-      
-      }),
-    }),
-     privacyPolicy: builder.mutation({
-      query: () => ({
-        url:`/privacy-policy/create-or-update`,
+        url:`/manage/add-privacy-policy`,
         method: "POST",      
       }),
     }),
-     termsPolicy: builder.mutation({
+     addTermsPolicy: builder.mutation({
       query: () => ({
-        url:`terms-condition/create-or-update`,
+        url:`/manage/add-terms-conditions`,
         method: "POST",      
       }),
     }),
-     createNewFaq: builder.mutation({
+
+     getTerms: builder.query({
       query: () => ({
-        url:`/faq/create`,
-        method: "POST",      
-      }),
-    }),
-     getAllFaq: builder.query({
-      query: () => ({
-        url:`/faq/retrieve`,
+        url:`/manage/get-terms-conditions`,
         method: "GET",      
       }),
     }),
-     getAllSupport: builder.query({
+     getPrivacy: builder.query({
       query: () => ({
-        url:`/support/retrieve/all`,
+        url:`/manage/get-privacy-policy`,
         method: "GET",      
       }),
     }),
@@ -48,4 +37,4 @@ const othersApi = baseApi.injectEndpoints({
 
 });
 
-export const { useAboutUsMutation,usePrivacyPolicyMutation,useTermsPolicyMutation,useGetAllFaqQuery,useCreateNewFaqMutation,useGetAllSupportQuery} = othersApi;
+export const {useAddPrivacyPolicyMutation,useAddTermsPolicyMutation,useGetPrivacyQuery,useGetTermsQuery} = othersApi;

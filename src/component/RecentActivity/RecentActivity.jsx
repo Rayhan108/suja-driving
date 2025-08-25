@@ -7,54 +7,28 @@ const RecentActivity = () => {
   const page = 1
   const {data:allUsers}=useGetAllUserQuery({searchTerm,page})
   console.log("all user------>",allUsers);
+  const users =allUsers?.data?.result
   return (
     <div className="bg-[#e6e6e6] text-black p-5 mt-3 font-title w-[30%]">
       <div>
         <h3 className="text-lg font-bold mb-3 ">Recent User</h3>
         
         {/* Activity Item 1 */}
-        <div className="activity-item flex justify-start items-center gap-2 mb-3">
+        {
+          users?.map((user,idx)=>{
+    return <div className="activity-item flex justify-start items-center gap-2 mb-3" key={idx}>
           <div className="activity-icon">
             <Avatar size={32} icon={<UserOutlined />} />
           </div>
           <div>
-            <p className="activity-text">Israa Completed a Hazard Test</p>
-            <span className="activity-time">20 min ago</span>
+            <p className="activity-text">{user?.name}</p>
+            {/* <span className="activity-time">20 min ago</span> */}
           </div>
         </div>
-        
-        {/* Activity Item 2 */}
-        <div className="activity-item flex justify-start items-center gap-2 mb-3">
-          <div className="activity-icon">
-            <Avatar size={32} icon={<UserOutlined />} />
-          </div>
-          <div>
-            <p className="activity-text">Israa Completed a Hazard Test</p>
-            <span className="activity-time">20 min ago</span>
-          </div>
-        </div>
-        
-        {/* Activity Item 3 */}
-        <div className="activity-item flex justify-start items-center gap-2 mb-3">
-          <div className="activity-icon">
-            <Avatar size={32} icon={<UserOutlined />} />
-          </div>
-          <div>
-            <p className="activity-text">Israa Completed a Hazard Test</p>
-            <span className="activity-time">20 min ago</span>
-          </div>
-        </div>
-        
-        {/* Activity Item 4 */}
-        <div className="activity-item flex justify-start items-center gap-2 mb-3">
-          <div className="activity-icon">
-            <Avatar size={32} icon={<UserOutlined />} />
-          </div>
-          <div>
-            <p className="activity-text">Israa Completed a Hazard Test</p>
-            <span className="activity-time">20 min ago</span>
-          </div>
-        </div>
+          }).slice(0,5)
+        }
+    
+   
 
       </div>
     </div>

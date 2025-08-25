@@ -43,7 +43,7 @@ function DashboardPage() {
       <Overview />
       <PracticeSession />
       <div className="flex gap-10 w-[100%]">
-        {/* <RecentActivity /> */}
+        <RecentActivity />
 
         {/* <Question /> */}
       </div>

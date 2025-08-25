@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
 // const sampleVideoUrl = 'https://www.w3schools.com/html/mov_bbb.mp4';
 
-export default function DangerZoneVideo({singleData,refetch}) {
-  console.log("single vedio data--->",singleData);
+export default function DangerZoneVideo({ singleData, refetch }) {
+  console.log("single vedio datas--->", singleData);
   const videoRef = useRef(null);
   const timelineRef = useRef(null);
-const sampleVideoUrl = singleData?.video_url
+  const sampleVideoUrl = singleData?.video_url;
   const [dangerZones, setDangerZones] = useState([
     { id: 1, time: 54 },
     { id: 2, time: 120 },
@@ -21,8 +21,9 @@ const sampleVideoUrl = singleData?.video_url
       setVideoDuration(Math.floor(video.duration));
     };
     if (video) {
-      video.addEventListener('loadedmetadata', onLoadedMetadata);    
-      return () => video.removeEventListener('loadedmetadata', onLoadedMetadata);
+      video.addEventListener("loadedmetadata", onLoadedMetadata);
+      return () =>
+        video.removeEventListener("loadedmetadata", onLoadedMetadata);
     }
   }, []);
 
@@ -34,20 +35,23 @@ const sampleVideoUrl = singleData?.video_url
       setSelectedTime(Math.floor(video.currentTime));
     };
 
-    video.addEventListener('timeupdate', onTimeUpdate);
-    return () => video.removeEventListener('timeupdate', onTimeUpdate);
+    video.addEventListener("timeupdate", onTimeUpdate);
+    return () => video.removeEventListener("timeupdate", onTimeUpdate);
   }, []);
 
   const addMore = () => {
     const newId = dangerZones.length + 1;
-    const lastTime = dangerZones.length > 0 ? dangerZones[dangerZones.length - 1].time : 0;
+    const lastTime =
+      dangerZones.length > 0 ? dangerZones[dangerZones.length - 1].time : 0;
     const newTime = Math.min(lastTime + 10, videoDuration);
     setDangerZones([...dangerZones, { id: newId, time: newTime }]);
   };
 
   const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-    const s = (seconds % 60).toString().padStart(2, '0');
+    const m = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
 
@@ -71,7 +75,10 @@ const sampleVideoUrl = singleData?.video_url
     // Avoid duplicates
     if (dangerZones.some((dz) => dz.time === clickedTime)) return;
 
-    setDangerZones((prev) => [...prev, { id: prev.length + 1, time: clickedTime }]);
+    setDangerZones((prev) => [
+      ...prev,
+      { id: prev.length + 1, time: clickedTime },
+    ]);
   };
 
   const FlagIcon = () => (
@@ -88,7 +95,8 @@ const sampleVideoUrl = singleData?.video_url
     </svg>
   );
 
-  const progressPercent = videoDuration > 0 ? (selectedTime / videoDuration) * 100 : 0;
+  const progressPercent =
+    videoDuration > 0 ? (selectedTime / videoDuration) * 100 : 0;
 
   return (
     <div className="max-w-xl mx-auto p-4 bg-white rounded shadow">
@@ -130,7 +138,7 @@ const sampleVideoUrl = singleData?.video_url
           {/* Background track */}
           <div
             className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 rounded"
-            style={{ transform: 'translateY(-50%)' }}
+            style={{ transform: "translateY(-50%)" }}
           />
 
           {/* Red progress bar */}
@@ -138,7 +146,7 @@ const sampleVideoUrl = singleData?.video_url
             className="absolute top-1/2 left-0 h-2 bg-red-600 rounded"
             style={{
               width: `${progressPercent}%`,
-              transform: 'translateY(-50%)',
+              transform: "translateY(-50%)",
             }}
           />
 
@@ -147,12 +155,12 @@ const sampleVideoUrl = singleData?.video_url
             className="absolute top-1/2 bg-gray-400 rounded-full"
             style={{
               left: `${progressPercent}%`,
-              width: '14px',
-              height: '14px',
-              transform: 'translate(-50%, -50%)',
-              pointerEvents: 'none',
-              border: '2px solid white',
-              boxSizing: 'border-box',
+              width: "14px",
+              height: "14px",
+              transform: "translate(-50%, -50%)",
+              pointerEvents: "none",
+              border: "2px solid white",
+              boxSizing: "border-box",
             }}
           />
 
@@ -170,12 +178,12 @@ const sampleVideoUrl = singleData?.video_url
                 className="absolute -top-1  cursor-pointer"
                 style={{
                   left: `${leftPercent}%`,
-                  transform: 'translate(-50%, -50%)',
-                  width: '40px',
-                  height: '30px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  transform: "translate(-50%, -50%)",
+                  width: "40px",
+                  height: "30px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
                 <FlagIcon />

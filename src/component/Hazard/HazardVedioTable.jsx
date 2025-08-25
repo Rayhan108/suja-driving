@@ -12,6 +12,7 @@ import {
 
 import VedioModal from "./VedioModal";
 import HazardForm from "./AddHazardForm";
+import EditHazVedio from "./EditHazVedio";
 const HazardVedioTable = () => {
   const [page, setPage] = useState(1);
   const [singleData, setSingleData] = useState({});
@@ -281,7 +282,8 @@ const meta = allVedios?.data?.meta
               <h1 className="text-3xl text-center text-[#333333]">
                 Edit Vedio
               </h1>
-              <VedioModal refetch={refetch} singleData={singleData} />
+              {/* <VedioModal refetch={refetch} singleData={singleData} /> */}
+              <EditHazVedio refetch={refetch} singleData={singleData}/>
             </div>
           </Modal>
         </ConfigProvider>

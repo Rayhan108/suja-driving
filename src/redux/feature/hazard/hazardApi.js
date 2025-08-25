@@ -51,6 +51,13 @@ const hazardApi = baseApi.injectEndpoints({
         body:args   
       }),
     }),
+      updateHazVedio: builder.mutation({
+      query: ({args,id}) => ({
+        url:`/hazard-video/update/${id}`,
+        method: "PATCH", 
+        body:args   
+      }),
+    }),
       createHazTopic: builder.mutation({
       query: (args) => ({
         url:`/hazard-topic/create`,
@@ -62,4 +69,4 @@ const hazardApi = baseApi.injectEndpoints({
 
 });
 
-export const {useGetAllHazardTopicQuery,useUpdateHazardTopicMutation,useDeleteHazardTopicMutation,useGetAllVediosQuery,useCreateHazVedioMutation,useCreateHazTopicMutation,useDeleteHazardVedioMutation} =hazardApi;
+export const {useGetAllHazardTopicQuery,useUpdateHazardTopicMutation,useDeleteHazardTopicMutation,useGetAllVediosQuery,useCreateHazVedioMutation,useCreateHazTopicMutation,useDeleteHazardVedioMutation,useUpdateHazVedioMutation} =hazardApi;

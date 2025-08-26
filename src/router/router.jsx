@@ -27,6 +27,7 @@ import NotificationPage from "../pages/Notification/NotificationPage";
 import NotificationDetails from "../pages/Notification/NotificationDetails";
 import HazardVedioTable from "../component/Hazard/HazardVedioTable";
 import SignTypeDetails from "../component/Highway/SignTypeDetails";
+import PrivetRoutes from "./PrivetRoutes";
 
 const router = createBrowserRouter([
   {
@@ -51,7 +52,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Main></Main>,
+    element: <PrivetRoutes><Main></Main></PrivetRoutes>,
     // errorElement: <ErrorPage></ErrorPage>,
     children: [
       {

@@ -4,7 +4,7 @@ const theoryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllCaterory: builder.query({
       query: ({ searchTerm, type, page }) => ({
-        url: `/category/all-categories?testType=${type}&searchTerm=${searchTerm}&&page=${page}`,
+        url: `/category/all-categories?testType=${type}&&searchTerm=${searchTerm}&&page=${page}`,
         method: "GET",
       }),
     }),

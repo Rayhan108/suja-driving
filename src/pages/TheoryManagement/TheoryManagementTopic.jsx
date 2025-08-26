@@ -15,11 +15,13 @@ const TheoryManagementTopic = () => {
   const [searchTerm, setSearchTerm] = useState("");
     const [page, setPage] = useState(1);
   const type = "THEORY";
-  const { data: allCategory } = useGetAllCateroryQuery({type});
+  const searchTerms = ""
+  
+  const { data: allCategory } = useGetAllCateroryQuery({searchTerm:searchTerms,type,page});
   const { data: allTopic, refetch } = useGetAllTopicQuery({id,page,searchTerm});
   const topic = allTopic?.data?.result;
 const meta = allTopic?.data?.meta
-  console.log("all category--->", allCategory);
+  console.log("all category dataaaaaaaaaa--->", allCategory);
   console.log("all topic--->", topic);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const category = allCategory?.data?.result;

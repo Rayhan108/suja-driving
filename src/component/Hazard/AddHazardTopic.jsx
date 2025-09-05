@@ -5,7 +5,7 @@ import { message } from "antd";
 import { useParams } from "react-router-dom";
 
 
-const AddHazardTopic = ({refetch}) => {
+const AddHazardTopic = ({refetch,setIsModalOpen}) => {
 
     const [createHazardTopic] = useCreateHazTopicMutation()
   const {
@@ -13,8 +13,9 @@ const AddHazardTopic = ({refetch}) => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch
   } = useForm();
-
+ const image = watch("category_image");
   const onSubmit = async (data) => {
     console.log("Form Data:", data);
     // Creating a new FormData object to handle the form submission
@@ -49,6 +50,7 @@ const AddHazardTopic = ({refetch}) => {
         message.success(res?.message);
         refetch();
         reset();
+        setIsModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -110,6 +112,11 @@ const AddHazardTopic = ({refetch}) => {
             className="hidden"
             {...register("category_image")}
           />
+                                {image?.[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected Image: {image?.[0].name}
+          </p>
+        )}
         </label>
       </div>
 

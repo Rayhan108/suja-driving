@@ -47,7 +47,7 @@ const meta = allHazardTopic?.data?.meta
     <div>
       <div className="flex justify-between my-2 mb-12 font-title">
         <div className="flex justify-center items-center gap-5">
-          <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
+
           <p className="text-[#3564d3] font-title text-3xl font-bold">
             Hazard Perception
           </p>
@@ -80,7 +80,7 @@ const meta = allHazardTopic?.data?.meta
       {/* Pass category data to the TheoryManagementTable component */}
       <HazardTable hazardData={hazardData} refetch={refetch} meta={meta} page={page} handlePageChange={handlePageChange}/>
 
-      <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
+      <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null} setIsModalOpen={setIsModalOpen}>
         <div>
           <AddHazardTopic refetch={refetch}/>
         </div>

@@ -3,14 +3,16 @@ import { useForm } from "react-hook-form";
 import { useCreateTopicMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { message } from "antd";
 
-const AddAdiTopicForm = ({refetch,category}) => {
+const AddAdiTopicForm = ({refetch,category,setIsModalOpen}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch
   } = useForm();
   const [createTopic] = useCreateTopicMutation();
+   const image = watch("topic_icon");
   const onSubmit = async (data) => {
     console.log("Form Data:------>", data);
     // Creating a new FormData object to handle the form submission
@@ -45,6 +47,7 @@ const AddAdiTopicForm = ({refetch,category}) => {
         message.success(res?.message);
         refetch();
         reset();
+        setIsModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -138,6 +141,11 @@ const AddAdiTopicForm = ({refetch,category}) => {
               Upload Field is required
             </p>
           )}
+                                {image?.[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected Image: {image?.[0].name}
+          </p>
+        )}
         </div>
 
       <div className="flex gap-12  mt-6">

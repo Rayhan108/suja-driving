@@ -2,15 +2,16 @@ import { message } from "antd";
 import { useForm } from "react-hook-form";
 import { useCreateHighwaySignMutation } from "../../redux/feature/highway/highwayApi";
 
-const HighwayAdd = ({ refetch }) => {
+const HighwayAdd = ({ refetch,setIsModalOpen }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch
   } = useForm();
   const [createHighway] = useCreateHighwaySignMutation();
-
+ const image = watch("image");
   const onSubmit = async (formValues) => {
     const formData = new FormData();
 
@@ -39,6 +40,7 @@ const HighwayAdd = ({ refetch }) => {
         message.success(res?.message);
         refetch();
         reset();
+        setIsModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -119,6 +121,11 @@ const HighwayAdd = ({ refetch }) => {
               Upload Field is required
             </p>
           )}
+                                {image?.[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected Image: {image?.[0].name}
+          </p>
+        )}
         </div>
 
         <div className="flex gap-12  mt-6">

@@ -57,7 +57,9 @@ const meta = allTopic?.data?.meta
     <div className="font-title">
       <div className="flex justify-between mt-2 mb-8 font-title">
         <div className="flex justify-center items-center gap-5">
+     <Link to={'/theoryManagement'}>
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
+          </Link>
           <p className="text-[#3564d3] font-title text-3xl font-bold">
             Theory Management
           </p>
@@ -129,7 +131,7 @@ const meta = allTopic?.data?.meta
 
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>
-          <AddTopicForm category={category} refetch={refetch} />
+          <AddTopicForm category={category} refetch={refetch} setIsModalOpen={setIsModalOpen}/>
         </div>
       </Modal>
     </div>

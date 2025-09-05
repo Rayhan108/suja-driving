@@ -205,7 +205,7 @@ const HighTable = ({ category, refetch, meta, handlePageChange, page }) => {
         >
           <div>
             <h1 className="text-3xl text-center text-[#333333]">Edit Code</h1>
-            <HighwayEdit singleData={singleData} refetch={refetch} />
+            <HighwayEdit singleData={singleData} refetch={refetch} setEditModalOpen={setEditModalOpen}/>
           </div>
         </Modal>
       </ConfigProvider>

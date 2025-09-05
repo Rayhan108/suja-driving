@@ -2,15 +2,16 @@ import { useForm } from "react-hook-form";
 import { useCreateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { message } from "antd";
 
-const AddCategoryForm = ({ refetch }) => {
+const AddCategoryForm = ({ refetch,setIsModalOpen}) => {
   const [createCategory] = useCreateCategoryMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch
   } = useForm();
-
+  const image = watch("category_image");
   const onSubmit = async (data) => {
     console.log("Form Data:------>", data);
     // Creating a new FormData object to handle the form submission
@@ -45,6 +46,7 @@ const AddCategoryForm = ({ refetch }) => {
         message.success(res?.message);
         refetch();
         reset();
+        setIsModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -79,22 +81,7 @@ const AddCategoryForm = ({ refetch }) => {
             </p>
           )}
         </div>
-        {/* <div>
-          <label className="block mb-1 font-medium text-gray-700">
-            Test Type
-          </label>
-          <select
-            {...register("testType", { required: true })}
-            className="w-full border border-gray-300 rounded-md px-3 py-2"
-          >
-            <option value="">Select Test Type</option>
-            <option value="ADI">ADI</option>
-            <option value="THEORY">THEORY</option>
-          </select>
-          {errors.testType && (
-            <p className="text-red-500 text-sm mt-1">Test Type is required</p>
-          )}
-        </div> */}
+ 
 
         <div>
           <label className="block mb-1 font-medium text-gray-700">
@@ -134,6 +121,12 @@ const AddCategoryForm = ({ refetch }) => {
               Upload Field is required
             </p>
           )}
+
+                  {image?.[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected Image: {image?.[0].name}
+          </p>
+        )}
         </div>
 
         <div className="flex gap-12  mt-6">

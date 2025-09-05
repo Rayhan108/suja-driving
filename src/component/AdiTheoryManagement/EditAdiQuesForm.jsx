@@ -58,6 +58,7 @@ const EditAdiQuesForm = ({ refetch, singleData,handleEditCancel }) => {
 
   const onCancel = () => {
     reset();
+    handleEditCancel()
   };
 
   return (

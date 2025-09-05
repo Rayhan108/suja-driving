@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateTopicMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { message } from "antd";
 
-const EditAdiTopicForm = ({singleData,refetch}) => {
+const EditAdiTopicForm = ({singleData,refetch,setEditModalOpen}) => {
   const [updateTopic]=useUpdateTopicMutation()
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
+    watch
   } = useForm();
-
+ const image = watch("topic_icon");
+   useEffect(() => {
+    if (singleData?.name) {
+      setValue("name", singleData?.name); // Dynamically set the name field
+    }
+  }, [singleData, setValue]);
   const onSubmit = async(data) => {
     console.log("Form Data:", data);
      // Creating a new FormData object to handle the form submission
@@ -45,6 +52,7 @@ const EditAdiTopicForm = ({singleData,refetch}) => {
             message.success(res?.message);
             refetch()
             reset();
+            setEditModalOpen(false)
           } else {
             message.error(res?.message);
           }
@@ -56,6 +64,7 @@ const EditAdiTopicForm = ({singleData,refetch}) => {
 
   const onCancel = () => {
     reset();
+    setEditModalOpen(false)
   };
 
 
@@ -72,6 +81,7 @@ const EditAdiTopicForm = ({singleData,refetch}) => {
           <input
             {...register("name", { required: true })}
             placeholder="category..."
+            defaultValue={singleData?.name}
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           />
           {errors.name && (
@@ -112,7 +122,11 @@ const EditAdiTopicForm = ({singleData,refetch}) => {
               {...register("topic_icon")}
             />
           </label>
-     
+                           {image?.[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected Image: {image?.[0].name}
+          </p>
+        )}
         </div>
 
         <div className="flex gap-12  mt-6">

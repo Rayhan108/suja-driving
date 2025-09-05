@@ -2,15 +2,16 @@ import { useForm } from "react-hook-form";
 import { useCreateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { message } from "antd";
 
-const AddAdiCategoryForm = ({refetch}) => {
+const AddAdiCategoryForm = ({refetch,setIsModalOpen}) => {
   const [createCategory] = useCreateCategoryMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    watch
   } = useForm();
-
+  const image = watch("category_image");
   const onSubmit = async (data) => {
     console.log("Form Data:------>", data);
     // Creating a new FormData object to handle the form submission
@@ -45,6 +46,7 @@ const AddAdiCategoryForm = ({refetch}) => {
         message.success(res?.message);
         refetch();
         reset();
+        setIsModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -55,6 +57,7 @@ const AddAdiCategoryForm = ({refetch}) => {
 
   const onCancel = () => {
     reset();
+    setIsModalOpen(false)
   };
 
   return (
@@ -134,16 +137,21 @@ const AddAdiCategoryForm = ({refetch}) => {
               Upload Field is required
             </p>
           )}
+                          {image?.[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected Image: {image?.[0].name}
+          </p>
+        )}
         </div>
       
         <div className="flex gap-12  mt-6">
-          {/* <button
+          <button
             type="button"
             onClick={onCancel}
             className="w-full px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-100 "
           >
             Cancel
-          </button> */}
+          </button>
           <button
             type="submit"
             className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"

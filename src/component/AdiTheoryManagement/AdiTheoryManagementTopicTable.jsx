@@ -186,7 +186,7 @@ const AdiTheoryManagementTopicTable = ({
         >
           <div>
             <h1 className="text-3xl text-center text-[#333333]">Edit Topic</h1>
-            <EditAdiTopicForm refetch={refetch} singleData={singleData} />
+            <EditAdiTopicForm refetch={refetch} singleData={singleData} setEditModalOpen={setEditModalOpen}/>
           </div>
         </Modal>
       </ConfigProvider>

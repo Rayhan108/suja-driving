@@ -9,7 +9,7 @@ import { useMyProfileQuery } from "../../redux/feature/user/userApi";
 
 
 const UpdateProfile = () => {
-  const { data: myProfile } = useMyProfileQuery(undefined);
+  const { data: myProfile,refetch } = useMyProfileQuery(undefined);
   console.log("my profile data--->", );
 const img = myProfile?.data?.profile_image
   const [activeTab, setActiveTab] = useState("edit");
@@ -49,6 +49,7 @@ const img = myProfile?.data?.profile_image
       console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
+        refetch()
    
       } else {
         message.error(res?.message);

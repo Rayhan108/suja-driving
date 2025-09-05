@@ -5,7 +5,7 @@ import { useCreateQuesMutation } from "../../redux/feature/theoryManagement/theo
 import { message } from "antd";
 import { toast } from "react-toastify";
 
-const AddAdiQuesForm = ({refetch}) => {
+const AddAdiQuesForm = ({refetch,setIsModalOpen}) => {
   const [createQues]=useCreateQuesMutation()
   const {id} = useParams();
   console.log("id------->",id);
@@ -15,6 +15,7 @@ const AddAdiQuesForm = ({refetch}) => {
     handleSubmit,
     formState: { errors },
     reset,
+    
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -31,6 +32,7 @@ const AddAdiQuesForm = ({refetch}) => {
         toast.success(res?.message);
         refetch();
         reset();
+        setIsModalOpen(false)
       } else {
         toast.error(res?.message);
       }

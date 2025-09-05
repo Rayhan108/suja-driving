@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { useUpdateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { message } from "antd";
+import { useEffect } from "react";
 
-const EditAdiCategoryForm = ({refetch,singleData}) => {
+const EditAdiCategoryForm = ({refetch,singleData,setEditModalOpen}) => {
   console.log("single data->",singleData);
   const [updateCategory]=useUpdateCategoryMutation()
   const {
@@ -10,8 +11,14 @@ const EditAdiCategoryForm = ({refetch,singleData}) => {
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,watch
   } = useForm();
-
+  const image = watch("category_image");
+  useEffect(() => {
+    if (singleData?.name) {
+      setValue("name", singleData?.name); // Dynamically set the name field
+    }
+  }, [singleData, setValue]);
   const onSubmit = async(data) => {
     console.log("Form Data:", data);
      // Creating a new FormData object to handle the form submission
@@ -46,6 +53,7 @@ const EditAdiCategoryForm = ({refetch,singleData}) => {
             message.success(res?.message);
             refetch()
             reset();
+            setEditModalOpen(false)
           } else {
             message.error(res?.message);
           }
@@ -57,6 +65,7 @@ const EditAdiCategoryForm = ({refetch,singleData}) => {
 
   const onCancel = () => {
     reset();
+    setEditModalOpen(false)
   };
   return (
     <div>
@@ -72,6 +81,7 @@ const EditAdiCategoryForm = ({refetch,singleData}) => {
           <input
             {...register("name", { required: true })}
             placeholder="category..."
+            defaultValue={singleData?.name}
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           />
           {errors.categoryName && (
@@ -110,6 +120,11 @@ const EditAdiCategoryForm = ({refetch,singleData}) => {
               className="hidden"
               {...register("category_image")}
             />
+                            {image?.[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected Image: {image?.[0].name}
+          </p>
+        )}
           </label>
      
         </div>

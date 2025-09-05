@@ -57,6 +57,7 @@ const EditQuesForm = ({ refetch, singleData,handleEditCancel }) => {
 
   const onCancel = () => {
     reset();
+    handleEditCancel()
   };
 
   return (

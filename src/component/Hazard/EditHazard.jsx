@@ -3,9 +3,10 @@ import { useForm } from "react-hook-form";
 import { useUpdateHazardTopicMutation } from "../../redux/feature/hazard/hazardApi";
 import { message } from "antd";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 
-const EditHazard = ({singleData,refetch}) => {
+const EditHazard = ({singleData,refetch,setEditModalOpen}) => {
 
     const [updateHazardTopic] = useUpdateHazardTopicMutation();
   const {
@@ -13,8 +14,15 @@ const EditHazard = ({singleData,refetch}) => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
+    setValue
   } = useForm();
-
+ const image = watch("category_image");
+   useEffect(() => {
+    if (singleData?.name) {
+      setValue("name", singleData?.name); // Dynamically set the name field
+    }
+  }, [singleData, setValue]);
   const onSubmit = async (data) => {
     console.log("Form Data:", data);
     // Creating a new FormData object to handle the form submission
@@ -48,6 +56,7 @@ const EditHazard = ({singleData,refetch}) => {
         message.success(res?.message);
         refetch();
         reset();
+        setEditModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -73,6 +82,7 @@ const EditHazard = ({singleData,refetch}) => {
         <input
           {...register("name", { required: true })}
           placeholder="Topic Name..."
+          defaultValue={singleData?.name}
           className="w-full border border-gray-300 rounded-md px-3 py-2"
         />
         {errors.name && (
@@ -110,6 +120,11 @@ const EditHazard = ({singleData,refetch}) => {
             {...register("category_image")}
           />
         </label>
+                              {image?.[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected Image: {image?.[0].name}
+          </p>
+        )}
       </div>
 
       <div className="flex gap-12  mt-6 font-title">

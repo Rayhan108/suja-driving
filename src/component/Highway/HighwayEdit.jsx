@@ -1,14 +1,23 @@
 import { useForm } from "react-hook-form";
 import { useUpdateHighwayTopicMutation } from "../../redux/feature/highway/highwayApi";
 import { message } from "antd";
+import { useEffect } from "react";
 
-const HighwayEdit  = ({refetch,singleData}) => {
+const HighwayEdit  = ({refetch,singleData,setEditModalOpen}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
+    watch
   } = useForm();
+   const image = watch("image");
+     useEffect(() => {
+    if (singleData?.name) {
+      setValue("name", singleData?.name); // Dynamically set the name field
+    }
+  }, [singleData, setValue]);
 const [updateHighTopic]=useUpdateHighwayTopicMutation()
 const onSubmit = async (formValues) => {
   // console.log("formValues---->",formValues);
@@ -38,6 +47,7 @@ const onSubmit = async (formValues) => {
         message.success(res?.message);
         refetch();
         reset();
+        setEditModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -64,6 +74,7 @@ const onSubmit = async (formValues) => {
           <input
             {...register("topicName", { required: true })}
             placeholder="topic name..."
+            defaultValue={singleData?.name}
             className="w-full border border-gray-300 rounded-md px-3 py-2"
           />
           {errors.topicName && (
@@ -101,6 +112,11 @@ const onSubmit = async (formValues) => {
               type="file"
               className="hidden"
             />
+                                  {image?.[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected Image: {image?.[0].name}
+          </p>
+        )}
           </label>
     
         </div>

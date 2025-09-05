@@ -51,7 +51,9 @@ console.log("activeTabFromURL",activeTabFromURL);
        <div>
       <div className="flex justify-between mt-2 mb-8 font-title">
         <div className="flex justify-center items-center gap-5">
+             <Link to={'/theoryManagement'}>
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
+          </Link>
           <p className="text-[#3564d3] font-title text-3xl font-bold">
           Theory Management
           </p>
@@ -130,7 +132,7 @@ console.log("activeTabFromURL",activeTabFromURL);
  
       >
   <div>
-    <AddQuesForm refetch={refetch}/>
+    <AddQuesForm refetch={refetch} setIsModalOpen={setIsModalOpen}/>
   </div>
       </Modal>
 

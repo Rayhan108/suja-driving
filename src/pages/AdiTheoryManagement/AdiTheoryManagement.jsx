@@ -52,7 +52,9 @@ console.log("activeTabFromURL",activeTabFromURL);
     <div>
       <div className="flex justify-between my-2 font-title mb-8">
         <div className="flex justify-center items-center gap-5">
+    <Link to={'/adiTheoryManagement/category'}>
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
+          </Link>
           <p className="text-[#3564d3] font-title text-3xl font-bold">
           Adi Theory Management
           </p>
@@ -132,7 +134,7 @@ console.log("activeTabFromURL",activeTabFromURL);
  
       >
   <div>
-    <AddAdiCategoryForm refetch={refetch} />
+    <AddAdiCategoryForm refetch={refetch} setIsModalOpen={setIsModalOpen}/>
   </div>
       </Modal>
     </div>

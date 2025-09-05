@@ -188,7 +188,7 @@ const TheoryManagementTable = ({ category, refetch,meta,page,handlePageChange })
             <h1 className="text-3xl text-center text-[#333333]">
               Edit Category
             </h1>
-            <EditCategoryForm refetch={refetch} singleData={singleData} />
+            <EditCategoryForm refetch={refetch} singleData={singleData} setEditModalOpen={setEditModalOpen}/>
           </div>
         </Modal>
       </ConfigProvider>

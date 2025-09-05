@@ -1,58 +1,67 @@
 import { useForm } from "react-hook-form";
 import { useUpdateCategoryMutation } from "../../redux/feature/theoryManagement/theoryApi";
 import { message } from "antd";
+import { useEffect } from "react";
 
-const EditCategoryForm = ({refetch,singleData}) => {
-  console.log("single data->",singleData);
-  const [updateCategory]=useUpdateCategoryMutation()
+const EditCategoryForm = ({ refetch, singleData, setEditModalOpen }) => {
+  console.log("single data->", singleData?.name);
+
+  const [updateCategory] = useUpdateCategoryMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
+setValue,
+    watch,
   } = useForm();
+  const image = watch("category_image");
 
-  const onSubmit = async(data) => {
+useEffect(() => {
+    if (singleData?.name) {
+      setValue("name", singleData?.name); // Dynamically set the name field
+    }
+  }, [singleData, setValue]);
+
+  const onSubmit = async (data) => {
     console.log("Form Data:", data);
-     // Creating a new FormData object to handle the form submission
-        const formData = new FormData();
-    
-        // Appending fields to the FormData object
-        formData.append(
-          "data",
-          JSON.stringify({
-            name: data?.name,
-            testType: singleData?.testType,
-          })
-        );
-    
-        const file = data?.category_image?.[0];
-        if (file) {
-          formData.append("category_image", file, file.name);
-        }
-    
-        // Log the FormData contents
-        console.log("Form Data Contents:");
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}:`, value);
-        }
-        try {
-          const res = await updateCategory({
-      args: formData,
-      id: singleData?._id,
-    }).unwrap();
-          console.log("response--->", res);
-          if (res?.success) {
-            message.success(res?.message);
-            refetch()
-            reset();
-          } else {
-            message.error(res?.message);
-          }
-        } catch (error) {
-          message.error(error?.data?.message);
-        }
-  
+    // Creating a new FormData object to handle the form submission
+    const formData = new FormData();
+
+    // Appending fields to the FormData object
+    formData.append(
+      "data",
+      JSON.stringify({
+        name: data?.name,
+        testType: singleData?.testType,
+      })
+    );
+
+    const file = data?.category_image?.[0];
+    if (file) {
+      formData.append("category_image", file, file.name);
+    }
+
+    // Log the FormData contents
+    console.log("Form Data Contents:");
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
+    try {
+      const res = await updateCategory({
+        args: formData,
+        id: singleData?._id,
+      }).unwrap();
+      console.log("response--->", res);
+      if (res?.success) {
+        message.success(res?.message);
+        refetch();
+        setEditModalOpen(false);
+      } else {
+        message.error(res?.message);
+      }
+    } catch (error) {
+      message.error(error?.data?.message);
+    }
   };
 
   const onCancel = () => {
@@ -74,6 +83,7 @@ const EditCategoryForm = ({refetch,singleData}) => {
             {...register("name", { required: true })}
             placeholder="category..."
             className="w-full border border-gray-300 rounded-md px-3 py-2"
+            defaultValue={singleData?.name}
           />
           {errors.categoryName && (
             <p className="text-red-500 text-sm mt-1">
@@ -109,16 +119,20 @@ const EditCategoryForm = ({refetch,singleData}) => {
               type="file"
               accept="image/*"
               className="hidden"
-              {...register("category_image",)}
+              {...register("category_image")}
             />
           </label>
-
+          {image?.[0] && (
+            <p className="text-sm text-gray-600 mt-2">
+              Selected Image: {image?.[0].name}
+            </p>
+          )}
         </div>
 
         <div className="flex gap-12  mt-6 font-title">
           <button
             type="button"
-            onClick={onCancel}
+            onClick={() => setEditModalOpen(false)}
             className="w-full px-4 py-2 border border-gray-400 rounded-md hover:bg-gray-100 "
           >
             Cancel

@@ -90,7 +90,7 @@ const HighwayPage = () => {
       <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null}>
         <div>
           <h1 className="text-3xl text-center text-[#333333]">Add Code</h1>
-          <HighwayAdd refetch={refetch}/>
+          <HighwayAdd refetch={refetch} setIsModalOpen={setIsModalOpen}/>
         </div>
       </Modal>
     </div>

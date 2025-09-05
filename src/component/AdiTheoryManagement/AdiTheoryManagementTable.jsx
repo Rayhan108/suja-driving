@@ -186,7 +186,7 @@ const AdiTheoryManagementTable = ({ category,refetch,handlePageChange,meta,page 
         >
           <div >
             <h1 className="text-3xl text-center text-[#333333]">Edit Category</h1>
- <EditAdiCategoryForm refetch={refetch} singleData={singleData}/>
+ <EditAdiCategoryForm refetch={refetch} singleData={singleData} setEditModalOpen={setEditModalOpen}/>
           </div>
         </Modal>
       </ConfigProvider>

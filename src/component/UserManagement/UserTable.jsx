@@ -10,7 +10,7 @@ import {
 
 const UserTable = ({ searchTerm }) => {
   const [page, setPage] = useState(1);
-  const { data: allUser } = useGetAllUserQuery({ searchTerm, page });
+  const { data: allUser,refetch } = useGetAllUserQuery({ searchTerm, page });
   console.log("all user--->", allUser?.data?.result);
   const meta = allUser?.data?.meta;
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,6 +38,7 @@ const UserTable = ({ searchTerm }) => {
       console.log("block user response--->", res);
       if (res.success) {
         message.success(res?.message);
+        refetch()
       } else {
         message.error(res?.message);
       }
@@ -103,7 +104,10 @@ const UserTable = ({ searchTerm }) => {
               
                 </Link> */}
           <button onClick={() => handleBlockUser(record)}>
-            <MdBlockFlipped className="text-[#3F5EAB] w-5 h-5" />
+            <MdBlockFlipped className={`${
+    record?.user?.isBlocked ? 'text-red-500' : 'text-[#3F5EAB]' 
+  } w-5 h-5`}
+ />
           </button>
         </div>
       ),

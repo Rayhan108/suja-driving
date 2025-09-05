@@ -111,7 +111,7 @@ const vedioId = singleData?._id
           <input
             type="file"
             id="video-upload"
-            {...register("video", { required: true })}
+            {...register("video")}
             className="hidden"
           />
         </label>

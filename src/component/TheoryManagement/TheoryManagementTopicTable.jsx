@@ -178,7 +178,7 @@ const TheoryManagementTopicTable = ({topic,refetch,meta,page,handlePageChange}) 
         >
           <div >
             <h1 className="text-3xl text-center text-[#333333]">Edit Topic</h1>
- <EditTopicForm refetch={refetch} singleData={singleData}/>
+ <EditTopicForm refetch={refetch} singleData={singleData} setEditModalOpen={setEditModalOpen}/>
           </div>
         </Modal>
       </ConfigProvider>

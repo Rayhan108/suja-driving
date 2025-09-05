@@ -2,7 +2,7 @@ import { Input } from "antd";
 import { useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import UserTable from "../../component/UserManagement/UserTable";
-import { SlArrowLeft } from "react-icons/sl";
+
 const UserManagement = () => {
       const [activeTab, setActiveTab] = useState("allOrder");
         const [searchTerm, setSearchTerm] = useState(""); 
@@ -19,7 +19,7 @@ const UserManagement = () => {
         <div className="title">
         <div className="flex justify-between mb-12 mt-5"> 
       <div className="flex  justify-center items-center gap-5">
-          <SlArrowLeft className="w-5 h-5 text-right  text-[#3564d3]" />
+ 
           <p className="text-[#3564d3] font-title text-3xl font-bold">
             User Management
           </p>

@@ -4,7 +4,7 @@ import { useCreateQuesMutation } from "../../redux/feature/theoryManagement/theo
 import { useParams } from "react-router-dom";
 import { message } from "antd";
 
-const AddQuesForm = () => {
+const AddQuesForm = ({refetch,setIsModalOpen}) => {
   const [createQues]=useCreateQuesMutation()
   const {id} = useParams();
   console.log("id------->",id);
@@ -30,6 +30,7 @@ const AddQuesForm = () => {
         message.success(res?.message);
         refetch();
         reset();
+        setIsModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -41,6 +42,7 @@ const AddQuesForm = () => {
 
   const onCancel = () => {
     reset();
+    setIsModalOpen(false)
   };
 
   return (

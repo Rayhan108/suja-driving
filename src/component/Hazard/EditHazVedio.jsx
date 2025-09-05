@@ -3,8 +3,11 @@ import { useParams } from "react-router-dom";
 
 import { message } from "antd";
 import { useUpdateHazVedioMutation } from "../../redux/feature/hazard/hazardApi";
+import { useState } from "react";
 
-const EditHazVedio = ({refetch,singleData}) => {
+const EditHazVedio = ({refetch,singleData,setEditModalOpen}) => {
+    // State for video file name and thumbnail image
+
 const {id} = useParams()
 const vedioId = singleData?._id
   const [updateHazVedio] = useUpdateHazVedioMutation();
@@ -13,11 +16,12 @@ const vedioId = singleData?._id
     handleSubmit,
     formState: { errors },
     reset,
+    watch
   } = useForm();
-
+ const watchedVideo = watch("video"); 
   const onSubmit = async (formValues) => {
     const formData = new FormData();
-
+    console.log("form values-------->", formValues);
     formData.append("video", formValues.video[0]);
 
     
@@ -46,6 +50,7 @@ const vedioId = singleData?._id
         message.success(res?.message);
         refetch();
         reset();
+        setEditModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -59,13 +64,11 @@ const vedioId = singleData?._id
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 space-y-6 border border-gray-200"
     >
-      <h2 className="text-2xl font-semibold text-gray-800 text-center">
-        Add Hazard Video
-      </h2>
+    
 
       {/* Danger Times */}
       <div>
-        <label className="block text-gray-700 font-medium mb-1">
+        <label className="block text-gray-700 font-medium my-3">
           Danger Times
           <span className="text-sm text-gray-500 ml-1">(comma separated)</span>
         </label>
@@ -114,6 +117,12 @@ const vedioId = singleData?._id
         </label>
         {errors.video && (
           <p className="text-red-500 text-sm mt-1">Video required</p>
+        )}
+                {/* Display video file name */}
+        {watchedVideo && watchedVideo[0] && (
+          <p className="text-sm text-gray-600 mt-2">
+            Selected video: {watchedVideo[0].name}
+          </p>
         )}
       </div>
 

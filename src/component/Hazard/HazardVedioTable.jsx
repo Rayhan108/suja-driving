@@ -181,7 +181,7 @@ const meta = allVedios?.data?.meta
             className="bg-[#3F5EAB] text-white p-3 rounded-xl"
             onClick={() => addVedioModal()}
           >
-            +Add Vedio
+            +Add Video
           </button>
         </div>
       </nav>
@@ -267,7 +267,7 @@ const meta = allVedios?.data?.meta
             footer={null}
           >
             <div>
-              <HazardForm refetch={refetch} />
+              <HazardForm refetch={refetch} setAddVedioModalOpen={setAddVedioModalOpen}/>
             </div>
           </Modal>
 
@@ -279,11 +279,11 @@ const meta = allVedios?.data?.meta
             footer={null}
           >
             <div>
-              <h1 className="text-3xl text-center text-[#333333]">
-                Edit Vedio
+              <h1 className="text-3xl text-center text-[#333333] mb-3">
+                Edit Video
               </h1>
               {/* <VedioModal refetch={refetch} singleData={singleData} /> */}
-              <EditHazVedio refetch={refetch} singleData={singleData}/>
+              <EditHazVedio refetch={refetch} singleData={singleData} setEditModalOpen={setEditModalOpen}/>
             </div>
           </Modal>
         </ConfigProvider>

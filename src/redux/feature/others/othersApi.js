@@ -3,7 +3,7 @@ import { baseApi } from "../../api/baseApi";
 const othersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
 
-
+// 
      addPrivacyPolicy: builder.mutation({
       query: () => ({
         url:`/manage/add-privacy-policy`,

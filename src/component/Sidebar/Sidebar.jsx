@@ -21,7 +21,6 @@ import { LuSquareMenu } from "react-icons/lu";
 import { useState } from "react"; // Import useState
 import logo from "../../assets/Logo.png";
 import {
-  RiDashboard3Line,
   RiFeedbackLine,
   RiLogoutCircleLine,
 } from "react-icons/ri";
@@ -29,7 +28,6 @@ import {
 import { CgMail } from "react-icons/cg";
 import { useAppSelector } from "../../redux/hooks";
 import { logout, selectCurrentUser } from "../../redux/feature/auth/authSlice";
-import { useMyProfileQuery } from "../../redux/feature/user/userApi";
 import { useDispatch } from "react-redux";
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const location = useLocation();

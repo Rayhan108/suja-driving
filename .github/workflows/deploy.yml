@@ -1,0 +1,71 @@
+name: Deploy React Dashboard to EC2
+
+on:
+    push:
+        branches:
+            - "main"
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout the repository
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20.15"
+
+            - name: Install Dependencies
+              run: npm install --frozen-lockfile
+
+            - name: Build Vite Project
+              run: npx vite build
+
+    deploy:
+        runs-on: ubuntu-latest
+        needs: build
+
+        steps:
+            - name: Checkout the repository again (for deployment)
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20.15"
+
+            - name: Install Dependencies
+              run: npm install --frozen-lockfile
+
+            - name: Build Vite Project Again
+              run: npx vite build
+
+            - name: Set up SSH to EC2
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+            - name: Deploy Vite Build to EC2
+              env:
+                  EC2_HOST: ${{ secrets.EC2_HOST }}
+                  EC2_USER: ${{ secrets.EC2_USER }}
+                  ENV_VARS_JSON: ${{ secrets.ENV_VARS_JSON }}
+              run: |
+                  # Create directory on EC2 if it doesn't exist
+                  ssh $EC2_USER@$EC2_HOST "mkdir -p ~/applications/dashboard/dist"
+
+                  # Upload only the Vite build (dist folder)
+                  rsync -avz dist/ $EC2_USER@$EC2_HOST:~/applications/dashboard/dist/
+
+                  # Optional: Add/update .env file if needed
+                  ssh $EC2_USER@$EC2_HOST "echo '$ENV_VARS_JSON' > ~/applications/dashboard/.env"
+
+                  # Restart Nginx
+                  ssh $EC2_USER@$EC2_HOST "sudo systemctl restart nginx"

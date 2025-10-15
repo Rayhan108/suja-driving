@@ -1,8 +1,8 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "https://sujadriving-backend.onrender.com",
+    baseUrl: "http://54.228.201.37:5000",
     // credentials: "include",
     prepareHeaders: (headers, { getState }) => {
       const token = (getState()).auth.token;

@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useCreateHazVedioMutation } from "../../redux/feature/hazard/hazardApi";
 import { message } from "antd";
@@ -14,16 +14,21 @@ const HazardForm = ({ refetch, setAddVedioModalOpen }) => {
     handleSubmit,
     formState: { errors },
     reset,
-    watch, // Watch for the form state, including file inputs
+    watch,
+    control,
   } = useForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "hazards", // this will be the array of hazard objects
+  });
 
   // Watch for thumbnail file input
-  const watchedThumbnail = watch("thumbnail"); // Get the thumbnail file from form state
- const watchedVideo = watch("video"); 
+  const watchedThumbnail = watch("thumbnail");
+  const watchedVideo = watch("video");
+
   // Form submission handler
   const onSubmit = async (formValues) => {
     const formData = new FormData();
-    console.log("form values-------->", formValues);
 
     // Ensure video file is selected and append it to formData
     const video = formValues?.video?.[0];
@@ -43,28 +48,31 @@ const HazardForm = ({ refetch, setAddVedioModalOpen }) => {
       return;
     }
 
-    // Parse dangerTimes and prepare JSON payload
-    const parsedDangerTimes = formValues.dangerTimes
-      .split(",")
-      .map((t) => parseFloat(t.trim()))
-      .filter((t) => !isNaN(t));
+    // Prepare the hazards data array with parsed number values for start and end
+    const hazardsData = formValues.hazards.map((hazard) => ({
+      start: parseFloat(hazard.start), // Convert start time to number
+      end: parseFloat(hazard.end), // Convert end time to number
+      type: hazard.type,
+    }));
+
+    // Check if all start and end values are valid numbers
+    const isValid = hazardsData.every(
+      (hazard) => !isNaN(hazard.start) && !isNaN(hazard.end)
+    );
+    if (!isValid) {
+      message.error("Start and end times must be valid numbers.");
+      return;
+    }
 
     const dataPayload = {
       hazardTopic: topicId,
-      dangerTimes: parsedDangerTimes,
+      hazards: hazardsData,
     };
     formData.append("data", JSON.stringify(dataPayload));
-
-    // Log form data for debugging
-    console.log("Submitting:");
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
 
     // API call to create hazard video
     try {
       const res = await createHazVedio(formData).unwrap();
-      console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();
@@ -87,20 +95,49 @@ const HazardForm = ({ refetch, setAddVedioModalOpen }) => {
         Add Hazard Video
       </h2>
 
-      {/* Danger Times */}
+      {/* Hazard Times */}
       <div>
         <label className="block text-gray-700 font-medium mb-1">
-          Danger Times
-          <span className="text-sm text-gray-500 ml-1">(comma separated)</span>
+          Hazard Times (Start, End, Type)
         </label>
-        <input
-          {...register("dangerTimes", { required: true })}
-          placeholder="15.5, 45.75, 120.0, 344"
-          className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-2 outline-none transition"
-        />
-        {errors.dangerTimes && (
-          <p className="text-red-500 text-sm mt-1">Required</p>
-        )}
+
+        {/* Dynamically add hazard times */}
+        {fields.map((item, index) => (
+          <div key={item.id} className="space-y-2 mb-4">
+            <div className="flex space-x-2">
+              <input
+                {...register(`hazards[${index}].start`, { required: true })}
+                placeholder="Start Time"
+                className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-2 outline-none transition"
+              />
+              <input
+                {...register(`hazards[${index}].end`, { required: true })}
+                placeholder="End Time"
+                className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-2 outline-none transition"
+              />
+              {/* <input
+                {...register(`hazards[${index}].type`, { required: true })}
+                placeholder="Type"
+                className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-2 outline-none transition"
+              /> */}
+            </div>
+            <button
+              type="button"
+              onClick={() => remove(index)}
+              className="text-red-500 text-sm"
+            >
+              Remove Hazard
+            </button>
+          </div>
+        ))}
+        
+        <button
+          type="button"
+          onClick={() => append({ start: "", end: "", type: "" })}
+          className="bg-blue-600 text-white rounded-lg py-2 px-4 mt-2"
+        >
+          Add More Hazard
+        </button>
       </div>
 
       {/* Video Upload */}
@@ -135,7 +172,7 @@ const HazardForm = ({ refetch, setAddVedioModalOpen }) => {
           />
         </label>
         {errors.video && <p className="text-red-500 text-sm mt-1">Video required</p>}
-          {/* Display video file name */}
+        {/* Display video file name */}
         {watchedVideo && watchedVideo[0] && (
           <p className="text-sm text-gray-600 mt-2">
             Selected video: {watchedVideo[0].name}

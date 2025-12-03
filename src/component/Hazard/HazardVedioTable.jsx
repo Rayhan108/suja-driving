@@ -288,7 +288,7 @@ const meta = allVedios?.data?.meta
                 Edit Video
               </h1>
               {/* <VedioModal refetch={refetch} singleData={singleData} /> */}
-              <EditHazVedio refetch={refetch} singleData={singleData} setEditModalOpen={setEditModalOpen} />
+              <EditHazVedio refetch={refetch} singleData={singleData} setEditModalOpen={setEditModalOpen} isEditModalOpen={isEditModalOpen} />
             </div>
           </Modal>
         </ConfigProvider>

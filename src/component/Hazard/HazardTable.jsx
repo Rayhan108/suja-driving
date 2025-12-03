@@ -202,7 +202,7 @@ const columns = [
         >
           <div>
          
-            <EditHazard singleData={singleData} refetch={refetch} setEditModalOpen={setEditModalOpen}/>
+            <EditHazard singleData={singleData} refetch={refetch} setEditModalOpen={setEditModalOpen} />
           </div>
         </Modal>
       </ConfigProvider>

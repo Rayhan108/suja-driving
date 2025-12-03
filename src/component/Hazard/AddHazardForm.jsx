@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 const HazardForm = ({ refetch, setAddVedioModalOpen, isAddVedioModalOpen }) => {
   const [resFile, setResFile] = useState("");
   const [url, setUrl] = useState("");
-  
+  console.log("resfile--------->",resFile);
+  console.log("vedio url--------->",url);
   // Upload progress states
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -110,12 +111,12 @@ const HazardForm = ({ refetch, setAddVedioModalOpen, isAddVedioModalOpen }) => {
 
     // Ensure video file is selected
     const video = formValues?.video?.[0];
-    if (video) {
-      formData.append("video", video, video.name);
-    } else {
-      message.error("Please select a video");
-      return;
-    }
+    // if (video) {
+    //   formData.append("video", video, video.name);
+    // } else {
+    //   message.error("Please select a video");
+    //   return;
+    // }
 
     // Ensure thumbnail image is selected
     const file = formValues?.thumbnail?.[0];

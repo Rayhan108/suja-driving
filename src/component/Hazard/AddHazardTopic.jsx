@@ -43,7 +43,7 @@ const AddHazardTopic = ({refetch,setIsModalOpen}) => {
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
-    try {
+    // try {
       const res = await createHazardTopic(formData).unwrap();
       console.log("response--->", res);
       if (res?.success) {
@@ -51,12 +51,10 @@ const AddHazardTopic = ({refetch,setIsModalOpen}) => {
         refetch();
         reset();
         setIsModalOpen(false)
-      } else {
-        message.error(res?.message);
-      }
-    } catch (error) {
-      message.error(error?.data?.message);
-    }
+      } 
+    // } catch (error) {
+    //   message.error(error?.data?.message);
+    // }
   };
 
   const onCancel = () => {

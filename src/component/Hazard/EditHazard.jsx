@@ -57,9 +57,7 @@ const EditHazard = ({singleData,refetch,setEditModalOpen}) => {
         refetch();
         reset();
         setEditModalOpen(false)
-      } else {
-        message.error(res?.message);
-      }
+      } 
     } catch (error) {
       message.error(error?.data?.message);
     }

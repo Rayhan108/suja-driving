@@ -38,12 +38,13 @@ const TestScoreTable = ({ testData, page, meta, handlePageChange }) => {
   };
 
   const columns = [
-    {
+  {
       title: "SL",
       dataIndex: "sl",
       key: "sl",
       align: "center",
-      render: (text, record, index) => index + 1, // Use the index + 1 as serial number
+      // ✅ Formula: (currentPage - 1) * pageSize + index + 1
+      render: (text, record, index) => (currentPage - 1) * pageSize + index + 1,
     },
     {
       title: "User Name",

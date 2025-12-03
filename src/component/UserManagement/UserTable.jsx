@@ -48,11 +48,14 @@ const UserTable = ({ searchTerm }) => {
   };
 
   const columns = [
-    // {
-    //   title: "User ID",
-    //   dataIndex: "userId",
-    //   key: "userId",
-    // },
+      {
+      title: "SL",
+      dataIndex: "sl",
+      key: "sl",
+      align: "center",
+      // ✅ Formula: (currentPage - 1) * pageSize + index + 1
+      render: (text, record, index) => (currentPage - 1) * pageSize + index + 1,
+    },
     {
       title: "Name",
       dataIndex: "name",

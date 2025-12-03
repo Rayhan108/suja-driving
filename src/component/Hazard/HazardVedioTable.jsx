@@ -105,23 +105,28 @@ const meta = allVedios?.data?.meta
   render: (hazardTopic, record, index) =>`${hazardTopic?.name}`,
 },
     {
-      title: "Videos",
-      dataIndex: "video_url",
+      title: "Thumbnail",
+      dataIndex: "thumbnail_url",
       key: "video_url",
       align: "center",
-      render: (videoUrl) => (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <video
-            src={videoUrl}
-            width={100}
-            height={60}
-            muted
-            controls={false}
-            preload="metadata"
-            style={{ objectFit: "cover", borderRadius: 5 }}
-          />
-        </div>
-      ),
+  render: (record) => {
+    console.log("record-->", record); // Log the record to the console
+    
+    return (
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {/* <video
+          src={record}
+          width={100}
+          height={60}
+          muted
+          controls={false}
+          preload="metadata"
+          style={{ objectFit: "cover", borderRadius: 5 }}
+        /> */}
+        <img src={record} style={{ width: 70, height: 40 }}alt="" />
+      </div>
+    );
+  },
     },
 
     // {
@@ -267,7 +272,7 @@ const meta = allVedios?.data?.meta
             footer={null}
           >
             <div>
-              <HazardForm refetch={refetch} setAddVedioModalOpen={setAddVedioModalOpen}/>
+              <HazardForm refetch={refetch} setAddVedioModalOpen={setAddVedioModalOpen} isAddVedioModalOpen={isAddVedioModalOpen}/>
             </div>
           </Modal>
 
@@ -283,7 +288,7 @@ const meta = allVedios?.data?.meta
                 Edit Video
               </h1>
               {/* <VedioModal refetch={refetch} singleData={singleData} /> */}
-              <EditHazVedio refetch={refetch} singleData={singleData} setEditModalOpen={setEditModalOpen}/>
+              <EditHazVedio refetch={refetch} singleData={singleData} setEditModalOpen={setEditModalOpen} />
             </div>
           </Modal>
         </ConfigProvider>

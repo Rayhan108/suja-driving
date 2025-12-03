@@ -65,8 +65,17 @@ const hazardApi = baseApi.injectEndpoints({
         body:args   
       }),
     }),
+    //vedio upload
+    //generate presigned url
+      generatePresignedUrl: builder.mutation({
+      query: (args) => ({
+        url:`/generate-presigned-url`,
+        method: "POST", 
+        body:args   
+      }),
+    }),
   }),
 
 });
 
-export const {useGetAllHazardTopicQuery,useUpdateHazardTopicMutation,useDeleteHazardTopicMutation,useGetAllVediosQuery,useCreateHazVedioMutation,useCreateHazTopicMutation,useDeleteHazardVedioMutation,useUpdateHazVedioMutation} =hazardApi;
+export const {useGetAllHazardTopicQuery,useUpdateHazardTopicMutation,useDeleteHazardTopicMutation,useGetAllVediosQuery,useCreateHazVedioMutation,useCreateHazTopicMutation,useDeleteHazardVedioMutation,useUpdateHazVedioMutation,useGeneratePresignedUrlMutation} =hazardApi;

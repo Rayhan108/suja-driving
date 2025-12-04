@@ -1,9 +1,9 @@
-import { Checkbox, ConfigProvider, Input, message, Modal, Table } from "antd";
+import { ConfigProvider,message, Modal, Table } from "antd";
 import { useState } from "react";
-import { RiDeleteBin6Line, RiEdit2Line } from "react-icons/ri";
+import { RiDeleteBin6Line, RiEdit2Line} from "react-icons/ri";
 
-import { Link, useParams } from "react-router-dom";
-import { BsEye } from "react-icons/bs";
+import { useParams } from "react-router-dom";
+
 import {
   useDeleteHazardTopicMutation,
   useDeleteHazardVedioMutation,
@@ -13,6 +13,7 @@ import {
 import VedioModal from "./VedioModal";
 import HazardForm from "./AddHazardForm";
 import EditHazVedio from "./EditHazVedio";
+import { FaRegEye } from "react-icons/fa";
 const HazardVedioTable = () => {
   const [page, setPage] = useState(1);
   const [singleData, setSingleData] = useState({});
@@ -84,7 +85,11 @@ const meta = allVedios?.data?.meta
   };
   const handleVedioCancel = () => {
     setVedioModalOpen(false);
-  };
+    // Clear video data after modal animation completes
+    setTimeout(() => {
+      setVedioData(null);
+    }, 300);
+  }
   const handleAddVedioCancel = () => {
     setAddVedioModalOpen(false);
   };
@@ -160,6 +165,17 @@ const meta = allVedios?.data?.meta
             }}
           >
             <RiEdit2Line className="text-black w-5 h-5" />
+          </button>
+          <button
+            // onClick={() => showEditModal(record)}
+              onClick={() => showVedioModal(record)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <FaRegEye  className="text-black w-5 h-5" />
           </button>
 
           <button
@@ -273,6 +289,19 @@ const meta = allVedios?.data?.meta
           >
             <div>
               <HazardForm refetch={refetch} setAddVedioModalOpen={setAddVedioModalOpen} isAddVedioModalOpen={isAddVedioModalOpen}/>
+            </div>
+          </Modal>
+          {/*display vedio modal */}
+          <Modal
+            open={isVedioModalOpen}
+            centered
+            onCancel={handleVedioCancel}
+            footer={null}
+              destroyOnClose
+            afterClose={() => setVedioData(null)}
+          >
+            <div>
+              <VedioModal  vedioData={vedioData} />
             </div>
           </Modal>
 

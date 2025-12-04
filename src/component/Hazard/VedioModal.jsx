@@ -1,19 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 
-// const sampleVideoUrl = 'https://www.w3schools.com/html/mov_bbb.mp4';
-
-export default function DangerZoneVideo({ singleData, refetch }) {
-  console.log("single vedio datas--->", singleData);
+export default function DangerZoneVideo({ vedioData }) {
   const videoRef = useRef(null);
   const timelineRef = useRef(null);
-  const sampleVideoUrl = singleData?.video_url;
-  const [dangerZones, setDangerZones] = useState([
-    { id: 1, time: 54 },
-    { id: 2, time: 120 },
-    { id: 3, time: 180 },
-  ]);
+  const sampleVideoUrl = vedioData?.video_url;
+
   const [videoDuration, setVideoDuration] = useState(0);
-  const [selectedTime, setSelectedTime] = useState(0); // For progress bar fill
+  const [selectedTime, setSelectedTime] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -35,50 +29,50 @@ export default function DangerZoneVideo({ singleData, refetch }) {
       setSelectedTime(Math.floor(video.currentTime));
     };
 
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+
     video.addEventListener("timeupdate", onTimeUpdate);
-    return () => video.removeEventListener("timeupdate", onTimeUpdate);
+    video.addEventListener("play", onPlay);
+    video.addEventListener("pause", onPause);
+
+    return () => {
+      video.removeEventListener("timeupdate", onTimeUpdate);
+      video.removeEventListener("play", onPlay);
+      video.removeEventListener("pause", onPause);
+    };
   }, []);
 
-  const addMore = () => {
-    const newId = dangerZones.length + 1;
-    const lastTime =
-      dangerZones.length > 0 ? dangerZones[dangerZones.length - 1].time : 0;
-    const newTime = Math.min(lastTime + 10, videoDuration);
-    setDangerZones([...dangerZones, { id: newId, time: newTime }]);
-  };
+  const formatTime = (milliseconds) => {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
 
-  const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60)
+    return `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
-      .padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  const seekVideo = (time) => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = time;
-      videoRef.current.play();
-      setSelectedTime(time);
-    }
-  };
-
-  const handleTimelineClick = (e) => {
-    if (!videoDuration) return;
+  const seekVideo = (e) => {
+    if (!timelineRef.current || !videoRef.current) return;
 
     const rect = timelineRef.current.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const width = rect.width;
+    const percent = (e.clientX - rect.left) / rect.width;
+    const time = percent * videoDuration;
 
-    let clickedTime = Math.round((clickX / width) * videoDuration);
+    videoRef.current.currentTime = time;
+    setSelectedTime(time);
+  };
 
-    // Avoid duplicates
-    if (dangerZones.some((dz) => dz.time === clickedTime)) return;
+  const togglePlayPause = () => {
+    if (!videoRef.current) return;
 
-    setDangerZones((prev) => [
-      ...prev,
-      { id: prev.length + 1, time: clickedTime },
-    ]);
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
   };
 
   const FlagIcon = () => (
@@ -86,7 +80,7 @@ export default function DangerZoneVideo({ singleData, refetch }) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="white"
-      stroke="red"
+      stroke="currentColor"
       strokeWidth="2"
       width="20px"
       height="20px"
@@ -95,117 +89,150 @@ export default function DangerZoneVideo({ singleData, refetch }) {
     </svg>
   );
 
-  const progressPercent =
-    videoDuration > 0 ? (selectedTime / videoDuration) * 100 : 0;
+  const progressPercent = videoDuration > 0 ? (selectedTime / videoDuration) * 100 : 0;
+
+  const renderHazardTimes = () => {
+    if (vedioData?.hazards?.length > 0) {
+      return vedioData.hazards.map((hazard, index) => (
+        <div
+          key={index}
+          className="flex justify-between items-center bg-gradient-to-r from-red-50 to-red-100 p-3 mb-3 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        >
+          <div className="flex items-center">
+            <div className="bg-red-500 p-1 rounded mr-2">
+              <FlagIcon />
+            </div>
+            <span className="text-gray-800 font-semibold">Hazard {index + 1}</span>
+          </div>
+          <div className="flex space-x-4">
+            <div className="text-sm text-gray-600 bg-white px-2 py-1 rounded">
+              <strong>Start:</strong> {formatTime(hazard.start)}
+            </div>
+            <div className="text-sm text-gray-600 bg-white px-2 py-1 rounded">
+              <strong>End:</strong> {formatTime(hazard.end)}
+            </div>
+          </div>
+        </div>
+      ));
+    }
+    return (
+      <div className="text-gray-500 text-center py-4 bg-gray-50 rounded-lg">
+        No hazards detected
+      </div>
+    );
+  };
+
+  // Render hazard markers on timeline
+  const renderHazardMarkers = () => {
+    if (!vedioData?.hazards?.length) return null;
+
+    return vedioData.hazards.map((hazard, index) => {
+      const startPercent = (hazard.start / 1000 / videoDuration) * 100;
+      const endPercent = (hazard.end / 1000 / videoDuration) * 100;
+
+      return (
+        <React.Fragment key={index}>
+          <div
+            className="absolute top-0 h-6 bg-red-500 opacity-30 rounded-l"
+            style={{ left: `${startPercent}%`, width: `${endPercent - startPercent}%` }}
+          />
+          <div
+            className="absolute top-0 w-1 h-6 bg-red-500"
+            style={{ left: `${startPercent}%` }}
+          />
+        </React.Fragment>
+      );
+    });
+  };
 
   return (
-    <div className="max-w-xl mx-auto p-4 bg-white rounded shadow">
-      <div className="relative w-full h-64 bg-black rounded overflow-hidden mb-4">
+    <div className="max-w-2xl mx-auto p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-lg">
+      {/* Video Player */}
+      <div className="relative w-full rounded-lg overflow-hidden shadow-xl mb-6">
         <video
           ref={videoRef}
           src={sampleVideoUrl}
-          controls
-          className="w-full h-full object-cover"
+          className="w-full h-64 object-cover"
+          poster={vedioData?.thumbnail_url}
         />
-        {/* Rear mirror */}
-        {/* <div className="absolute top-2 left-2 w-24 h-16 border border-gray-300 rounded overflow-hidden">
-          <video src={sampleVideoUrl} muted autoPlay loop className="w-full h-full object-cover" />
-        </div> */}
-        {/* Left mirror */}
-        {/* <div className="absolute top-2 right-2 w-24 h-16 border border-gray-300 rounded overflow-hidden">
-          <video src={sampleVideoUrl} muted autoPlay loop className="w-full h-full object-cover" />
-        </div> */}
-        {/* Right mirror */}
-        {/* <div className="absolute bottom-2 right-2 w-24 h-16 border border-gray-300 rounded overflow-hidden">
-          <video src={sampleVideoUrl} muted autoPlay loop className="w-full h-full object-cover" />
-        </div> */}
+
+        {/* Custom Controls */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={togglePlayPause}
+              className="text-white hover:text-red-400 transition-colors"
+            >
+              {isPlaying ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              )}
+            </button>
+
+            <div className="text-white text-sm font-mono">
+              {formatTime(selectedTime * 1000)} / {formatTime(videoDuration * 1000)}
+            </div>
+
+            <div className="flex-1">
+              <div
+                ref={timelineRef}
+                onClick={seekVideo}
+                className="relative h-1.5 cursor-pointer rounded-full bg-gray-600"
+              >
+                {/* Progress bar */}
+                <div
+                  className="absolute top-0 left-0 h-full bg-red-500 rounded-full"
+                  style={{ width: `${progressPercent}%` }}
+                />
+
+                {/* Hazard markers */}
+                {renderHazardMarkers()}
+
+                {/* Thumb */}
+                <div
+                  className="absolute top-1/2 bg-white rounded-full shadow"
+                  style={{
+                    left: `${progressPercent}%`,
+                    width: "12px",
+                    height: "12px",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                />
+              </div>
+            </div>
+
+            <button
+              onClick={() => videoRef.current?.requestFullscreen()}
+              className="text-white hover:text-red-400 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5-5" />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div>
-        <h2 className="text-lg font-semibold mb-2">Danger Zone Time</h2>
-
-        <div className="mb-5 border border-gray-400 p-2 text-center ">
-          Full Video Length : {formatTime(videoDuration)} Minute
+      {/* Hazard Information */}
+      <div className="bg-white rounded-lg p-5 shadow-md">
+        <div className="flex items-center mb-4">
+          <div className="bg-red-500 p-2 rounded-lg mr-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h3 className="text-xl font-bold text-gray-800">Hazard Zones</h3>
         </div>
 
-        {/* Timeline bar */}
-        <div
-          ref={timelineRef}
-          onClick={handleTimelineClick}
-          className="relative h-6 cursor-pointer"
-          title="Click to add danger zone"
-        >
-          {/* Background track */}
-          <div
-            className="absolute top-1/2 left-0 w-full h-1 bg-gray-300 rounded"
-            style={{ transform: "translateY(-50%)" }}
-          />
-
-          {/* Red progress bar */}
-          <div
-            className="absolute top-1/2 left-0 h-2 bg-red-600 rounded"
-            style={{
-              width: `${progressPercent}%`,
-              transform: "translateY(-50%)",
-            }}
-          />
-
-          {/* Circular handle */}
-          <div
-            className="absolute top-1/2 bg-gray-400 rounded-full"
-            style={{
-              left: `${progressPercent}%`,
-              width: "14px",
-              height: "14px",
-              transform: "translate(-50%, -50%)",
-              pointerEvents: "none",
-              border: "2px solid white",
-              boxSizing: "border-box",
-            }}
-          />
-
-          {/* Flags */}
-          {dangerZones.map(({ id, time }) => {
-            const leftPercent = (time / videoDuration) * 100;
-            return (
-              <div
-                key={id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  seekVideo(time);
-                }}
-                title={`Danger zone at ${formatTime(time)}`}
-                className="absolute -top-1  cursor-pointer"
-                style={{
-                  left: `${leftPercent}%`,
-                  transform: "translate(-50%, -50%)",
-                  width: "40px",
-                  height: "30px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <FlagIcon />
-              </div>
-            );
-          })}
+        <div className="space-y-3">
+          {renderHazardTimes()}
         </div>
-
-        <div className="space-y-1 mt-3 mb-4">
-          {dangerZones.map(({ id, time }) => (
-            <div key={id} className="border border-gray-300 p-1 text-sm">
-              {formatTime(time)} : 00 Second
-            </div>
-          ))}
-        </div>
-
-        <button
-          onClick={addMore}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
-        >
-          Add More
-        </button>
       </div>
     </div>
   );

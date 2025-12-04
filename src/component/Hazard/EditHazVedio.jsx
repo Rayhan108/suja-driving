@@ -123,12 +123,7 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen })
 
     // Ensure video file is selected
     const video = formValues?.video?.[0];
-    // if (video) {
-    //   formData.append("video", video, video.name);
-    // } else {
-    //   message.error("Please select a video");
-    //   return;
-    // }
+
 
     // Ensure thumbnail image is selected
     const file = formValues?.thumbnail?.[0];

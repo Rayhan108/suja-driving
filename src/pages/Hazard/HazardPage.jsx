@@ -80,9 +80,9 @@ const meta = allHazardTopic?.data?.meta
       {/* Pass category data to the TheoryManagementTable component */}
       <HazardTable hazardData={hazardData} refetch={refetch} meta={meta} page={page} handlePageChange={handlePageChange}/>
 
-      <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null} setIsModalOpen={setIsModalOpen}>
+      <Modal open={isModalOpen} centered onCancel={handleCancel} footer={null} >
         <div>
-          <AddHazardTopic refetch={refetch}/>
+          <AddHazardTopic refetch={refetch} setIsModalOpen={setIsModalOpen}/>
         </div>
       </Modal>
     </div>

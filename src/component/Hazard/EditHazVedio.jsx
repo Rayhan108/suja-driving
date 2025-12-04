@@ -1,25 +1,47 @@
 import { useForm, useFieldArray } from "react-hook-form";
-
 import { message } from "antd";
 import { useGeneratePresignedUrlMutation, useUpdateHazVedioMutation } from "../../redux/feature/hazard/hazardApi";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen }) => {
-    const { id } = useParams();
+const EditHazVedio = ({ refetch, singleData, setEditModalOpen, isEditModalOpen }) => {
+  const { id } = useParams();
   const topicId = id;
-  console.log("topic id----------------->>>>",topicId);
-    const [resFile, setResFile] = useState("");
+  
+  const [resFile, setResFile] = useState("");
   const [url, setUrl] = useState("");
-  console.log("resfile--------->",resFile);
-  console.log("vedio url--------->",url);
+  
   // Upload progress states
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState(""); // 'uploading', 'success', 'error'
+  const [uploadStatus, setUploadStatus] = useState("");
 
   const [updateHazVedio] = useUpdateHazVedioMutation();
-    const [generatePresignedUrl] = useGeneratePresignedUrlMutation();
+  const [generatePresignedUrl] = useGeneratePresignedUrlMutation();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    watch,
+    control,
+  } = useForm();
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "hazards",
+  });
+
+  const watchedThumbnail = watch("thumbnail");
+  const watchedVideo = watch("video");
+
+  // ✅ Helper function: Milliseconds to Seconds (only for initial load)
+  const msToSeconds = (ms) => {
+    if (ms === undefined || ms === null || ms === "") return "";
+    return (Number(ms) / 1000).toFixed(2);
+  };
+
   useEffect(() => {
     const uploadVideo = async () => {
       const payload = {
@@ -29,7 +51,6 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen })
 
       try {
         const presignedRes = await generatePresignedUrl(payload).unwrap();
-        console.log("presignedRes----->", presignedRes);
         const uploadURL = presignedRes?.uploadURL;
         setUrl(uploadURL);
         setResFile(presignedRes?.fileName);
@@ -40,21 +61,32 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen })
 
     if (isEditModalOpen) {
       uploadVideo();
-      // Reset progress when modal opens
       setUploadProgress(0);
       setIsUploading(false);
       setUploadStatus("");
     }
   }, [isEditModalOpen, generatePresignedUrl]);
 
+  // ✅ Initialize form - Convert ms to seconds for display
+  useEffect(() => {
+    if (singleData && singleData.hazards) {
+      const convertedHazards = singleData.hazards.map((hazard) => ({
+        start: msToSeconds(hazard.start),  // ✅ Convert ms to seconds for display
+        end: msToSeconds(hazard.end),      // ✅ Convert ms to seconds for display
+        type: hazard.type || "",
+      }));
 
+      reset({
+        hazards: convertedHazards,
+      });
+    }
+  }, [singleData, reset]);
 
-  // Function to upload file with progress tracking using XMLHttpRequest
+  // Function to upload file with progress tracking
   const uploadFileWithProgress = (uploadUrl, file, contentType) => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      // Track upload progress
       xhr.upload.addEventListener('progress', (event) => {
         if (event.lengthComputable) {
           const percentComplete = Math.round((event.loaded / event.total) * 100);
@@ -62,7 +94,6 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen })
         }
       });
 
-      // Handle upload complete
       xhr.addEventListener('load', () => {
         if (xhr.status >= 200 && xhr.status < 300) {
           setUploadStatus("success");
@@ -73,13 +104,11 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen })
         }
       });
 
-      // Handle error
       xhr.addEventListener('error', () => {
         setUploadStatus("error");
         reject(new Error('Upload failed'));
       });
 
-      // Handle abort
       xhr.addEventListener('abort', () => {
         setUploadStatus("error");
         reject(new Error('Upload aborted'));
@@ -91,42 +120,12 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen })
     });
   };
 
-
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
-    control,
-  } = useForm();
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "hazards", // Name of the field array for hazard data
-  });
-
-  const watchedThumbnail = watch("thumbnail");
-  const watchedVideo = watch("video");
-
-  useEffect(() => {
-    // Initialize form with singleData (existing hazard video)
-    if (singleData) {
-      reset({
-        hazards: singleData.hazards || [],
-      });
-    }
-  }, [singleData, reset]);
-
   const onSubmit = async (formValues) => {
     const formData = new FormData();
 
-    // Ensure video file is selected
     const video = formValues?.video?.[0];
-
-
-    // Ensure thumbnail image is selected
     const file = formValues?.thumbnail?.[0];
+    
     if (file) {
       formData.append("thumbnail", file, file.name);
     }
@@ -139,8 +138,6 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen })
         setUploadStatus("uploading");
 
         await uploadFileWithProgress(url, video, 'video/mp4');
-
-        console.log("Upload succeeded!");
         message.success("Video uploaded successfully!");
       } catch (error) {
         console.error("Upload failed:", error);
@@ -151,13 +148,14 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen })
       }
     }
 
-    // Prepare the hazards data array
+    // ✅ Send seconds directly (no conversion needed)
     const hazardsData = formValues.hazards.map((hazard) => ({
-      start: parseFloat(hazard.start),
-      end: parseFloat(hazard.end),
+      start: parseFloat(hazard.start),  // ✅ Send as seconds
+      end: parseFloat(hazard.end),      // ✅ Send as seconds
       type: hazard.type,
     }));
 
+    // Validate
     const isValid = hazardsData.every(
       (hazard) => !isNaN(hazard.start) && !isNaN(hazard.end)
     );
@@ -170,14 +168,16 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen,isEditModalOpen })
     const dataPayload = {
       hazardTopic: topicId,
       video_url: resFile,
-      hazards: hazardsData,
+      hazards: hazardsData,  // ✅ Seconds format
     };
-    console.log("data payload--->",dataPayload);
+    
+    console.log("data payload (in seconds)--->", dataPayload);
     formData.append("data", JSON.stringify(dataPayload));
-const id = singleData?._id
-    // API call to create hazard video
+    
+    const id = singleData?._id;
+
     try {
-      const res = await updateHazVedio({args:formData,id}).unwrap();
+      const res = await updateHazVedio({ args: formData, id }).unwrap();
       if (res?.success) {
         message.success(res?.message);
         refetch();
@@ -192,29 +192,23 @@ const id = singleData?._id
       setIsUploading(false);
     }
   };
-  // Get progress bar color based on status
+
   const getProgressBarColor = () => {
     switch (uploadStatus) {
-      case "success":
-        return "bg-green-500";
-      case "error":
-        return "bg-red-500";
-      default:
-        return "bg-blue-600";
+      case "success": return "bg-green-500";
+      case "error": return "bg-red-500";
+      default: return "bg-blue-600";
     }
   };
 
-  // Get status text
   const getStatusText = () => {
     switch (uploadStatus) {
-      case "success":
-        return "Upload Complete!";
-      case "error":
-        return "Upload Failed!";
-      default:
-        return "Uploading...";
+      case "success": return "Upload Complete!";
+      case "error": return "Upload Failed!";
+      default: return "Uploading...";
     }
   };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -224,36 +218,51 @@ const id = singleData?._id
         Edit Hazard Video
       </h2>
 
-      {/* Hazard Times (Start, End, Type) */}
+      {/* Hazard Times */}
       <div>
-        <label className="block text-gray-700 font-medium mb-1">
-          Hazard Times (Start, End, Type)
+        <label className="block text-gray-700 font-medium mb-2">
+          Hazard Times (in Seconds)
         </label>
+        
+        {/* Header */}
+        {fields.length > 0 && (
+          <div className="flex space-x-2 mb-2 text-sm text-gray-500 font-medium">
+            <span className="w-full">Start (sec)</span>
+            <span className="w-full">End (sec)</span>
+          </div>
+        )}
+
         {fields.map((item, index) => (
-          <div key={item.id} className="space-y-2 mb-4">
+          <div key={item.id} className="space-y-2 mb-3 p-3 bg-gray-50 rounded-lg border">
             <div className="flex space-x-2">
               <input
-                {...register(`hazards[${index}].start`, { required: true })}
-                placeholder="Start Time"
+                {...register(`hazards[${index}].start`, { 
+                  required: true,
+                  min: 0
+                })}
+                type="number"
+                step="0.01"
+                placeholder="e.g. 5"
                 className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-2 outline-none transition"
               />
               <input
-                {...register(`hazards[${index}].end`, { required: true })}
-                placeholder="End Time"
+                {...register(`hazards[${index}].end`, { 
+                  required: true,
+                  min: 0
+                })}
+                type="number"
+                step="0.01"
+                placeholder="e.g. 10"
                 className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-2 outline-none transition"
               />
-              {/* <input
-                {...register(`hazards[${index}].type`, { required: true })}
-                placeholder="Type"
-                className="w-full border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-400 rounded-lg px-3 py-2 outline-none transition"
-              /> */}
             </div>
+            
             <button
               type="button"
               onClick={() => remove(index)}
-              className="text-red-500 text-sm"
+              className="text-red-500 text-sm hover:text-red-700"
             >
-              Remove Hazard
+              ✕ Remove
             </button>
           </div>
         ))}
@@ -261,9 +270,9 @@ const id = singleData?._id
         <button
           type="button"
           onClick={() => append({ start: "", end: "", type: "" })}
-          className="bg-blue-600 text-white rounded-lg py-2 px-4 mt-2"
+          className="bg-blue-600 text-white rounded-lg py-2 px-4 mt-2 hover:bg-blue-700 transition"
         >
-          Add More Hazard
+          + Add Hazard
         </button>
       </div>
 
@@ -288,9 +297,7 @@ const id = singleData?._id
               d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5-5m0 0l5 5m-5-5v12"
             />
           </svg>
-          <span className="text-gray-600 text-sm">
-            Drag & drop or click to upload
-          </span>
+          <span className="text-gray-600 text-sm">Click to upload video</span>
           <input
             type="file"
             id="video-upload"
@@ -299,134 +306,71 @@ const id = singleData?._id
             className="hidden"
           />
         </label>
-        {errors.video && <p className="text-red-500 text-sm mt-1">Video required</p>}
         
-        {/* Display video file name */}
-        {watchedVideo && watchedVideo[0] && (
+        {watchedVideo?.[0] && (
           <p className="text-sm text-gray-600 mt-2">
-            Selected video: {watchedVideo[0].name}
+            ✓ {watchedVideo[0].name}
           </p>
         )}
 
-        {/* ========== PROGRESS BAR SECTION ========== */}
+        {/* Progress Bar */}
         {isUploading && (
           <div className="mt-4 space-y-2">
-            {/* Progress Header */}
             <div className="flex justify-between items-center">
-              <span className={`text-sm font-medium ${
-                uploadStatus === "success" ? "text-green-600" : 
-                uploadStatus === "error" ? "text-red-600" : "text-blue-600"
-              }`}>
-                {getStatusText()}
-              </span>
-              <span className={`text-sm font-bold ${
-                uploadStatus === "success" ? "text-green-600" : 
-                uploadStatus === "error" ? "text-red-600" : "text-blue-600"
-              }`}>
-                {uploadProgress}%
-              </span>
+              <span className="text-sm font-medium">{getStatusText()}</span>
+              <span className="text-sm font-bold">{uploadProgress}%</span>
             </div>
-
-            {/* Progress Bar Container */}
-            <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden shadow-inner">
+            <div className="w-full bg-gray-200 rounded-full h-3">
               <div
-                className={`h-full rounded-full transition-all duration-300 ease-out ${getProgressBarColor()}`}
+                className={`h-full rounded-full transition-all ${getProgressBarColor()}`}
                 style={{ width: `${uploadProgress}%` }}
-              >
-                {/* Animated stripes for uploading state */}
-                {uploadStatus === "uploading" && uploadProgress < 100 && (
-                  <div className="h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse" />
-                )}
-              </div>
-            </div>
-
-            {/* Additional Info */}
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>
-                {uploadStatus === "uploading" && uploadProgress < 100 && "Please wait..."}
-                {uploadStatus === "success" && "✓ Video uploaded successfully"}
-                {uploadStatus === "error" && "✗ Upload failed, please try again"}
-              </span>
-              {watchedVideo?.[0] && (
-                <span>
-                  {(watchedVideo[0].size / (1024 * 1024)).toFixed(2)} MB
-                </span>
-              )}
+              />
             </div>
           </div>
         )}
-        {/* ========== END PROGRESS BAR SECTION ========== */}
       </div>
-      {/* Thumbnail Image Upload */}
+
+      {/* Thumbnail Upload */}
       <div>
         <label className="block mb-1 font-medium text-gray-700">
-          Upload Thumbnail Image
+          Upload Thumbnail
         </label>
         <label
           htmlFor="file-upload"
           className="cursor-pointer flex justify-center items-center border border-gray-300 rounded-md px-3 py-3 hover:bg-gray-100 transition"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-gray-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5-5m0 0l5 5m-5-5v12"
-            />
-          </svg>
+          <span className="text-gray-600 text-sm">Click to upload thumbnail</span>
           <input
             {...register("thumbnail")}
             id="file-upload"
             type="file"
+            accept="image/*"
             className="hidden"
           />
         </label>
-        {watchedThumbnail && watchedThumbnail[0] && (
+        {watchedThumbnail?.[0] && (
           <div className="mt-2">
             <img
               src={URL.createObjectURL(watchedThumbnail[0])}
-              alt="Thumbnail Preview"
-              className="max-w-full h-auto rounded-lg"
+              alt="Preview"
+              className="max-w-full h-32 object-cover rounded-lg"
             />
           </div>
         )}
-        {watchedThumbnail?.[0] && (
-          <p className="text-sm text-gray-600 mt-2">
-            Selected thumbnail: {watchedThumbnail?.[0].name}
-          </p>
-        )}
       </div>
 
-       {/* Submit Button */}
-      <div className="flex gap-4">
-        <button
-          type="submit"
-          disabled={isUploading}
-          className={`w-full px-4 py-2 rounded-lg shadow-md transition ${
-            isUploading 
-              ? "bg-gray-400 cursor-not-allowed" 
-              : "bg-blue-600 text-white hover:bg-blue-700"
-          }`}
-        >
-          {isUploading ? (
-            <span className="flex items-center justify-center gap-2">
-              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Uploading... {uploadProgress}%
-            </span>
-          ) : (
-            "Submit"
-          )}
-        </button>
-      </div>
+      {/* Submit */}
+      <button
+        type="submit"
+        disabled={isUploading}
+        className={`w-full py-3 rounded-lg font-medium transition ${
+          isUploading 
+            ? "bg-gray-400 cursor-not-allowed" 
+            : "bg-blue-600 text-white hover:bg-blue-700"
+        }`}
+      >
+        {isUploading ? `Uploading... ${uploadProgress}%` : "Update"}
+      </button>
     </form>
   );
 };

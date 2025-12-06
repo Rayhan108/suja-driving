@@ -38,7 +38,7 @@ const EditHazard = ({singleData,refetch,setEditModalOpen}) => {
 
     const file = data?.category_image?.[0];
     if (file) {
-      formData.append("category_image", file, file.name);
+      formData.append("topic_icon", file, file.name);
     }
 
     // Log the FormData contents
@@ -120,7 +120,7 @@ const EditHazard = ({singleData,refetch,setEditModalOpen}) => {
         </label>
                               {image?.[0] && (
           <p className="text-sm text-gray-600 mt-2">
-            Selected Image: {image?.[0].name}
+            Selected Image: {image?.[0]?.name}
           </p>
         )}
       </div>

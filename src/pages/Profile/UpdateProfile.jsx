@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input, Form, message, Avatar } from "antd";
 import gallery from "../../assets/gallery.png";
-import profile from "../../assets/profileImg.png";
+import profile from "../../assets/user.png";
 import { SlArrowLeft } from "react-icons/sl";
 import ChangePass from "./ChangePass";
 import { useUpdateAdminProfileMutation } from "../../redux/feature/auth/authApi";
@@ -84,7 +84,7 @@ const img = myProfile?.data?.profile_image
         <div>
           <div className="relative text-center items-center justify-center flex">
        <div>
-  {img ? 
+  {/* {img ? 
     <img
       src={img}
       alt="Profile Preview"
@@ -96,7 +96,18 @@ const img = myProfile?.data?.profile_image
       alt="Profile"
       className="w-36 h-36 object-cover rounded-full"
     />
+  } */}
+  <img
+  src={
+    profileImgPreview
+      ? profileImgPreview       
+      : img
+      ? img                    
+      : profile        
   }
+  alt="Profile"
+  className="w-36 h-36 object-cover rounded-full"
+/>
 </div>
             <div className="absolute top-20 left-[224px]">
   

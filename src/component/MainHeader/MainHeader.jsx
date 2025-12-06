@@ -1,6 +1,6 @@
 
 import { Link, useNavigate } from "react-router-dom";
-import anita from "../../assets/Anita.png"
+import anita from "../../assets/user.png"
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { Badge } from "antd";
 import { useMyProfileQuery } from "../../redux/feature/user/userApi";
@@ -8,6 +8,7 @@ const MainHeader = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const { data: myProfile } = useMyProfileQuery(undefined);
   console.log("my profile data--->", myProfile);
+  const proImg=myProfile?.data?.profile_image
   return (
     <div className="relative font-title">
       <header className=" bg-[#3F5EAB] shadow-sm">
@@ -26,7 +27,7 @@ const MainHeader = ({ toggleSidebar }) => {
               className="flex items-center gap-2 cursor-default  px-5 py-2 rounded-2xl"
             >
               <img
-                src={myProfile?.data?.profile_image}
+                src={proImg ? proImg:anita}
                 className="w-8 md:w-12 h-8 md:h-12 object-cover rounded-full"
                 alt="User Avatar"
               />

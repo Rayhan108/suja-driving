@@ -197,7 +197,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           </li>
         </Link>
         {/* Subscription */}
-        <Link to="/subscription" className="flex justify-between ">
+        {/* <Link to="/subscription" className="flex justify-between ">
           {isActive("/subscription") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
@@ -211,7 +211,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <CgMail className="w-5 h-5" />
             <p className="text-lg">Subscriptions & Payment</p>
           </li>
-        </Link>
+        </Link> */}
         {/* feedback */}
         <Link to="/feedback" className="flex justify-between ">
           {isActive("/feedback") && (

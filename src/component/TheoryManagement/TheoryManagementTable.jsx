@@ -56,9 +56,12 @@ const TheoryManagementTable = ({ category, refetch,meta,page,handlePageChange })
       dataIndex: "sl",
       key: "sl",
       align: "center",
-      // ✅ Formula: (currentPage - 1) * pageSize + index + 1
-      render: (text, record, index) => (currentPage - 1) * pageSize + index + 1,
+    
+    render: (text, record, index) => {
+    // Calculate SL number considering pagination
+    return (currentPage - 1) * pageSize + index + 1;
     },
+  },
     {
       title: "Category Name",
       dataIndex: "name",
@@ -112,14 +115,11 @@ const TheoryManagementTable = ({ category, refetch,meta,page,handlePageChange })
             InputNumber: {
               activeBorderColor: "#00c0b5",
             },
-            Pagination: {
-              colorPrimaryBorder: "#00c0b5",
-              colorBorder: "#00c0b5",
-              colorPrimaryHover: "#00c0b5",
-              colorTextPlaceholder: "#00c0b5",
-              itemActiveBgDisabled: "#00c0b5",
-              colorPrimary: "#00c0b5",
-            },
+           Pagination: {
+        itemActiveBg: "transparent", // Remove active background
+        itemActiveBorderColor: "transparent", // Remove active border color
+        itemBg: "transparent", // Make all items' background transparent
+      },
             Table: {
               headerBg: "#3F5EAB",
               headerColor: "rgb(255,255,255)",

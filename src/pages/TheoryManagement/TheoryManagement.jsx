@@ -121,7 +121,7 @@ console.log("activeTabFromURL",activeTabFromURL);
       </div>
 
       {/* Pass category data to the TheoryManagementTable component */}
-      <TheoryManagementTable category={category} refetch={refetch} meta={meta} handlePageChange={handlePageChange}/>
+      <TheoryManagementTable category={category} refetch={refetch} meta={meta} handlePageChange={handlePageChange} page={page}/>
 
 
 

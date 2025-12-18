@@ -54,12 +54,16 @@ const HighTable = ({ category, refetch, meta, handlePageChange, page }) => {
   const columns = useMemo(
     () => [
       {
-        title: "SL",
-        key: "sl",
-        align: "center",
-        render: (_text, _record, index) =>
-          (currentPage - 1) * pageSize + (index + 1),
-      },
+      title: "SL",
+      dataIndex: "sl",
+      key: "sl",
+      align: "center",
+    
+    render: (text, record, index) => {
+    // Calculate SL number considering pagination
+    return (currentPage - 1) * pageSize + index + 1;
+    },
+  },
       {
         title: "Topics Name",
         dataIndex: "name",

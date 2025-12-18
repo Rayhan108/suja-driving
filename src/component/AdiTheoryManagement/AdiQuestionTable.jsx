@@ -62,7 +62,17 @@ const AdiQuestionTable = ({ question,refetch,page,meta,handlePageChange}) => {
     setIsModalOpen(false);
   };
   const columns = [
-    { title: "SL", dataIndex: "id", key: "sl", align: "center", render: (_, __, i) => i + 1, width: 60 },
+ {
+      title: "SL",
+      dataIndex: "sl",
+      key: "sl",
+      align: "center",
+    
+    render: (text, record, index) => {
+    // Calculate SL number considering pagination
+    return (currentPage - 1) * pageSize + index + 1;
+    },
+  },
     {
       title: "Question",
       dataIndex: "question",

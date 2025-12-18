@@ -56,14 +56,17 @@ const AdiTheoryManagementTopicTable = ({
     setIsModalOpen(false);
   };
   const columns = [
-     {
+ {
       title: "SL",
       dataIndex: "sl",
       key: "sl",
       align: "center",
-      // ✅ Formula: (currentPage - 1) * pageSize + index + 1
-      render: (text, record, index) => (currentPage - 1) * pageSize + index + 1,
+    
+    render: (text, record, index) => {
+    // Calculate SL number considering pagination
+    return (currentPage - 1) * pageSize + index + 1;
     },
+  },
     {
       title: "Topic Name",
       dataIndex: "name",

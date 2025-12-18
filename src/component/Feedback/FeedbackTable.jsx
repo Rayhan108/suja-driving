@@ -47,8 +47,12 @@ const FeedbackTable = ({ feedbackData,meta,page,handlePageChange }) => {
       dataIndex: "sl",
       key: "sl",
       align: "center",
-      render: (text, record, index) => index + 1, // Use the index + 1 as serial number
+    
+    render: (text, record, index) => {
+    // Calculate SL number considering pagination
+    return (currentPage - 1) * pageSize + index + 1;
     },
+  },
     {
       title: "Category",
       dataIndex: "category",

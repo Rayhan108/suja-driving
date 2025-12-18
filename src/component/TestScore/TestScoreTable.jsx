@@ -43,9 +43,12 @@ const TestScoreTable = ({ testData, page, meta, handlePageChange }) => {
       dataIndex: "sl",
       key: "sl",
       align: "center",
-      // ✅ Formula: (currentPage - 1) * pageSize + index + 1
-      render: (text, record, index) => (currentPage - 1) * pageSize + index + 1,
+    
+    render: (text, record, index) => {
+    // Calculate SL number considering pagination
+    return (currentPage - 1) * pageSize + index + 1;
     },
+  },
     {
       title: "User Name",
       dataIndex: ["user", "name"], // directly point to user.name

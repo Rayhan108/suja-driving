@@ -50,12 +50,16 @@ const TheoryManagementTopicTable = ({topic,refetch,meta,page,handlePageChange}) 
     setIsModalOpen(false);
   };
   const columns = [
-    {
-    title: "SL",
-    dataIndex: "sl",
-    key: "sl",
-    align: "center",
-    render: (text, record, index) => index + 1,  // Use the index + 1 as serial number
+ {
+      title: "SL",
+      dataIndex: "sl",
+      key: "sl",
+      align: "center",
+    
+    render: (text, record, index) => {
+    // Calculate SL number considering pagination
+    return (currentPage - 1) * pageSize + index + 1;
+    },
   },
     {
       title: "Topic Name",

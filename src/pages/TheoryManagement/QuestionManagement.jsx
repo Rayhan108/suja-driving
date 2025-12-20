@@ -78,7 +78,7 @@ console.log("activeTabFromURL",activeTabFromURL);
 
       {/* Tabs for Category, Topic, Question */}
       <div className="flex gap-9 mb-8 font-title">
-        <div>
+        {/* <div>
           <Link to="/theoryManagement/category">
             <button
               className={`${
@@ -90,9 +90,9 @@ console.log("activeTabFromURL",activeTabFromURL);
               Category
             </button>
           </Link>
-        </div>
+        </div> */}
         <div>
-      
+       <Link to="/theoryManagement/topic">
             <button
               className={`${
                 activeTab === "topic"
@@ -102,7 +102,7 @@ console.log("activeTabFromURL",activeTabFromURL);
             >
               Topic
             </button>
-      
+      </Link>
         </div>
         <div>
       

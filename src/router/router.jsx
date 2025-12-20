@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         element: <TheoryManagement />,
       },
       {
-        path: "/theoryManagement/topic/:id",
+        path: "/theoryManagement/topic",
         element: <TheoryManagementTopic />,
       },
       {
@@ -80,17 +80,17 @@ const router = createBrowserRouter([
         element: <QuestionManagement />,
       },
       {
-        path: "/adiTheoryManagement",
-        element: <AdiTheoryManagement />,
-      },
-      {
-        path: "/adiTheoryManagement/category",
-        element: <AdiTheoryManagement />,
-      },
-      {
-        path: "/adiTheoryManagement/topic/:id",
+        path: "/adiTheoryManagement/topic",
         element: <AdiTheoryManagementTopic />,
       },
+      // {
+      //   path: "/adiTheoryManagement/category",
+      //   element: <AdiTheoryManagement />,
+      // },
+      // {
+      //   path: "/adiTheoryManagement/topic/:id",
+      //   element: <AdiTheoryManagementTopic />,
+      // },
       {
         path: "/adiTheoryManagement/question/:id",
         element: <AdiQuestionManagement />,

@@ -113,7 +113,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </Link>
 
         {/* theory*/}
-        <Link to="/theoryManagement" className="flex justify-between ">
+        <Link to="/theoryManagement/topic" className="flex justify-between ">
           {isTheory("/theoryManagement") && (
             <div className="bg-[#F3F3F3] w-[3%] h-14 ml-0 -left-8 mt-5 relative"></div>
           )}
@@ -131,7 +131,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
         {/* Order */}
         <Link
-          to="/adiTheoryManagement/category"
+          to="/adiTheoryManagement/topic"
           className="flex justify-between "
         >
           {isAdiTheory("/adiTheoryManagement") && (

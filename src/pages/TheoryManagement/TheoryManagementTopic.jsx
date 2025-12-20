@@ -57,7 +57,7 @@ const meta = allTopic?.data?.meta
     <div className="font-title">
       <div className="flex justify-between mt-2 mb-8 font-title">
         <div className="flex justify-center items-center gap-5">
-     <Link to={'/theoryManagement'}>
+     <Link to={'/theoryManagement/topic'}>
           <SlArrowLeft className="w-5 h-5 text-right text-[#3564d3]" />
           </Link>
           <p className="text-[#3564d3] font-title text-3xl font-bold">
@@ -89,7 +89,7 @@ const meta = allTopic?.data?.meta
 
       {/* Tabs for Category, Topic, Question */}
       <div className="flex gap-9 mb-8 font-title">
-        <div>
+        {/* <div>
           <Link to="/theoryManagement/category">
             <button
               className={`${
@@ -101,8 +101,9 @@ const meta = allTopic?.data?.meta
               Category
             </button>
           </Link>
-        </div>
+        </div> */}
         <div>
+                 <Link to="/theoryManagement/topic">
           <button
             className={`${
               activeTab === "topic"
@@ -112,6 +113,7 @@ const meta = allTopic?.data?.meta
           >
             Topic
           </button>
+          </Link>
         </div>
         <div>
           <button

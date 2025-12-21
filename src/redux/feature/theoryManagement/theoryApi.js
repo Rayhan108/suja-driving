@@ -9,8 +9,9 @@ const theoryApi = baseApi.injectEndpoints({
       }),
     }),
     getAllTopic: builder.query({
-      query: ({ id, page }) => ({
-        url: `/topic/all-topics?category=${id}&&page=${page}`,
+      query: ({page,testType}) => ({
+        // url: `/topic/all-topics?category=${id}&&page=${page}&&testType=${testType}`,
+        url: `/topic/all-topics?page=${page}&&testType=${testType}`,
         method: "GET",
       }),
     }),

@@ -18,7 +18,7 @@ const TheoryManagementTopic = () => {
   const searchTerms = ""
   
   const { data: allCategory } = useGetAllCateroryQuery({searchTerm:searchTerms,type,page});
-  const { data: allTopic, refetch } = useGetAllTopicQuery({id,page,searchTerm});
+  const { data: allTopic, refetch } = useGetAllTopicQuery({page,searchTerm,testType:type});
   const topic = allTopic?.data?.result;
 const meta = allTopic?.data?.meta
   console.log("all category dataaaaaaaaaa--->", allCategory);

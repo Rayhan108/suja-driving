@@ -23,7 +23,8 @@ const AddAdiTopicForm = ({refetch,category,setIsModalOpen}) => {
       "data",
       JSON.stringify({
         name: data?.name,
-        category: data?.category,
+        // category: data?.category,
+         testType: 'ADI',
       })
     );
 
@@ -66,7 +67,7 @@ const AddAdiTopicForm = ({refetch,category,setIsModalOpen}) => {
       className="max-w-md mx-auto p-6 space-y-6 font-title"
       noValidate
     >
-<div className="w-1/2">
+{/* <div className="w-1/2">
           <label className="block mb-1 font-medium text-gray-700">
             Select Category
           </label>
@@ -87,7 +88,7 @@ const AddAdiTopicForm = ({refetch,category,setIsModalOpen}) => {
           {errors.category && (
             <p className="text-red-500 text-sm mt-1">Category is required</p>
           )}
-        </div>
+        </div> */}
 
       <div>
         <label className="block mb-1 font-medium text-gray-700">

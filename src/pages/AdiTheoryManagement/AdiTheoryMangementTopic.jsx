@@ -18,7 +18,7 @@ const AdiTheoryManagementTopic = () => {
     const [page, setPage] = useState(1);
 const type = "ADI"
 const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
-  const { data: allTopic, refetch } = useGetAllTopicQuery({id,searchTerm,page});
+  const { data: allTopic, refetch } = useGetAllTopicQuery({searchTerm,page,testType:type});
   const topic = allTopic?.data?.result;
 const meta = allTopic?.data?.meta
   console.log("all category--->", allCategory);

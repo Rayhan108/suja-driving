@@ -24,6 +24,7 @@ const AddTopicForm = ({ refetch, category, setIsModalOpen }) => {
       JSON.stringify({
         name: data?.name,
         // category: data?.category,
+        testType: 'THEORY',
       })
     );
 

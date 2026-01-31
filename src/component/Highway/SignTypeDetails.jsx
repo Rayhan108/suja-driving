@@ -2,17 +2,18 @@ import { ConfigProvider, Modal, Table } from "antd";
 import { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useGetAllHighwaySignQuery } from "../../redux/feature/highway/highwayApi";
+import CreateHighwaySign from "./createHighwaySign";
 
 const SignTypeDetails = () => {
     const {id}=useParams()
     console.log("id from params in sign type details--->",id);
-    const {data:getAllSign}=useGetAllHighwaySignQuery(id)
+    const {data:getAllSign,refetch}=useGetAllHighwaySignQuery(id)
         console.log("get Al Sign from params in sign type details--->",getAllSign);
         const result = getAllSign?.data?.result
   const [page, setPage] = useState(1);
 
   const meta = getAllSign?.data?.meta;
-
+  const [isAddModalOpen, setAddModalOpen] = useState(false);
   const currentPage = Number(page ?? 1);
   const pageSize = Number(meta?.limit ?? 10);
   const total = Number(meta?.total ?? 0);
@@ -22,7 +23,14 @@ const SignTypeDetails = () => {
     console.log("calling functon........", nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   };
-
+  const addModal = () => {
+    // console.log("data", data);
+    // setVedioData(data);
+    setAddModalOpen(true);
+  };
+    const handleAddCancel = () => {
+    setAddModalOpen(false);
+  };
   const columns = useMemo(
     () => [
       {
@@ -59,6 +67,16 @@ const SignTypeDetails = () => {
 
   return (
     <div>
+           <nav className="flex justify-end mb-3">
+        <div>
+          <button
+            className="bg-[#3F5EAB] text-white p-3 rounded-xl"
+            onClick={() => addModal()}
+          >
+            +Add Higway Sign
+          </button>
+        </div>
+      </nav>
       <ConfigProvider
         theme={{
           components: {
@@ -101,6 +119,19 @@ const SignTypeDetails = () => {
           scroll={{ x: "max-content" }}
         />
       </ConfigProvider>
+
+
+             {/*vedio modal */}
+          <Modal
+            open={isAddModalOpen}
+            centered
+            onCancel={handleAddCancel}
+            footer={null}
+          >
+            <div>
+              <CreateHighwaySign  setAddModalOpen={setAddModalOpen} isAddModalOpen={isAddModalOpen} id={id} refetch={refetch}/>
+            </div>
+          </Modal>
     </div>
   );
 };

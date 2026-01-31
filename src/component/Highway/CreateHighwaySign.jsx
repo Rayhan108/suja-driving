@@ -1,23 +1,24 @@
-import { message } from "antd";
-import { useForm } from "react-hook-form";
-import { useCreateHighwaySignMutation } from "../../redux/feature/highway/highwayApi";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useHighwaySignCreateMutation } from '../../redux/feature/highway/highwayApi';
+import { message } from 'antd';
 
-const HighwayAdd = ({ refetch,setIsModalOpen }) => {
-  const {
+const CreateHighwaySign = ({id,refetch,isAddModalOpen,setAddModalOpen}) => {
+    const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     watch
   } = useForm();
-  const [createHighway] = useCreateHighwaySignMutation();
+  const [createHighway] = useHighwaySignCreateMutation();
  const image = watch("image");
   const onSubmit = async (formValues) => {
     const formData = new FormData();
 
     // prepare JSON payload
     const dataPayload = {
-      name: formValues?.name,
+      signType:id,
       description:formValues?.description
       // description: formValues?.description,
     };
@@ -25,7 +26,7 @@ const HighwayAdd = ({ refetch,setIsModalOpen }) => {
 
     const file = formValues?.image?.[0];
     if (file) {
-      formData.append("icon", file, file.name);
+      formData.append("sign_image", file, file.name);
     } else {
       message.error("Please select an image file.");
       return;
@@ -41,7 +42,7 @@ const HighwayAdd = ({ refetch,setIsModalOpen }) => {
         message.success(res?.message);
         refetch();
         reset();
-        setIsModalOpen(false)
+        setAddModalOpen(false)
       } else {
         message.error(res?.message);
       }
@@ -53,27 +54,14 @@ const HighwayAdd = ({ refetch,setIsModalOpen }) => {
   const onCancel = () => {
     reset();
   };
-
-  return (
-    <div>
+    return (
+          <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-md mx-auto p-6 space-y-6"
         noValidate
       >
-        <div>
-          <label className="block mb-1 font-medium text-gray-700">
-          Topic Name
-          </label>
-          <input
-            {...register("name", { required: true })}
-            placeholder="Topic Name"
-            className="w-full border border-gray-300 rounded-md px-3 py-2"
-          />
-          {errors.signType && (
-            <p className="text-red-500 text-sm mt-1">Topic Name is required</p>
-          )}
-        </div>
+
         <div>
           <label className="block mb-1 font-medium text-gray-700">
             Description
@@ -139,7 +127,7 @@ const HighwayAdd = ({ refetch,setIsModalOpen }) => {
         </div>
       </form>
     </div>
-  );
+    );
 };
 
-export default HighwayAdd;
+export default CreateHighwaySign;

@@ -40,8 +40,15 @@ const highwayApi = baseApi.injectEndpoints({
         body:args   
       }),
     }),
+      highwaySignCreate: builder.mutation({
+      query: (args) => ({
+        url:`/highway-sign/create`,
+        method: "POST", 
+        body:args   
+      }),
+    }),
   }),
 
 });
 
-export const {useGetAllHighwayTopicQuery,useUpdateHighwayTopicMutation,useDeleteHighwayTopicMutation,useCreateHighwaySignMutation,useGetAllHighwaySignQuery} =highwayApi;
+export const {useGetAllHighwayTopicQuery,useUpdateHighwayTopicMutation,useDeleteHighwayTopicMutation,useCreateHighwaySignMutation,useGetAllHighwaySignQuery,useHighwaySignCreateMutation} =highwayApi;

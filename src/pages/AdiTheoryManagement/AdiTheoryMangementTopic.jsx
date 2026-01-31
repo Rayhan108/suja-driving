@@ -21,8 +21,7 @@ const {data:allCategory}=useGetAllCateroryQuery({searchTerm,type})
   const { data: allTopic, refetch } = useGetAllTopicQuery({searchTerm,page,testType:type});
   const topic = allTopic?.data?.result;
 const meta = allTopic?.data?.meta
-  console.log("all category--->", allCategory);
-  console.log("all topic--->", topic);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const category = allCategory?.data?.result;
   const showModal = () => {

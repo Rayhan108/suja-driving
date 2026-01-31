@@ -30,9 +30,10 @@ const othersApi = baseApi.injectEndpoints({
       }),
     }),
      getAllNotification: builder.query({
-      query: () => ({
+      query: ({page,limit}) => ({
         url:`/notification/get-notifications`,
-        method: "GET",      
+        method: "GET", 
+        params:{page,limit}     
       }),
     }),
      getStats: builder.query({

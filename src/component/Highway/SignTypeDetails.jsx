@@ -2,7 +2,9 @@ import { ConfigProvider, Modal, Table } from "antd";
 import { useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useGetAllHighwaySignQuery } from "../../redux/feature/highway/highwayApi";
-import CreateHighwaySign from "./createHighwaySign";
+import HighwaySignCreateModal from "./HighwaySignCreateModal";
+
+
 
 const SignTypeDetails = () => {
     const {id}=useParams()
@@ -129,7 +131,7 @@ const SignTypeDetails = () => {
             footer={null}
           >
             <div>
-              <CreateHighwaySign  setAddModalOpen={setAddModalOpen} isAddModalOpen={isAddModalOpen} id={id} refetch={refetch}/>
+              <HighwaySignCreateModal  setAddModalOpen={setAddModalOpen} isAddModalOpen={isAddModalOpen} id={id} refetch={refetch}/>
             </div>
           </Modal>
     </div>

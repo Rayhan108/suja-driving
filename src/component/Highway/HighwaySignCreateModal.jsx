@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useHighwaySignCreateMutation } from '../../redux/feature/highway/highwayApi';
 import { message } from 'antd';
 
-const CreateHighwaySign = ({id,refetch,isAddModalOpen,setAddModalOpen}) => {
+const HighwaySignCreateModal = ({id,refetch,isAddModalOpen,setAddModalOpen}) => {
     const {
     register,
     handleSubmit,
@@ -130,4 +130,4 @@ const CreateHighwaySign = ({id,refetch,isAddModalOpen,setAddModalOpen}) => {
     );
 };
 
-export default CreateHighwaySign;
+export default HighwaySignCreateModal;

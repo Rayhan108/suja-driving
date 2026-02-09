@@ -8,9 +8,9 @@ import HighwaySignCreateModal from "./HighwaySignCreateModal";
 
 const SignTypeDetails = () => {
     const {id}=useParams()
-    console.log("id from params in sign type details--->",id);
+    // console.log("id from params in sign type details--->",id);
     const {data:getAllSign,refetch}=useGetAllHighwaySignQuery(id)
-        console.log("get Al Sign from params in sign type details--->",getAllSign);
+        // console.log("get Al Sign from params in sign type details--->",getAllSign);
         const result = getAllSign?.data?.result
   const [page, setPage] = useState(1);
 
@@ -22,7 +22,7 @@ const SignTypeDetails = () => {
 
   // ---- pass this to the table ----
   const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........", nextPage);
+    // console.log("calling functon........", nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   };
   const addModal = () => {

@@ -16,7 +16,7 @@ const TheoryManagementTable = ({ category, refetch,meta,page,handlePageChange })
     setIsModalOpen(true);
   };
   const showEditModal = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     setSingleData(id);
     setEditModalOpen(true);
   };
@@ -26,7 +26,7 @@ const TheoryManagementTable = ({ category, refetch,meta,page,handlePageChange })
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  console.log("category---->", category);
+  // console.log("category---->", category);
 
   const currentPage = Number(page ?? 1);
   const pageSize = Number(meta?.limit ?? 10);
@@ -34,10 +34,10 @@ const TheoryManagementTable = ({ category, refetch,meta,page,handlePageChange })
 
 
   const handleDelete = async (id) => {
-    console.log("delete id-->",id);
+    // console.log("delete id-->",id);
     try {
       const res = await deleteCategory(id).unwrap();
-      console.log("response-->", res);
+      // console.log("response-->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();

@@ -35,10 +35,10 @@ const HighTable = ({ category, refetch, meta, handlePageChange, page }) => {
   const handleCancel = () => setIsModalOpen(false);
 
   const handleDelete = async (id) => {
-    console.log("delete id-->", id);
+    // console.log("delete id-->", id);
     try {
       const res = await deleteHighTopic(id).unwrap();
-      console.log("response-->", res);
+      // console.log("response-->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();

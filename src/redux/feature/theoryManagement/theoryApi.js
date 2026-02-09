@@ -66,7 +66,7 @@ const theoryApi = baseApi.injectEndpoints({
     // Mutation definition (RTK Query)
     deleteCategory: builder.mutation({
       query: (id) => {
-        console.log("Received ID in mutation query:", id); // Log to see if the id is passed correctly
+        // console.log("Received ID in mutation query:", id); // Log to see if the id is passed correctly
         return {
           url: `/category/delete-category/${id}`,
           method: "DELETE",
@@ -75,7 +75,7 @@ const theoryApi = baseApi.injectEndpoints({
     }),
     deleteTopic: builder.mutation({
       query: (id) => {
-        console.log("Received ID in mutation query:", id); // Log to see if the id is passed correctly
+        // console.log("Received ID in mutation query:", id); // Log to see if the id is passed correctly
         return {
           url: `/topic/delete-topic/${id}`,
           method: "DELETE",
@@ -84,7 +84,7 @@ const theoryApi = baseApi.injectEndpoints({
     }),
     deleteQues: builder.mutation({
       query: (id) => {
-        console.log("Received ID in mutation query:", id); // Log to see if the id is passed correctly
+        // console.log("Received ID in mutation query:", id); // Log to see if the id is passed correctly
         return {
           url: `/question/delete-question/${id}`,
           method: "DELETE",

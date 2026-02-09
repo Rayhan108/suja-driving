@@ -34,15 +34,15 @@ const onSubmit = async (formValues) => {
     if (file) {
       formData.append("icon", file, file.name);
     }
-    console.log("Submitting:");
+    // console.log("Submitting:");
     for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
+      // console.log(pair[0], pair[1]);
     }
   
 
     try {
       const res = await updateHighTopic({args:formData,id:singleData?._id}).unwrap();
-      console.log("response--->", res);
+      // console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();

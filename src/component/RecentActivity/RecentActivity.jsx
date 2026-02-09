@@ -6,7 +6,7 @@ const RecentActivity = () => {
   const searchTerm=""
   const page = 1
   const {data:allUsers}=useGetAllUserQuery({searchTerm,page})
-  console.log("all user------>",allUsers);
+  // console.log("all user------>",allUsers);
   const users =allUsers?.data?.result
   return (
     <div className="bg-[#e6e6e6] text-black p-5 mt-3 font-title w-[30%]">

@@ -11,7 +11,7 @@ const TestScore = () => {
       // ---- pagination state (server-side) ----
       // ---- pass this to the table ----
   const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........",nextPage);
+    // console.log("calling functon........",nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   }
   return (

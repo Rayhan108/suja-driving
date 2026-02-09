@@ -20,7 +20,7 @@ const HazardTable = ({hazardData,refetch,handlePageChange,page,meta}) => {
     setIsModalOpen(true);
   };
   const showEditModal = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     setSingleData(id);
     setEditModalOpen(true);
   };
@@ -32,11 +32,11 @@ const HazardTable = ({hazardData,refetch,handlePageChange,page,meta}) => {
     setIsModalOpen(false);
   };
     const handleDelete = async (id) => {
-    console.log("delete id-->",id);
+    // console.log("delete id-->",id);
   
     try {
       const res = await deleteHazardTopic(id).unwrap();
-      console.log("response-->", res);
+      // console.log("response-->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();
@@ -73,17 +73,7 @@ const columns = [
   key: "icon",
   align: "center",
   render: (text) => (
-    // <div style={{ display: "flex", justifyContent: "center" }}>
-    //   <video
-    //     src={videoUrl}
-    //     width={100}
-    //     height={60}
-    //     muted
-    //     controls={false}
-    //     preload="metadata"
-    //     style={{ objectFit: "cover", borderRadius: 5 }}
-    //   />
-    // </div>
+
         <div style={{ display: "flex", justifyContent: "center" }}>
           {" "}
           <img

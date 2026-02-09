@@ -35,13 +35,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false); // Track the dropdown state
   const dispatch = useDispatch();
   const user = useAppSelector(selectCurrentUser);
-  console.log("user--->", user);
+  // console.log("user--->", user);
   // Check if current path matches a menu item
   const isActive = (path) => currentPath === path;
 
   // Check if any settings submenu is active
   const isSettingsActive = currentPath.startsWith("/setting");
-  console.log("setting active", isSettingsActive);
+  // console.log("setting active", isSettingsActive);
   // Handle toggling of the settings dropdown
   const toggleSettingsDropdown = () => {
     setIsSettingsOpen(!isSettingsOpen);

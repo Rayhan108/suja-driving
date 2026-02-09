@@ -14,23 +14,23 @@ export default function Verify() {
     const [email, setEmail] = useState("");
       const [resendOtp] = useResendOtpMutation();
   const user = useAppSelector(selectCurrentUser);
-  console.log("user----->", user);
+  // console.log("user----->", user);
   const [verifyOtp] = useVerifyOtpMutation();
 
   const onSubmit = async (data) => {
     const verifyCode = `${data.digit1}${data.digit2}${data.digit3}${data.digit4}${data.digit5}${data.digit6}`;
 
-    console.log(data);
+    // console.log(data);
     const modifiedData = {
       email: data?.email,
       verifyCode: parseInt(verifyCode),
     };
-    console.log("verify otp data--->", modifiedData);
+    // console.log("verify otp data--->", modifiedData);
     // handle code verification here
     try {
   
       const res = await verifyOtp(modifiedData).unwrap();
-      console.log("verify otp response--->", res);
+      // console.log("verify otp response--->", res);
       if (res?.success) {
         message.success(res?.message);
         navigate("/passReset");

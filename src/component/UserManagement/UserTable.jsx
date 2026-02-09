@@ -11,11 +11,11 @@ import {
 const UserTable = ({ searchTerm }) => {
   const [page, setPage] = useState(1);
   const { data: allUser,refetch } = useGetAllUserQuery({ searchTerm, page });
-  console.log("all user--->", allUser?.data?.result);
+  // console.log("all user--->", allUser?.data?.result);
   const meta = allUser?.data?.meta;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = (userdata) => {
-    console.log("userData", userdata);
+    // console.log("userData", userdata);
     setIsModalOpen(true);
   };
   const [blockUser] = useBlockUserMutation();
@@ -27,15 +27,15 @@ const UserTable = ({ searchTerm }) => {
   };
   // ---- pass this to the table ----
   const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........", nextPage);
+    // console.log("calling functon........", nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   };
 
   const handleBlockUser = async (id) => {
-    console.log("id--------->>>>>", id);
+    // console.log("id--------->>>>>", id);
     try {
       const res = await blockUser(id?.user?._id).unwrap();
-      console.log("block user response--->", res);
+      // console.log("block user response--->", res);
       if (res.success) {
         message.success(res?.message);
         refetch()

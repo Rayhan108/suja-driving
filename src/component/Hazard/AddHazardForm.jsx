@@ -101,7 +101,7 @@ const HazardForm = ({ refetch, setAddVedioModalOpen, isAddVedioModalOpen }) => {
       
       // ✅ Step 1: Generate fresh presigned URL প্রতিবার
       setUploadStatus("generating");
-      console.log("Generating presigned URL...");
+      // console.log("Generating presigned URL...");
       
       const payload = {
         fileType: "video/mp4",
@@ -109,7 +109,7 @@ const HazardForm = ({ refetch, setAddVedioModalOpen, isAddVedioModalOpen }) => {
       };
       
       const presignedRes = await generatePresignedUrl(payload).unwrap();
-      console.log("presignedRes----->", presignedRes);
+      // console.log("presignedRes----->", presignedRes);
       
       const uploadURL = presignedRes?.uploadURL;
       const fileName = presignedRes?.fileName;
@@ -120,10 +120,10 @@ const HazardForm = ({ refetch, setAddVedioModalOpen, isAddVedioModalOpen }) => {
       
       // ✅ Step 2: Upload video to S3
       setUploadStatus("uploading");
-      console.log("Starting upload to:", uploadURL);
+      // console.log("Starting upload to:", uploadURL);
       
       await uploadFileWithProgress(uploadURL, video, 'video/mp4');
-      console.log("Video upload succeeded!");
+      // console.log("Video upload succeeded!");
       
       // ✅ Step 3: Submit form data to backend
       setUploadStatus("submitting");

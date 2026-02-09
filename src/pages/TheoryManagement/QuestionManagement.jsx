@@ -17,7 +17,7 @@ const QuestionManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const question =getAllQues?.data?.result;
 const meta = getAllQues?.data?.meta
-console.log("get all ques-->",getAllQues);
+// console.log("get all ques-->",getAllQues);
   const showModal = () => {
     // setDeleteId(id);
     setIsModalOpen(true);
@@ -31,7 +31,7 @@ console.log("get all ques-->",getAllQues);
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
   const activeTabFromURL = location.pathname.split('/')[2]; // Assuming your routes look like "/category", "/topic", "/question"
-console.log("activeTabFromURL",activeTabFromURL);
+// console.log("activeTabFromURL",activeTabFromURL);
   // Set the initial active tab based on the URL
   const [activeTab, setActiveTab] = useState(activeTabFromURL || 'category');
 
@@ -41,7 +41,7 @@ console.log("activeTabFromURL",activeTabFromURL);
   }, [location]);
     // ---- pass this to the table ----
   const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........",nextPage);
+    // console.log("calling functon........",nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   }
     const handleSearchChange = (e) => {

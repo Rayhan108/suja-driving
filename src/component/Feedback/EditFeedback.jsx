@@ -13,12 +13,12 @@ const EditFeedback = ({singleData}) => {
   } = useForm();
 const [sendFeedback] = useSendFeedbackMutation()
   const onSubmit = async (formValues) => {
-console.log("form values------>",formValues);
+// console.log("form values------>",formValues);
 
 
     try {
       const res = await sendFeedback({args:formValues,id}).unwrap();
-      console.log("response--->", res);
+      // console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
       

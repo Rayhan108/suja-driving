@@ -31,13 +31,13 @@ const HighwaySignCreateModal = ({id,refetch,isAddModalOpen,setAddModalOpen}) => 
       message.error("Please select an image file.");
       return;
     }
-    console.log("Submitting:");
+    // console.log("Submitting:");
     for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
+      // console.log(pair[0], pair[1]);
     }
     try {
       const res = await createHighway(formData).unwrap();
-      console.log("response--->", res);
+      // console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();

@@ -18,14 +18,14 @@ const HighwayPage = () => {
   
   const [limit] = useState(10); // fixed on backend
   const {data:highwayTopic,refetch}=useGetAllHighwayTopicQuery({page,searchTerm})
-  console.log("Highway Topic------->",highwayTopic);
+  // console.log("Highway Topic------->",highwayTopic);
   const meta = highwayTopic?.data?.meta
   const category = highwayTopic?.data?.result
   const location = useLocation(); // Get the current location (URL)
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
   const activeTabFromURL = location.pathname.split("/")[2]; // Assuming your routes look like "/category", "/topic", "/question"
-  console.log("activeTabFromURL", activeTabFromURL);
+  // console.log("activeTabFromURL", activeTabFromURL);
   // Set the initial active tab based on the URL
   const [activeTab, setActiveTab] = useState(activeTabFromURL || "category");
 
@@ -45,10 +45,10 @@ const HighwayPage = () => {
   };
   // ---- pass this to the table ----
   const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........",nextPage);
+    // console.log("calling functon........",nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   }
-  console.log("page no------------->",page);
+  // console.log("page no------------->",page);
     const handleSearchChange = (e) => {
     setSearchTerm(e.target.value.toLowerCase()); // Update the searchTerm state
   };

@@ -12,7 +12,7 @@ import { message } from "antd";
 function PrivacyPolicy() {
   const { data: privacy, refetch } = useGetPrivacyQuery(undefined);
   const privacyData = privacy?.data?.description;
-  console.log("privacy data from backend-->", privacyData);
+  // console.log("privacy data from backend-->", privacyData);
   const [content, setContent] = useState("");
   const [addPrivacy] = useAddPrivacyPolicyMutation();
   // Load saved content from localStorage when the page loads
@@ -32,11 +32,11 @@ function PrivacyPolicy() {
     const privacyContent = {
       description: content,
     };
-    console.log("privacy content->", privacyContent);
+    // console.log("privacy content->", privacyContent);
     // message.success("Privacy Policy Saved Successfully!");
     try {
       const res = await addPrivacy(privacyContent).unwrap();
-      console.log("privacy content response ---->", res);
+      // console.log("privacy content response ---->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();

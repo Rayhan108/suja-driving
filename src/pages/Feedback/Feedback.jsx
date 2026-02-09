@@ -7,12 +7,12 @@ import { useState } from "react";
 const Feedback = () => {
   const [page,setPage]=useState(1)
   const {data:allFeedback}=useGetAllFeedbackQuery(page)
-  console.log("all feedback------>",allFeedback);
+  // console.log("all feedback------>",allFeedback);
 
   const feedbackData = allFeedback?.data?.result 
   const meta = allFeedback?.data?.meta
     const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........",nextPage);
+    // console.log("calling functon........",nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   }
   return (

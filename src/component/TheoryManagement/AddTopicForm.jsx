@@ -14,7 +14,7 @@ const AddTopicForm = ({ refetch, category, setIsModalOpen }) => {
     const image = watch("topic_icon");
   const [createTopic] = useCreateTopicMutation();
   const onSubmit = async (data) => {
-    console.log("Form Data:------>", data);
+    // console.log("Form Data:------>", data);
     // Creating a new FormData object to handle the form submission
     const formData = new FormData();
 
@@ -37,13 +37,13 @@ const AddTopicForm = ({ refetch, category, setIsModalOpen }) => {
     }
 
     // Log the FormData contents
-    console.log("Form Data Contents:");
+    // console.log("Form Data Contents:");
     for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
+      // console.log(`${key}:`, value);
     }
     try {
       const res = await createTopic(formData).unwrap();
-      console.log("response--->", res);
+      // console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();

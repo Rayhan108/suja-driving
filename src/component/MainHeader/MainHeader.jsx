@@ -7,7 +7,7 @@ import { useMyProfileQuery } from "../../redux/feature/user/userApi";
 const MainHeader = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const { data: myProfile } = useMyProfileQuery(undefined);
-  console.log("my profile data--->", myProfile);
+  // console.log("my profile data--->", myProfile);
   const proImg=myProfile?.data?.profile_image
   return (
     <div className="relative font-title">

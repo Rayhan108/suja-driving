@@ -14,14 +14,14 @@ const TheoryManagement = () => {
 const type = "THEORY"
 const {data:allCategory,refetch}=useGetAllCateroryQuery({searchTerm,type,page})
 
-console.log("all category--->",allCategory);
+// console.log("all category--->",allCategory);
 const meta = allCategory?.data?.meta;
 const category = allCategory?.data?.result
   const location = useLocation(); // Get the current location (URL)
 
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
   const activeTabFromURL = location.pathname.split('/')[2]; // Assuming your routes look like "/category", "/topic", "/question"
-console.log("activeTabFromURL",activeTabFromURL);
+// console.log("activeTabFromURL",activeTabFromURL);
   // Set the initial active tab based on the URL
   const [activeTab, setActiveTab] = useState(activeTabFromURL || 'category');
 
@@ -41,7 +41,7 @@ console.log("activeTabFromURL",activeTabFromURL);
   };
   // ---- pass this to the table ----
   const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........",nextPage);
+    // console.log("calling functon........",nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   }
   const handleSearchChange = (e) => {

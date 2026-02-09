@@ -29,7 +29,7 @@ const AdiTheoryManagementTopicTable = ({
   const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const showEditModal = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     setSingleData(id);
     setEditModalOpen(true);
   };
@@ -40,10 +40,10 @@ const AdiTheoryManagementTopicTable = ({
   const pageSize = Number(meta?.limit ?? 10);
   const total = Number(meta?.total ?? 0);
   const handleDelete = async (id) => {
-    console.log("delete id-->", id);
+    // console.log("delete id-->", id);
     try {
       const res = await deleteTopic(id).unwrap();
-      console.log("response-->", res);
+      // console.log("response-->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();

@@ -13,11 +13,11 @@ const ChangePass = () => {
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const onFinish =async (values) => {
-    console.log("Form values:", values);
+    // console.log("Form values:", values);
 
       try {
       const res = await changePassword(values).unwrap();
-      console.log("response--->", res);
+      // console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
         navigate('/sign-in')

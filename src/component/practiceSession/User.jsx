@@ -3,7 +3,7 @@ import { useGetUserChartsQuery } from '../../redux/feature/others/othersApi';
 
 const User = () => {
     const {data:userChart}=useGetUserChartsQuery(undefined)
-    console.log("user charts--->",userChart);
+    // console.log("user charts--->",userChart);
     // Data for 12 months
     const chartsData =userChart?.data?.chartData
 

@@ -171,7 +171,7 @@ const EditHazVedio = ({ refetch, singleData, setEditModalOpen, isEditModalOpen }
       hazards: hazardsData,  // ✅ Seconds format
     };
     
-    console.log("data payload (in seconds)--->", dataPayload);
+    // console.log("data payload (in seconds)--->", dataPayload);
     formData.append("data", JSON.stringify(dataPayload));
     
     const id = singleData?._id;

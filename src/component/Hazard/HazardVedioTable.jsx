@@ -18,9 +18,9 @@ const HazardVedioTable = () => {
   const [page, setPage] = useState(1);
   const [singleData, setSingleData] = useState({});
   const { id } = useParams();
-  console.log("singleData--------------->", singleData);
+  // console.log("singleData--------------->", singleData);
   const { data: allVedios,refetch } = useGetAllVediosQuery({id,page});
-  console.log("all Vedios->", allVedios?.data?.result);
+  // console.log("all Vedios->", allVedios?.data?.result);
 const meta = allVedios?.data?.meta
 
   const vediosData = allVedios?.data?.result;
@@ -43,7 +43,7 @@ const meta = allVedios?.data?.meta
   const [isEditModalOpen, setEditModalOpen] = useState(false);
 
   const showEditModal = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     setSingleData(id);
     setEditModalOpen(true);
   };
@@ -52,15 +52,15 @@ const meta = allVedios?.data?.meta
   };
   // ---- pass this to the table ----
   const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........",nextPage);
+    // console.log("calling functon........",nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   }
   const handleDelete = async (id) => {
-    console.log("delete id-->", id);
+    // console.log("delete id-->", id);
 
     try {
       const res = await deleteHazardVedio(id).unwrap();
-      console.log("response-->", res);
+      // console.log("response-->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();
@@ -79,7 +79,7 @@ const meta = allVedios?.data?.meta
     setAddVedioModalOpen(true);
   };
   const showVedioModal = (data) => {
-    console.log("data", data);
+    // console.log("data", data);
     setVedioData(data);
     setVedioModalOpen(true);
   };
@@ -119,7 +119,7 @@ const meta = allVedios?.data?.meta
       key: "video_url",
       align: "center",
   render: (record) => {
-    console.log("record-->", record); // Log the record to the console
+    // console.log("record-->", record); // Log the record to the console
     
     return (
       <div style={{ display: "flex", justifyContent: "center" }}>

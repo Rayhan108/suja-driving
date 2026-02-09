@@ -16,7 +16,7 @@ const SubscriptionTable = ({ subscriptionData }) => {
     setIsModalOpen(true);
   };
   const showDescriptionModal = (testData) => {
-    console.log("id", data);
+    // console.log("id", data);
     setData(data);
     setDescriptionModalOpen(true);
   };
@@ -24,7 +24,7 @@ const SubscriptionTable = ({ subscriptionData }) => {
     setDescriptionModalOpen(false);
   };
   const showEditModal = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     setEditModalOpen(true);
   };
   const handleEditCancel = () => {

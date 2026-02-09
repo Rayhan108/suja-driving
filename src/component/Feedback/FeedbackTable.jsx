@@ -22,7 +22,7 @@ const FeedbackTable = ({ feedbackData,meta,page,handlePageChange }) => {
     setIsModalOpen(true);
   };
   const showDescriptionModal = (data) => {
-    console.log("data--->", data);
+    // console.log("data--->", data);
     setSingleData(data)
     setDescriptionModalOpen(true);
   };
@@ -30,7 +30,7 @@ const FeedbackTable = ({ feedbackData,meta,page,handlePageChange }) => {
     setDescriptionModalOpen(false);
   };
   const showEditModal = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     setSingleData(id)
     setEditModalOpen(true);
   };

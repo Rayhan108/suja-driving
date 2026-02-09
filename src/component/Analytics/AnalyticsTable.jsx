@@ -12,7 +12,7 @@ const AnalyticsTable = ({ reports }) => {
   const [data, setData] = useState([]);
 
   const showDescriptionModal = (testData) => {
-    console.log("id", data);
+    // console.log("id", data);
     setData(data);
     setDescriptionModalOpen(true);
   };

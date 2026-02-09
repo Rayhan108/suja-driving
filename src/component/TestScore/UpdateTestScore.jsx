@@ -10,7 +10,7 @@ const UpdateTestScore = () => {
       } = useForm ();
     
       const onSubmit = (data) => {
-        console.log("Form Data:", data);
+        // console.log("Form Data:", data);
         reset();
       };
     

@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 const HazardForm = ({ refetch, setAddVedioModalOpen, isAddVedioModalOpen }) => {
   const [resFile, setResFile] = useState("");
   const [url, setUrl] = useState("");
-  console.log("resfile--------->",resFile);
-  console.log("vedio url--------->",url);
+  // console.log("resfile--------->",resFile);
+  // console.log("vedio url--------->",url);
   // Upload progress states
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -28,7 +28,7 @@ const HazardForm = ({ refetch, setAddVedioModalOpen, isAddVedioModalOpen }) => {
 
       try {
         const presignedRes = await generatePresignedUrl(payload).unwrap();
-        console.log("presignedRes----->", presignedRes);
+        // console.log("presignedRes----->", presignedRes);
         const uploadURL = presignedRes?.uploadURL;
         setUrl(uploadURL);
         setResFile(presignedRes?.fileName);
@@ -136,7 +136,7 @@ const HazardForm = ({ refetch, setAddVedioModalOpen, isAddVedioModalOpen }) => {
 
         await uploadFileWithProgress(url, video, 'video/mp4');
 
-        console.log("Upload succeeded!");
+        // console.log("Upload succeeded!");
      
       } catch (error) {
         console.error("Upload failed:", error);

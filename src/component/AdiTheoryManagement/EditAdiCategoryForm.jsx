@@ -4,7 +4,7 @@ import { message } from "antd";
 import { useEffect } from "react";
 
 const EditAdiCategoryForm = ({refetch,singleData,setEditModalOpen}) => {
-  console.log("single data->",singleData);
+  // console.log("single data->",singleData);
   const [updateCategory]=useUpdateCategoryMutation()
   const {
     register,
@@ -20,7 +20,7 @@ const EditAdiCategoryForm = ({refetch,singleData,setEditModalOpen}) => {
     }
   }, [singleData, setValue]);
   const onSubmit = async(data) => {
-    console.log("Form Data:", data);
+    // console.log("Form Data:", data);
      // Creating a new FormData object to handle the form submission
         const formData = new FormData();
     
@@ -39,16 +39,16 @@ const EditAdiCategoryForm = ({refetch,singleData,setEditModalOpen}) => {
         } 
     
         // Log the FormData contents
-        console.log("Form Data Contents:");
+        // console.log("Form Data Contents:");
         for (let [key, value] of formData.entries()) {
-          console.log(`${key}:`, value);
+          // console.log(`${key}:`, value);
         }
         try {
           const res = await updateCategory({
       args: formData,
       id: singleData?._id,
     }).unwrap();
-          console.log("response--->", res);
+          // console.log("response--->", res);
           if (res?.success) {
             message.success(res?.message);
             refetch()

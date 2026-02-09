@@ -27,7 +27,7 @@ const [login]=useLoginMutation()
     try {
       const res = await login(values).unwrap()
       const user = verifyToken(res.data.accessToken);
-      console.log("response------->",res);
+      // console.log("response------->",res);
       if(res?.success){
         message.success(res?.message)
         setLoading(false)
@@ -38,7 +38,7 @@ const [login]=useLoginMutation()
         setLoading(false)
       }
     } catch (error) {
-      console.log("login error",error)
+      // console.log("login error",error)
          message.error(error?.data?.message)
            setLoading(false)
     }

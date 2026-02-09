@@ -7,12 +7,12 @@ import { FiEye } from "react-icons/fi";
 import UpdateTestScore from "./UpdateTestScore";
 
 const TestScoreTable = ({ testData, page, meta, handlePageChange }) => {
-  console.log("testData--->", testData);
+  // console.log("testData--->", testData);
   const currentPage = Number(page ?? 1);
   const pageSize = Number(meta?.limit ?? 10);
   const total = Number(meta?.total ?? 0);
   const [singleData, setSingleData] = useState({});
-  console.log("single  data------>", singleData);
+  // console.log("single  data------>", singleData);
   const [isDescriptionModalOpen, setDescriptionModalOpen] = useState(false);
   const [data, setData] = useState([]);
   const showModal = () => {
@@ -27,7 +27,7 @@ const TestScoreTable = ({ testData, page, meta, handlePageChange }) => {
     setDescriptionModalOpen(false);
   };
   const showEditModal = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     setEditModalOpen(true);
   };
   const handleEditCancel = () => {

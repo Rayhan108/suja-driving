@@ -22,12 +22,12 @@ const Signin = () => {
   const [resetPassword] = useResetPassMutation();
 
   const onFinish = async (values) => {
-    console.log("Form submitted:", values); // Display form values in the console
+    // console.log("Form submitted:", values); // Display form values in the console
     setLoading(true);
     try {
       setEmail(values?.email);
       const res = await resetPassword(values).unwrap();
-      console.log("reset pass response--->", res);
+      // console.log("reset pass response--->", res);
       if (res?.success) {
         message.success(res?.message);
         setLoading(false);

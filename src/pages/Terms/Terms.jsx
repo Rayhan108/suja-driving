@@ -9,7 +9,7 @@ import { message } from "antd";
 function TermsCondition() {
     const { data: terms, refetch } = useGetTermsQuery(undefined);
     const termsData = terms?.data?.description;
-    console.log("terms data from backend-->", termsData);
+    // console.log("terms data from backend-->", termsData);
   const [content, setContent] = useState("");
   const [addTerms]=useAddTermsPolicyMutation()
     // Load saved content from localStorage when the page loads
@@ -30,11 +30,11 @@ function TermsCondition() {
         const privacyContent = {
       description: content,
     };
-    console.log("privacy content->", privacyContent);
+    // console.log("privacy content->", privacyContent);
     // message.success("Privacy Policy Saved Successfully!");
     try {
       const res = await addTerms(privacyContent).unwrap();
-      console.log("privacy content response ---->", res);
+      // console.log("privacy content response ---->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch();

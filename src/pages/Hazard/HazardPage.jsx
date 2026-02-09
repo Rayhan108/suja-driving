@@ -18,7 +18,7 @@ const HazardPage = () => {
 const meta = allHazardTopic?.data?.meta
   // Get the active tab from the URL path (i.e., /category, /topic, /question)
   const activeTabFromURL = location.pathname.split("/")[2]; // Assuming your routes look like "/category", "/topic", "/question"
-  console.log("activeTabFromURL", activeTabFromURL);
+  // console.log("activeTabFromURL", activeTabFromURL);
   // Set the initial active tab based on the URL
   const [activeTab, setActiveTab] = useState(activeTabFromURL || "category");
 
@@ -36,11 +36,11 @@ const meta = allHazardTopic?.data?.meta
     setIsModalOpen(false);
     setDeleteId(null);
   };
-  console.log("All Hazard Data----->", allHazardTopic?.data?.result);
+  // console.log("All Hazard Data----->", allHazardTopic?.data?.result);
   const hazardData = allHazardTopic?.data?.result;
   // ---- pass this to the table ----
   const handlePageChange = (nextPage /*, pageSize */) => {
-    console.log("calling functon........",nextPage);
+    // console.log("calling functon........",nextPage);
     setPage(nextPage); // triggers RTK Query refetch because query args changed
   }
   return (

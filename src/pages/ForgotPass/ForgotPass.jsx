@@ -12,12 +12,12 @@ const ForgotPass = () => {
   const [loading, setLoading] = useState(false);
 const [sendOtp] =useSendOtpMutation()
   const onFinish = async(values) => {
-    console.log("Form submitted:", values); // Display form values in the console
+    // console.log("Form submitted:", values); // Display form values in the console
     setLoading(true);
     try {
       const res = await sendOtp(values).unwrap()
 
-      console.log("response------->",res);
+      // console.log("response------->",res);
  
       if(res?.success){
         message.success(res?.message)
@@ -28,7 +28,7 @@ const [sendOtp] =useSendOtpMutation()
         setLoading(false)
       }
     } catch (error) {
-      console.log("login error",error)
+      // console.log("login error",error)
          message.error(error?.data?.message)
            setLoading(false)
     }

@@ -10,7 +10,7 @@ import { useMyProfileQuery } from "../../redux/feature/user/userApi";
 
 const UpdateProfile = () => {
   const { data: myProfile,refetch } = useMyProfileQuery(undefined);
-  console.log("my profile data--->", );
+  // console.log("my profile data--->", );
 const img = myProfile?.data?.profile_image
   const [activeTab, setActiveTab] = useState("edit");
   const [profileImg, setProfileImg] = useState("");
@@ -18,7 +18,7 @@ const img = myProfile?.data?.profile_image
   const [updateAdminProfile]=useUpdateAdminProfileMutation()
   const onFinish = async(values) => {
 
- console.log("Form Data:------>", values);
+//  console.log("Form Data:------>", values);
     // Creating a new FormData object to handle the form submission
     const formData = new FormData();
 
@@ -40,13 +40,13 @@ const img = myProfile?.data?.profile_image
     // }
 
     // Log the FormData contents
-    console.log("Form Data Contents:");
+    // console.log("Form Data Contents:");
     for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
+      // console.log(`${key}:`, value);
     }
     try {
       const res = await updateAdminProfile(formData).unwrap();
-      console.log("response--->", res);
+      // console.log("response--->", res);
       if (res?.success) {
         message.success(res?.message);
         refetch()
